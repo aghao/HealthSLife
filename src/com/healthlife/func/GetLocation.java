@@ -1,10 +1,6 @@
 package com.healthlife.func;
 
 import com.healthslife.R;
-import com.healthslife.R.id;
-import com.healthslife.R.layout;
-import com.healthslife.R.menu;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
