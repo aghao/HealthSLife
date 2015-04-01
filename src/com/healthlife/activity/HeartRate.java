@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -32,7 +33,7 @@ public class HeartRate extends Activity {
 			Log.e("==========", "摄像头存在");
 		}
 		
-		
+		//按钮响应
 		cameraButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -72,6 +73,24 @@ public class HeartRate extends Activity {
 		super.onStart();
 	}
 	
+	//预览图像的数据处理
+	private static PreviewCallback mPriviewCallBack = new PreviewCallback(){
+
+		@Override
+		public void onPreviewFrame(byte[] data, Camera cam) {
+			// TODO Auto-generated method stub
+			 if (data == null) throw new NullPointerException();
+	         Camera.Size size = cam.getParameters().getPreviewSize();
+	         if (size == null) throw new NullPointerException();
+	         
+	         int width = size.width;
+	         int height = size.height;
+	         
+	         
+		}
+		
+	};
+	
 	//自定义相机视图  开启相机，预览图像
 	class CameraView extends SurfaceView {
 		
@@ -100,7 +119,8 @@ public class HeartRate extends Activity {
 						//开启闪光灯
 			            Camera.Parameters param = mCamera.getParameters(); 
 			            param.setFlashMode(Parameters.FLASH_MODE_TORCH);
-
+			            //添加预览回调
+			            mCamera.setPreviewCallback(mPriviewCallBack);
 			            mCamera.setParameters(param); 
 			            mCamera.setPreviewDisplay(mHolder); 
 					}
