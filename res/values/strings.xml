@@ -5,5 +5,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_get_location">GetLocation</string>
-
+	<string name="title_activity_heart_rate">HeartRate</string>
 </resources>

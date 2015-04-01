@@ -29,6 +29,10 @@
             android:name="com.healthlife.activity.GetLocation"
             android:label="@string/title_activity_get_location" >
         </activity>
+        <activity
+            android:name="com.healthlife.activity.HeartRate"
+            android:label="@string/title_activity_heart_rate">
+        </activity>
     </application>
 
 </manifest>

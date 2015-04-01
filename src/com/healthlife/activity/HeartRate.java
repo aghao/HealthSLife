@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 public class HeartRate extends Activity {
 
@@ -37,8 +38,9 @@ public class HeartRate extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				//myCV = (SurfaceView) findViewById(R.id.surface);
+				FrameLayout frameLayout = (FrameLayout) findViewById(R.id.cameraview);
 				myCV = new CameraView(HeartRate.this);
+				frameLayout.addView(myCV);
 			}
 		});
 	}
@@ -59,6 +61,9 @@ public class HeartRate extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+//		mCamera.stopPreview();
+//		mCamera.release();
+//        mCamera = null;
 	}
 
 	@Override
