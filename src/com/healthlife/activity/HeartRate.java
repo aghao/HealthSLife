@@ -1,5 +1,6 @@
 package com.healthlife.activity;
 
+import com.healthlife.util.YuvToRGB;
 import com.healthslife.R;
 import android.app.Activity;
 import android.content.Context;
@@ -86,7 +87,8 @@ public class HeartRate extends Activity {
 	         int width = size.width;
 	         int height = size.height;
 	         
-	         
+	         int redAvg = YuvToRGB.getRed(data, width, height);
+	        
 		}
 		
 	};
@@ -119,13 +121,17 @@ public class HeartRate extends Activity {
 						//开启闪光灯
 			            Camera.Parameters param = mCamera.getParameters(); 
 			            param.setFlashMode(Parameters.FLASH_MODE_TORCH);
+//			            param.setPreviewFpsRange(20,30);
 			            //添加预览回调
+			            
 			            mCamera.setPreviewCallback(mPriviewCallBack);
 			            mCamera.setParameters(param); 
 			            mCamera.setPreviewDisplay(mHolder); 
 					}
 					catch(Exception e){
 					//如果失败释放摄像头
+
+						Log.e("==========", "ERROR");
 						mCamera.release();
 				        mCamera = null;
 					}
