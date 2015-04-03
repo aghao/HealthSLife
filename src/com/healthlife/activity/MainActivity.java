@@ -1,33 +1,75 @@
 package com.healthlife.activity;
 
 import com.healthslife.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-
+	
+	private Button heartBtn;
+	private Button locateBtn;
+	private Button sportBtn;
+	private Button musicBtn;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.healthlife_main);
 		
-		Button button = (Button) findViewById(R.id.button);
+		heartBtn = (Button)findViewById(R.id.heartbtn);
+		locateBtn = (Button)findViewById(R.id.locatebtn);
+		sportBtn = (Button)findViewById(R.id.sportbtn);
+		musicBtn = (Button)findViewById(R.id.musicbtn);
 		
-		button.setOnClickListener(new View.OnClickListener() {
+		//心率按钮响应
+		heartBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(MainActivity.this,HeartRate.class));
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, HeartRate.class);
+				startActivity(intent);
 			}
 		});
 		
+		//地图定位按钮响应
+		locateBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, GetLocation.class);
+				startActivity(intent);
+			}
+		});
+		
+		//音乐播放按钮响应
+		musicBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			//	Intent intent = new Intent();
+			//	intent.setClass(MainActivity.this, GetLocation.class);
+			//	startActivity(intent);
+			}
+		});
+		//运动数据按钮响应
+		sportBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			//	Intent intent = new Intent();
+			//	intent.setClass(MainActivity.this, GetLocation.class);
+			//	startActivity(intent);
+			}
+		});
 	}
 
 	@Override
