@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import android.widget.Button;
 
 public class MainActivity extends Activity {
@@ -16,7 +17,7 @@ public class MainActivity extends Activity {
 	private Button locateBtn;
 	private Button sportBtn;
 	private Button musicBtn;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +60,6 @@ public class MainActivity extends Activity {
 			//	startActivity(intent);
 			}
 		});
-		
 		//运动数据按钮响应
 		sportBtn.setOnClickListener(new OnClickListener() {
 			

@@ -1,5 +1,6 @@
 package com.healthlife.activity;
 
+import com.healthlife.util.YuvToRGB;
 import com.healthslife.R;
 
 import android.app.Activity;
@@ -7,12 +8,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 public class HeartRate extends Activity {
 
@@ -32,14 +35,15 @@ public class HeartRate extends Activity {
 			Log.e("==========", "摄像头存在");
 		}
 		
-		
+		//按钮响应
 		cameraButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				//myCV = (SurfaceView) findViewById(R.id.surface);
+				FrameLayout frameLayout = (FrameLayout) findViewById(R.id.cameraview);
 				myCV = new CameraView(HeartRate.this);
+				frameLayout.addView(myCV);
 			}
 		});
 	}
@@ -60,6 +64,9 @@ public class HeartRate extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+//		mCamera.stopPreview();
+//		mCamera.release();
+//        mCamera = null;
 	}
 
 	@Override
@@ -67,6 +74,25 @@ public class HeartRate extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
 	}
+	
+	//预览图像的数据处理
+	private static PreviewCallback mPriviewCallBack = new PreviewCallback(){
+
+		@Override
+		public void onPreviewFrame(byte[] data, Camera cam) {
+			// TODO Auto-generated method stub
+			 if (data == null) throw new NullPointerException();
+	         Camera.Size size = cam.getParameters().getPreviewSize();
+	         if (size == null) throw new NullPointerException();
+	         
+	         int width = size.width;
+	         int height = size.height;
+	         
+	         int redAvg = YuvToRGB.getRed(data, width, height);
+	        
+		}
+		
+	};
 	
 	//自定义相机视图  开启相机，预览图像
 	class CameraView extends SurfaceView {
@@ -96,12 +122,17 @@ public class HeartRate extends Activity {
 						//开启闪光灯
 			            Camera.Parameters param = mCamera.getParameters(); 
 			            param.setFlashMode(Parameters.FLASH_MODE_TORCH);
-
+//			            param.setPreviewFpsRange(20,30);
+			            //添加预览回调
+			            
+			            mCamera.setPreviewCallback(mPriviewCallBack);
 			            mCamera.setParameters(param); 
 			            mCamera.setPreviewDisplay(mHolder); 
 					}
 					catch(Exception e){
 					//如果失败释放摄像头
+
+						Log.e("==========", "ERROR");
 						mCamera.release();
 				        mCamera = null;
 					}
