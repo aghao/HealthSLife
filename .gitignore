@@ -15,6 +15,10 @@ ic_launcher1-web.png
 bin/
 gen/
 
+# MainActivity
+src/com/healthlife/activity/MainActivity.java
+res/layout/healthlife_main.xml
+
 # Gradle files
 .gradle/
 build/
