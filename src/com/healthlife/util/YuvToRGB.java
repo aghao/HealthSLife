@@ -1,5 +1,6 @@
 package com.healthlife.util;
 
+
 public class YuvToRGB {
 	
 	    //I420是yuv420格式，是3个plane，排列方式为(Y)(U)(V)  
@@ -20,11 +21,15 @@ public class YuvToRGB {
 	                //RGB tmp = yuvTorgb(src[Y], src[U], src[V]);  
 	                int tmp = (int)((src[Y]&0xff) + 1.4075 * ((src[V]&0xff)-128));
 	                tmp = (tmp<0?0:tmp>255?255:tmp);
-	                red =+ tmp;
+	                red = red + tmp;
+
 	            }  
 	        }  
-	          
-	        return (int)(red/numOfPixel);  
+
+	        if(red < 80*numOfPixel || red ==255*numOfPixel)
+	        	return -1;
+	        return (int)(red);  
+
 	    }      
 }
 //	    private static class RGB{  

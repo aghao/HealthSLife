@@ -5,15 +5,23 @@
     android:orientation="vertical" >
     
 
-    <Button 
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:id="@+id/hrtestib"
+        android:background="@drawable/ic_launcher"
+        android:contentDescription="@string/app_name"
         />
     
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/cameraview"
+        />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/heartratetest"
         />
 </LinearLayout>
