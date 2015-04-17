@@ -4,7 +4,7 @@ package com.healthlife.util;
 public class YuvToRGB {
 	
 	    //I420是yuv420格式，是3个plane，排列方式为(Y)(U)(V)  
-	    public static int getRed(byte[] src, int width, int height){  
+	    public static double getRed(byte[] src, int width, int height){  
 	        int numOfPixel = width * height;  
 //	        int positionOfV = numOfPixel;  
 	        int positionOfU = numOfPixel/4 + numOfPixel;   
@@ -25,10 +25,10 @@ public class YuvToRGB {
 
 	            }  
 	        }  
-
-	        if(red < 80*numOfPixel || red ==255*numOfPixel)
+	        red = red/numOfPixel;
+	        if(red < 80 || red > 230)
 	        	return -1;
-	        return (int)(red);  
+	        return (double)(red);  
 
 	    }      
 }

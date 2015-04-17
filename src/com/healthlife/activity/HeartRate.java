@@ -1,5 +1,6 @@
 package com.healthlife.activity;
 
+import com.healthlife.util.Mallat;
 import com.healthlife.util.YuvToRGB;
 import com.healthslife.R;
 
@@ -20,12 +21,12 @@ import android.widget.TextView;
 
 public class HeartRate extends Activity {
 
-	private static final int NUM = 100;
+	private static final int NUM = 64;
 	private ImageButton cameraButton = null ;
 	private static Camera mCamera = null ;
 	private static CameraView myCV = null ;
 	private static TextView testtext= null;
-	private static int [] red = new int [NUM];
+	private static double [] red = new double [NUM];
 	private static int point = 0;
 	//计时变量
 	private static long startTime = 0;
@@ -109,8 +110,12 @@ public class HeartRate extends Activity {
 	         int width = size.width;
 	         int height = size.height;
 	         
-	         int redAvg = YuvToRGB.getRed(data.clone(), width, height);
-	         if(redAvg>0)
+	         double redAvg = YuvToRGB.getRed(data.clone(), width, height);
+	         if(redAvg == -1)
+	         {
+	        	 point =0;
+	         }
+	         else
 	         {
 	        	 if(point == 0)
 	        	 {
@@ -118,8 +123,7 @@ public class HeartRate extends Activity {
 	        	 }
 		         red[point]=redAvg;
 		         point ++;
-		         Log.v("NUM", ""+point);
-		         if(point>=NUM)
+		         if(point==63)
 		         {
 		        	 endTime = System.currentTimeMillis();
 		        	 getHeartRate();
@@ -127,6 +131,7 @@ public class HeartRate extends Activity {
 		        	 stopCamera();
 		         }
 	         }
+	         Log.v("point",""+point);
 	        
 		}
 		
@@ -204,18 +209,33 @@ public class HeartRate extends Activity {
 	//去噪后的数据寻峰运算得到心率
 	private static void getHeartRate()
 	{
-		int point = 0;
+		Mallat.Analyze(red,NUM);
+		double [] output = Mallat.MakeUp(NUM);
+		int num = 0;
+		int start = 0;
+		int end =0;
+		//寻找峰数NUM
 		for(int i =1;i<NUM-1;i++)
 		{
-			if(red[i]>red[i-1]&&red[i]>red[i+1])
+			if(output[i]>output[i-1]&&output[i]>output[i+1])
 			{
-				point++;
+				if(num == 1)
+				{
+					start = i;
+				}
+				num++;
+				end = i;
 			}
 		}
-		long time = (endTime-startTime)*60000;
+		Log.v("time",""+endTime);
+
+		Log.v("time",""+startTime);
+		double time = (double)(endTime-startTime)/60000;
 		//计时器归0
 		endTime = startTime = 0;
-		testtext.setText(""+point/time);
+		//寻峰计算心率
+		num = (int) ((num-1)*(end-start)/time/NUM);
+		testtext.setText(""+num);
 		point = 0;
 	}
 	
