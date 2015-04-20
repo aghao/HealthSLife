@@ -25,9 +25,11 @@ public class DBManager {
 		
 		values.put("MUSICNAME", music.getMusicName());
 		values.put("PATH", music.getMusicPath());
+		values.put("IFACTIVE", music.isIfActive());
 		values.put("PACE", music.getPace());
 		
-		db.insert("MUSIC", null, values);
+		music.setMusicId(db.insert("MUSIC", null, values));
+		
 		values.clear();
 		
 		return music.getMusicId();
@@ -50,16 +52,18 @@ public class DBManager {
 		values.clear();
 	}
 	
-	public void insertBeats(Beats beats){
+	public long insertBeats(Beats beats){
 		
 		values.put("DATE",beats.getDate().toString());
 		values.put("BEATS",beats.getBeats());
 		values.put("TYPE",beats.getType());
 		values.put("USERID",GlobalVariables.CURRENT_USERID);
 		
-		db.insert("BEATS", null, values);
-		
+		beats.setBeatId(db.insert("BEATS", null, values));
 		values.clear();
+		
+		return beats.getBeatId();
+
 	}
 	
 	public void removeBeat(long beatId){
