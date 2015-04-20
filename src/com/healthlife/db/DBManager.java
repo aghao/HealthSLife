@@ -24,7 +24,7 @@ public class DBManager {
 	public long insertMusic(Music music){
 		
 		values.put("MUSICNAME", music.getMusicName());
-		values.put("MUSICPATH", music.getMusicPath());
+		values.put("PATH", music.getMusicPath());
 		values.put("PACE", music.getPace());
 		
 		db.insert("MUSIC", null, values);
@@ -41,7 +41,7 @@ public class DBManager {
 	public void updateMusic(Music music){
 		
 		values.put("MUSICNAME", music.getMusicName());
-		values.put("MUSICPATH", music.getMusicPath());
+		values.put("PATH", music.getMusicPath());
 		values.put("PACE", music.getPace());
 		values.put("IFACTIVE", music.isIfActive());
 		
@@ -52,7 +52,7 @@ public class DBManager {
 	
 	public void insertBeats(Beats beats){
 		
-		values.put("DATE",beats.getTime().toString());
+		values.put("DATE",beats.getDate().toString());
 		values.put("BEATS",beats.getBeats());
 		values.put("TYPE",beats.getType());
 		values.put("USERID",GlobalVariables.CURRENT_USERID);
@@ -103,11 +103,10 @@ public class DBManager {
 		
 		if(cursor!=null)
 		{
-			sports = new Sports();
 			sportsList =  new ArrayList<Sports>();
 			
 			while(cursor.moveToNext()){
-				
+				sports = new Sports();
 				sports.setSportsID(cursor.getLong(cursor.getColumnIndex("SPORTID")));
 				sports.setDate(cursor.getString(cursor.getColumnIndex("DATE")));
 				sports.setDuration(cursor.getString(cursor.getColumnIndex("DURATION")));
@@ -140,15 +139,15 @@ public class DBManager {
 		if(cursor!=null)
 		{
 			
-			music = new Music();
 			musicList =  new ArrayList<Music>();
 			
 			while(cursor.moveToNext()){
+				music = new Music();
 				
 				music.setIfActive(cursor.getInt(cursor.getColumnIndex("IFACTIVE")));
 				music.setMusicId(cursor.getLong(cursor.getColumnIndex("MUSICID")));
 				music.setMusicName(cursor.getString(cursor.getColumnIndex("MUSICNAME")));
-				music.setMusicPath(cursor.getString(cursor.getColumnIndex("MUSICPATH")));
+				music.setMusicPath(cursor.getString(cursor.getColumnIndex("PATH")));
 				music.setPace(cursor.getInt(cursor.getColumnIndex("PACE")));
 				
 				musicList.add(music);
@@ -169,15 +168,16 @@ public class DBManager {
 		if(cursor!=null)
 		{
 			
-			music = new Music();
+		
 			musicList =  new ArrayList<Music>();
 			
 			while(cursor.moveToNext()){
+				music = new Music();
 				
 				music.setIfActive(cursor.getInt(cursor.getColumnIndex("IFACTIVE")));
 				music.setMusicId(cursor.getLong(cursor.getColumnIndex("MUSICID")));
 				music.setMusicName(cursor.getString(cursor.getColumnIndex("MUSICNAME")));
-				music.setMusicPath(cursor.getString(cursor.getColumnIndex("MUSICPATH")));
+				music.setMusicPath(cursor.getString(cursor.getColumnIndex("PATH")));
 				music.setPace(cursor.getInt(cursor.getColumnIndex("PACE")));
 				
 				musicList.add(music);
@@ -200,15 +200,15 @@ public class DBManager {
 		if(cursor!=null)
 		{
 			
-			music = new Music();
 			musicList =  new ArrayList<Music>();
 			
 			while(cursor.moveToNext()){
+				music = new Music();
 				
 				music.setIfActive(cursor.getInt(cursor.getColumnIndex("IFACTIVE")));
 				music.setMusicId(cursor.getLong(cursor.getColumnIndex("MUSICID")));
 				music.setMusicName(cursor.getString(cursor.getColumnIndex("MUSICNAME")));
-				music.setMusicPath(cursor.getString(cursor.getColumnIndex("MUSICPATH")));
+				music.setMusicPath(cursor.getString(cursor.getColumnIndex("PATH")));
 				music.setPace(cursor.getInt(cursor.getColumnIndex("PACE")));
 				
 				musicList.add(music);
@@ -230,13 +230,13 @@ public class DBManager {
 		if(cursor!=null)
 		{
 			beatsList = new ArrayList<Beats>();
-			beats = new Beats();
 			
 			while(cursor.moveToNext()){
+				beats = new Beats();
 				
 				beats.setBeatId(cursor.getLong(cursor.getColumnIndex("BEATID")));
 				beats.setBeats(cursor.getInt(cursor.getColumnIndex("BEATS")));
-				beats.setTime(cursor.getString(cursor.getColumnIndex("DATE")));
+				beats.setDate(cursor.getString(cursor.getColumnIndex("DATE")));
 				beats.setType(cursor.getInt(cursor.getColumnIndex("TYPE")));
 				beats.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
 				
