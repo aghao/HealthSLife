@@ -18,7 +18,7 @@ public class Sports {
 	private float MaxSpeed;
 	private float AVGSpeed;
 	private float distance;
-	private String Duration;
+	private String duration;
 	
 
 	
@@ -32,7 +32,7 @@ public class Sports {
 		return Date;
 	}
 	public void setDate(String date) {
-		Date = date;
+		this.Date = date;
 	}
 	public int getType() {
 		return type;
@@ -56,7 +56,7 @@ public class Sports {
 		return ValidRate;
 	}
 	public void setValidRate(float validRate) {
-		ValidRate = validRate;
+		this.ValidRate = validRate;
 	}
 	public float getPerfectRate() {
 		return perfectRate;
@@ -74,13 +74,13 @@ public class Sports {
 		return MaxSpeed;
 	}
 	public void setMaxSpeed(float maxSpeed) {
-		MaxSpeed = maxSpeed;
+		this.MaxSpeed = maxSpeed;
 	}
 	public float getAVGSpeed() {
 		return AVGSpeed;
 	}
-	public void setAVGSpeed(float aVGSpeed) {
-		AVGSpeed = aVGSpeed;
+	public void setAVGSpeed(float AVGSpeed) {
+		this.AVGSpeed = AVGSpeed;
 	}
 	public float getDistance() {
 		return distance;
@@ -89,10 +89,10 @@ public class Sports {
 		this.distance = distance;
 	}
 	public String getDuration() {
-		return Duration;
+		return duration;
 	}
 	public void setDuration(String duration) {
-		Duration = duration;
+		this.duration = duration;
 	}
 }
 
