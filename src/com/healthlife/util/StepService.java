@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.util.Log;
  
 public class StepService extends Service {
     public static Boolean flag = false;
@@ -52,6 +53,5 @@ public class StepService extends Service {
         if (stepDetector != null) {
             sensorManager.unregisterListener(stepDetector);
         }
- 
     }
 }
