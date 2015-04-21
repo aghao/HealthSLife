@@ -48,9 +48,7 @@ public class StepDetector implements SensorEventListener {
         Sensor sensor = event.sensor;
         synchronized (this) {
             if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            	
-            	Log.i("test", "sensor change has been detected");
-            	Log.i("test", "current step:"+CURRENT_SETP);
+
                 float vSum = 0;
                 for (int i = 0; i < 3; i++) {
                     final float v = mYOffset + event.values[i] * mScale[1];//计算垂直速度

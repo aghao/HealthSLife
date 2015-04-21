@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.util.Log;
 
 public class SitUpService extends Service {
 
@@ -21,7 +22,7 @@ public class SitUpService extends Service {
 		super.onCreate();
 		new Thread (new Runnable(){
 			public void run(){
-
+				Log.i("dd", "startService");
 				startSitUpDetector();
 				
 			}
@@ -33,7 +34,7 @@ public class SitUpService extends Service {
 		sitUpDetector = new SitUpDetector();
 		
 		sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
-		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 		// TODO Auto-generated method stub
 		sensorManager.registerListener(sitUpDetector,sensor,sensorManager.SENSOR_DELAY_FASTEST);
 		
