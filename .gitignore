@@ -16,8 +16,8 @@ bin/
 gen/
 
 # MainActivity
-src/com/healthlife/activity/MainActivity.java
-res/layout/healthlife_main.xml
+MainActivity.java
+healthlife_main.xml
 
 # Gradle files
 .gradle/
