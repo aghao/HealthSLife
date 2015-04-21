@@ -23,12 +23,13 @@ public class DBManager {
 	
 	public long insertMusic(Music music){
 		
-		values.put("MUSICNAME", music.getMusicName());
 		values.put("PATH", music.getMusicPath());
 		values.put("IFACTIVE", music.isIfActive());
 		values.put("PACE", music.getPace());
-		
-		music.setMusicId(db.insert("MUSIC", null, values));
+
+		Cursor cursor = db.query("MUSIC", null, "PATH = ?", new String[] {music.getMusicPath()}, null, null, null);
+		if(cursor.getCount()==0)
+			music.setMusicId(db.insert("MUSIC", null, values));
 		
 		values.clear();
 		
