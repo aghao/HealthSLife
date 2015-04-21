@@ -2,7 +2,7 @@ package com.healthlife.activity;
 
 import com.healthlife.util.Mallat;
 import com.healthlife.util.YuvToRGB;
-import com.healthslife.R;
+import com.healthlife.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 public class HeartRate extends Activity {
 
 	private static final int NUM = 64;
-	private ImageButton cameraButton = null ;
+	private Button historyButton = null ;
 	private static Camera mCamera = null ;
 	private static CameraView myCV = null ;
 	private static TextView testtext= null;
@@ -37,7 +38,7 @@ public class HeartRate extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.heartrate_main);
-		cameraButton = (ImageButton) findViewById(R.id.hrtestib);
+		historyButton = (Button) findViewById(R.id.historybt);
 		testtext = (TextView) findViewById(R.id.heartratetest);
 		testtext.setText("无记录");
 		
@@ -48,10 +49,13 @@ public class HeartRate extends Activity {
 		
 		FrameLayout frameLayout = (FrameLayout) findViewById(R.id.cameraview);
 		myCV = new CameraView(HeartRate.this);
+		ImageButton cameraButton = new ImageButton(this);
 		//设定自定义surfaceview大小
-		myCV.setLayoutParams(new FrameLayout.LayoutParams(10, 10));
+		FrameLayout.LayoutParams lp= new FrameLayout.LayoutParams(10, 10);
+		myCV.setLayoutParams(lp);
 		frameLayout.addView(myCV);  
-		
+		frameLayout.addView(cameraButton);
+//		myCV = (CameraView) findViewById(R.id.cameraview);
 		//按钮响应
 		cameraButton.setOnClickListener(new View.OnClickListener() {
 			

@@ -1,7 +1,5 @@
 package com.healthlife.util;
 
-import android.util.Log;
-
 public class Mallat {
 	public static double analyzeArray[] = new double [200];
 	public static double h[] = {.332670552950, .806891509311, .459877502118, -.135011020010,   

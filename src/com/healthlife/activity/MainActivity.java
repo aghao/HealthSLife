@@ -1,6 +1,6 @@
 package com.healthlife.activity;
 
-import com.healthslife.R;
+import com.healthlife.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
