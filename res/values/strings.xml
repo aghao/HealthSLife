@@ -5,6 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_get_location">地图定位</string>
-	<string name="title_activity_heart_rate">心率测量</string>
-	<string name="histroy">历史记录</string>
+    <string name="title_activity_heart_rate">心率测量</string>
+    <string name="histroy">历史记录</string>
+    <string name="title_activity_heart_result">HeartResult</string>
+    <string name="title_activity_heart_history">HeartHistory</string>
+    <string name="title_activity_fffff">FFfff</string>
+
 </resources>

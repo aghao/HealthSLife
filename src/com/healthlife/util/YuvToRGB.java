@@ -26,7 +26,7 @@ public class YuvToRGB {
 	            }  
 	        }  
 	        red = red/numOfPixel;
-	        if(red < 80 || red > 230)
+	        if(red < 110 || red > 200)
 	        	return -1;
 	        return (double)(red);  
 
