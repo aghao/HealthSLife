@@ -43,10 +43,6 @@
             android:name="com.healthlife.activity.HeartHistory"
             android:label="@string/title_activity_heart_history" >
         </activity>
-        <activity
-            android:name="com.healthlife.FFfff"
-            android:label="@string/title_activity_fffff" >
-        </activity>
     </application>
 
 </manifest>

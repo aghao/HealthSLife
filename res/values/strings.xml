@@ -7,8 +7,9 @@
     <string name="title_activity_get_location">地图定位</string>
     <string name="title_activity_heart_rate">心率测量</string>
     <string name="histroy">历史记录</string>
-    <string name="title_activity_heart_result">HeartResult</string>
-    <string name="title_activity_heart_history">HeartHistory</string>
-    <string name="title_activity_fffff">FFfff</string>
-
+    <string name="title_activity_heart_result">心率结果</string>
+    <string name="title_activity_heart_history">心率历史</string>
+    <string name="download">下载记录</string>
+    <string name="edit">编辑</string>
+    <string name="back">返回</string>
 </resources>
