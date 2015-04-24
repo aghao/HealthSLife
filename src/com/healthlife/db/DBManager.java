@@ -364,4 +364,12 @@ public class DBManager {
 		db.update("USERS", values, "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)});
 		values.clear();
 	}
+	
+	public long insertFakeUser(){
+		values.put("keyword", "asd");
+		long a = db.insert("USERS", null, values);
+		values.clear();
+		return a;
+
+	}
 }
