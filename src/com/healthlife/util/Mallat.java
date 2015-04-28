@@ -8,7 +8,7 @@ public class Mallat {
         .806891509311, -.332670552950};
 	//循环卷积
 	//input为输入信号，output为输出信号，n为input长度
-	public static void Analyze(double input[],  int n)
+	public static double[] Analyze(double input[],  int n)
 
 	{
 		
@@ -54,13 +54,10 @@ public class Mallat {
 			analyzeArray[i] = v1[3][i];
 			
 		}
-	}
-	//小波重构，为小波分解的逆过程
-	public static double[] MakeUp(int n)
-	{
+		
 		double []output = new double [n];
 		double [][]v = new double [4][n];
-		int flag = n/8;
+		flag = n/8;
 //		for(int i=0;i<n;i++)
 //		{
 //			Log.v("wwwwwwwwwwwvvvvvv",""+analyzeArray[i]);
@@ -96,3 +93,4 @@ public class Mallat {
 		return output;
 	}
 }
+

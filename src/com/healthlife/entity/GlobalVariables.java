@@ -2,7 +2,7 @@ package com.healthlife.entity;
 
 public class GlobalVariables {
 	
-	public static long CURRENT_USERID;
+	public static long CURRENT_USERID =1;
 	
 	public final static int JOG_TYPE = 0;
 	public final static int PUSHUP_TYPE = 1;

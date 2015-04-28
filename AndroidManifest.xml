@@ -8,10 +8,11 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-	<uses-feature android:name="android.hardware.camera" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher1"
@@ -33,6 +34,14 @@
         <activity
             android:name="com.healthlife.activity.HeartRate"
             android:label="@string/title_activity_heart_rate" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.HeartResult"
+            android:label="@string/title_activity_heart_result" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.HeartHistory"
+            android:label="@string/title_activity_heart_history" >
         </activity>
     </application>
 

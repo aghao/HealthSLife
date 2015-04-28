@@ -6,6 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.healthlife.entity.*;
 
 public class DBManager {
@@ -58,7 +60,7 @@ public class DBManager {
 		values.put("DATE",beats.getDate().toString());
 		values.put("BEATS",beats.getBeats());
 		values.put("TYPE",beats.getType());
-		values.put("USERID",GlobalVariables.CURRENT_USERID);
+		values.put("USERID",1);
 		
 		beats.setBeatId(db.insert("BEATS", null, values));
 		values.clear();
@@ -363,5 +365,12 @@ public class DBManager {
 		values.put("RECORDID", db.insert("RECORDS", null, values));
 		db.update("USERS", values, "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)});
 		values.clear();
+	}
+	
+	public void insertUserForFake(){
+		values.put("USERNAME","asdasd");
+		long a = db.insert("USERS", null, values);
+		values.clear();
+		Log.i("dd", "userid:"+a);
 	}
 }

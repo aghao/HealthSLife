@@ -19,12 +19,18 @@
         android:layout_centerInParent="true"
         >
     </FrameLayout>    
-    <TextView
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true" >
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/heartratetest"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true" />
+        android:id="@+id/heartratetest"/>
+    </LinearLayout>
+    
 
     
 </RelativeLayout>

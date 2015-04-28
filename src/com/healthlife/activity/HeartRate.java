@@ -4,14 +4,17 @@ import com.healthlife.util.Mallat;
 import com.healthlife.util.YuvToRGB;
 import com.healthlife.R;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -25,13 +28,14 @@ public class HeartRate extends Activity {
 	private static final int NUM = 64;
 	private Button historyButton = null ;
 	private static Camera mCamera = null ;
-	private static CameraView myCV = null ;
-	private static TextView testtext= null;
-	private static double [] red = new double [NUM];
-	private static int point = 0;
+	private CameraView myCV = null ;
+	private TextView lastText= null;
+	private TextView helpText = null;
+	private double [] red = new double [NUM];
+	private int point = 0;
 	//计时变量
-	private static long startTime = 0;
-	private static long endTime = 0;
+	private long startTime = 0;
+	private long endTime = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +43,34 @@ public class HeartRate extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.heartrate_main);
 		historyButton = (Button) findViewById(R.id.historybt);
-		testtext = (TextView) findViewById(R.id.heartratetest);
-		testtext.setText("无记录");
+		lastText = (TextView) findViewById(R.id.heartratetest);
+		lastText.setText("无记录");
 		
 		//检测摄像头
 		if(checkCameraHardware(this)){
 			Log.e("==========", "摄像头存在");
 		}
-		
+		helpText = new TextView(this);
+		ImageButton cameraButton = new ImageButton(this);
 		FrameLayout frameLayout = (FrameLayout) findViewById(R.id.cameraview);
 		myCV = new CameraView(HeartRate.this);
-		ImageButton cameraButton = new ImageButton(this);
+		
+
+		helpText.setText("点击开始测量");
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		lp.gravity = Gravity.CENTER;
+		cameraButton.setLayoutParams(lp);
+		frameLayout.addView(cameraButton);
+		helpText.setLayoutParams(lp);
+		frameLayout.addView(helpText);
 		//设定自定义surfaceview大小
-		FrameLayout.LayoutParams lp= new FrameLayout.LayoutParams(10, 10);
+		lp = new FrameLayout.LayoutParams(1, 1);
+		lp.gravity = Gravity.CENTER;
 		myCV.setLayoutParams(lp);
 		frameLayout.addView(myCV);  
-		frameLayout.addView(cameraButton);
 //		myCV = (CameraView) findViewById(R.id.cameraview);
+
+		
 		//按钮响应
 		cameraButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -65,11 +80,24 @@ public class HeartRate extends Activity {
 				if(null == mCamera)
 				{
 					startPreview(myCV.getSurfaceHolder());
+					helpText.setText("请将手指轻放在摄像头上");
 				}
 				else
 				{
+					helpText.setText("点击开始测量");
 					stopCamera();
 				}
+			}
+		});
+		
+		historyButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(HeartRate.this,HeartHistory.class);
+				startActivity(intent);
 			}
 		});
 	}
@@ -84,12 +112,14 @@ public class HeartRate extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		stopCamera();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		helpText.setText("点击开始测量");
 //		mCamera.stopPreview();
 //		mCamera.release();
 //        mCamera = null;
@@ -102,7 +132,7 @@ public class HeartRate extends Activity {
 	}
 	
 	//预览图像的数据处理
-	private static PreviewCallback mPriviewCallBack = new PreviewCallback(){
+	private PreviewCallback mPriviewCallBack = new PreviewCallback(){
 
 		@Override
 		public void onPreviewFrame(byte[] data, Camera cam) {
@@ -117,6 +147,7 @@ public class HeartRate extends Activity {
 	         double redAvg = YuvToRGB.getRed(data.clone(), width, height);
 	         if(redAvg == -1)
 	         {
+	        	 helpText.setText("请将手指轻放在摄像头上");
 	        	 point =0;
 	         }
 	         else
@@ -124,8 +155,10 @@ public class HeartRate extends Activity {
 	        	 if(point == 0)
 	        	 {
 	        		 startTime = System.currentTimeMillis();
+	        		 helpText.setText("正在测量请勿移动手指");
 	        	 }
 		         red[point]=redAvg;
+//		         Log.v("rrrrrrrred",""+redAvg);
 		         point ++;
 		         if(point==63)
 		         {
@@ -211,10 +244,9 @@ public class HeartRate extends Activity {
 	}
 	
 	//去噪后的数据寻峰运算得到心率
-	private static void getHeartRate()
+	private void getHeartRate()
 	{
-		Mallat.Analyze(red,NUM);
-		double [] output = Mallat.MakeUp(NUM);
+		double [] output = Mallat.Analyze(red,NUM);
 		int num = 0;
 		int start = 0;
 		int end =0;
@@ -231,18 +263,25 @@ public class HeartRate extends Activity {
 				end = i;
 			}
 		}
-		Log.v("time",""+endTime);
-
-		Log.v("time",""+startTime);
-		double time = (double)(endTime-startTime)/60000;
+//		Log.v("time",""+endTime);
+//
+//		Log.v("time",""+startTime);
+		double time = (double)(endTime-startTime)/600;
 		//计时器归0
 		endTime = startTime = 0;
 		//寻峰计算心率
-		num = (int) ((num-1)*(end-start)/time/NUM);
-		testtext.setText(""+num);
+		time = time *(end-start+1)/NUM;
+		num = (int) ((num-1)/time*100);
+		helpText.setText(num+"bmp");
+		Intent intent = new Intent();
+		intent.putExtra("heartrate", num);
+		intent.setClass(HeartRate.this,HeartResult.class);
+		startActivity(intent);
 		point = 0;
 	}
 	
+	//对话框
+
 	
 	//检查摄像头是否存在
 	private boolean checkCameraHardware(Context context) {
