@@ -266,13 +266,15 @@ public class HeartRate extends Activity {
 //		Log.v("time",""+endTime);
 //
 //		Log.v("time",""+startTime);
-		double time = (double)(endTime-startTime)/60000;
+		double time = (double)(endTime-startTime)/600;
 		//计时器归0
 		endTime = startTime = 0;
 		//寻峰计算心率
-		num = (int) ((num-1)*(end-start)/time/NUM);
+		time = time *(end-start+1)/NUM;
+		num = (int) ((num-1)/time*100);
 		helpText.setText(num+"bmp");
 		Intent intent = new Intent();
+		intent.putExtra("heartrate", num);
 		intent.setClass(HeartRate.this,HeartResult.class);
 		startActivity(intent);
 		point = 0;

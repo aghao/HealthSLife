@@ -12,18 +12,22 @@
 
 		<TextView
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:id="@+id/text"
-				android:textSize="40dp"/>
+				android:layout_height="wrap_content"
+				android:id="@+id/hr_history"
+				android:textSize="20sp"/>
+		<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/hr_data"
+				android:textSize="40sp"/>
 
 		<Button
 				android:id="@+id/expandable_toggle_button"
-				android:text="More"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_alignBottom="@+id/text"
+				android:layout_alignBottom="@+id/hr_data"
 				android:layout_alignParentRight="true"
-				android:layout_alignTop="@id/text" android:textSize="30dp"/>
+				android:layout_alignTop="@id/hr_history" android:textSize="30sp"/>
 
 	</RelativeLayout>
 
@@ -35,19 +39,21 @@
 			android:background="#000000">
 
 		<Button
-				android:id="@+id/buttonA"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:layout_weight="0.5"
-				android:text="Action A"
-				android:textSize="12dip"/>
+		    style="?android:attr/buttonBarButtonStyle"
+			android:id="@+id/hr_upload"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_weight="0.5"
+			android:text="@string/hrupload"
+			android:textSize="12sp"/>
 
 		<Button
-				android:id="@+id/buttonB"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:layout_weight="0.5"
-				android:text="Action B"
-				android:textSize="12dip"/>
+		    style="?android:attr/buttonBarButtonStyle"
+			android:id="@+id/hr_delete"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_weight="0.5"
+			android:text="@string/hrdelete"
+			android:textSize="12sp"/>
 
 	</LinearLayout>
 </LinearLayout>

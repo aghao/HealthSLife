@@ -1,11 +1,15 @@
 package com.healthlife.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
 import com.healthlife.R;
+import com.healthlife.db.DBManager;
+import com.healthlife.entity.Beats;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 /**
@@ -20,7 +24,10 @@ import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
  * @date 6/13/12 7:33 AM
  */
 public class HeartHistory extends Activity {
-
+	
+	private DBManager myDB = null;
+	ArrayList <Beats> hrHistory = null;
+	View mView = null;
 	@Override
 	public void onCreate(Bundle savedData) {
 
@@ -30,11 +37,14 @@ public class HeartHistory extends Activity {
 		this.setContentView(R.layout.hearthistory_main);
 		// get a reference to the listview, needed in order
 		// to call setItemActionListener on it
-		ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.list);
-
-		// fill the list with data
+		final ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.list);
+		mView = new View(this);
+		Button clearBt = (Button) findViewById(R.id.hr_clearbt);
+		myDB = new DBManager(this);
+		hrHistory = myDB.getBeatsList();
+//		// fill the list with data
 		list.setAdapter(buildDummyData());
-
+		
 		// listen for events in the two buttons for every list item.
 		// the 'position' var will tell which list item is clicked
 		list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
@@ -48,25 +58,37 @@ public class HeartHistory extends Activity {
 				 * view.getId() you would perform a
 				 * different action.
 				 */
-				String actionName = "";
-				if(buttonview.getId()==R.id.buttonA) {
-					actionName = "buttonA";
-				} else {
-					actionName = "ButtonB";
+				if(buttonview.getId()==R.id.hr_upload) {
+				} 
+				//删除
+				else {
+					myDB.removeBeat(hrHistory.get(hrHistory.size()-1-position).getBeatId());
+					hrHistory.remove(hrHistory.size()-1-position);
+					//重绑adapter刷新listview
+					list.setAdapter(buildDummyData());
 				}
-				/**
-				 * For testing sake we just show a toast
-				 */
-				Toast.makeText(
-					HeartHistory.this,
-					"Clicked Action: "+actionName+" in list item "+position,
-					Toast.LENGTH_SHORT
-				).show();
+				
 			}
 
 		// note that we also add 1 or more ids to the setItemActionListener
 		// this is needed in order for the listview to discover the buttons
-		}, R.id.buttonA, R.id.buttonB);
+		}, R.id.hr_upload, R.id.hr_delete);
+		
+		//清空
+		clearBt.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<hrHistory.size();i++)
+				{
+					myDB.removeBeat(hrHistory.get(i).getBeatId());
+				}
+				hrHistory.clear();
+				//重绑adapter刷新listviews
+				list.setAdapter(buildDummyData());
+			}
+		});
 	}
 
 	/**
@@ -74,16 +96,17 @@ public class HeartHistory extends Activity {
 	 * In a real app this would be an adapter
 	 * for your data. For example a CursorAdapter
 	 */
+	//数据库读数据存入hrHistory
 	public ListAdapter buildDummyData() {
-		final int SIZE = 20;
-		String[] values = new String[SIZE];
-		for(int i=0;i<SIZE;i++) {
-			values[i] = "Item "+i;
+//		final int Size = 20;
+		String[] values = new String[hrHistory.size()];
+		for(int i=0;i<hrHistory.size();i++) {
+			values[i] = hrHistory.get(hrHistory.size()-1-i).getBeats()+"\n"+hrHistory.get(i).getDate();
 		}
 		return new ArrayAdapter<String>(
 				this,
 				R.layout.hrexpand_listview,
-				R.id.text,
+				R.id.hr_history,
 				values
 		);
 	}

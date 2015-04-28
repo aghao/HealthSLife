@@ -7,14 +7,15 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal" 
-	    android:layout_alignParentTop="true" >
+	    android:layout_alignParentTop="true" 
+	    android:id="@+id/hrheadbt">
 	    <Button 
             style="?android:attr/borderlessButtonStyle"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:id="@+id/hr_editbt"
-	        android:text="@string/edit"/>
+	        android:id="@+id/hr_clearbt"
+	        android:text="@string/clear"/>
 	    
 	    <Button 
 	        style="?android:attr/borderlessButtonStyle"
@@ -30,14 +31,8 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/list"
 		android:layout_height="fill_parent"
-		android:layout_width="fill_parent"/>
+		android:layout_width="fill_parent"
+		android:layout_below="@id/hrheadbt"/>
 	
-	<Button 
-	        style="?android:attr/borderlessButtonStyle"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/hr_backbt"
-	        android:text="@string/back"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

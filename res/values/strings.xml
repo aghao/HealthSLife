@@ -10,6 +10,10 @@
     <string name="title_activity_heart_result">心率结果</string>
     <string name="title_activity_heart_history">心率历史</string>
     <string name="download">下载记录</string>
-    <string name="edit">编辑</string>
+    <string name="clear">清空</string>
+    <string name="cancle">取消</string>
     <string name="back">返回</string>
+    <string name="saverecord">保存本次记录</string>
+    <string name="hrupload">上传此次记录</string>
+    <string name="hrdelete">删除此次记录</string>
 </resources>
