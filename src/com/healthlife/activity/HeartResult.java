@@ -50,7 +50,7 @@ public class HeartResult extends Activity {
 				Log.v("id",""+ID);
 				if(ID == -1)
 				{
-					myDB.insertUserForFake();
+					myDB.insertFakeUser();
 					ID= myDB.insertBeats(newBeats);
 					Log.v("id",""+ID);
 				}
