@@ -1,5 +1,6 @@
 package com.healthlife.activity;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.healthlife.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +22,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//使用SDK之前各组件初始化context信息，传入ApplicationContext
+		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.healthlife_main);
 		
 		heartBtn = (Button)findViewById(R.id.heartbtn);

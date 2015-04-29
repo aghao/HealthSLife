@@ -1,36 +1,60 @@
 package com.healthlife.activity;
 
-import com.healthlife.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+import com.baidu.location.LocationClient;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
+import com.healthlife.R;
 
 public class GetLocation extends Activity {
 	
-	private WebView webView;
+	MapView mMapView = null;
+	BaiduMap mBaiduMap = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.location_main);
 		
-		webView = (WebView)findViewById(R.id.webview);
+		mMapView = (MapView)findViewById(R.id.bmapView);
 		
-		String url = "http://map.baidu.com";
-		webView.loadUrl(url);
-		
-		webView.setWebViewClient(new WebViewClient(){
-			public boolean shouldOverrideUrlLoading(WebView view, String url){
-				view.loadUrl(url);
-				return true;
-			}
-		});
+		mBaiduMap = mMapView.getMap();
+		LatLng cenpt = new LatLng(30.516985,114.440993); 
+		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(18).build();
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+		mBaiduMap.setMapStatus(mMapStatusUpdate);
+
 	}
 	
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mMapView.onDestroy(); 
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mMapView.onPause(); 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mMapView.onResume(); 
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
