@@ -16,4 +16,8 @@
     <string name="saverecord">保存本次记录</string>
     <string name="hrupload">上传此次记录</string>
     <string name="hrdelete">删除此次记录</string>
+    <string name="hrstatic">静息心率</string>
+    <string name="hrmax">最大心率</string>
+    <string name="hrsport">运动后心率</string>
+    <string name="hrlast">最近一次的测量</string>
 </resources>

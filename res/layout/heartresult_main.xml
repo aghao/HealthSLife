@@ -8,6 +8,27 @@
 		 android:id="@+id/showresult"
         />
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/showresult"
+		android:id="@+id/hrradiogp">
+        <RadioButton 
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/statichr"
+        	android:text="@string/hrstatic"/>
+        <RadioButton 
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/sporthr"
+			android:text="@string/hrsport"/>
+        <RadioButton 
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/maxhr"
+			android:text="@string/hrmax"/>
+    </RadioGroup>
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="match_parent"

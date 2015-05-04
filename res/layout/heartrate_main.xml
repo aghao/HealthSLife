@@ -20,17 +20,31 @@
         >
     </FrameLayout>    
     
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true" >
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/heartratetest"/>
-    </LinearLayout>
+ 
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_alignParentBottom="true">
+	   
+	    <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content" 
+	    	android:id="@+id/hrlast"
+	    	android:layout_alignParentBottom="true"/>
+	     <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="@string/hrlast"
+	    	android:layout_above="@id/hrlast"
+	    	/>
+	     <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_alignTop="@id/hrlast" 
+	    	android:layout_alignBottom="@id/hrlast"
+	    	android:id="@+id/hrlasttype"
+	    	android:layout_alignParentRight="true"/>
+	</RelativeLayout>
     
-
     
 </RelativeLayout>

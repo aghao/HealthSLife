@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class HeartResult extends Activity {
@@ -29,6 +31,7 @@ public class HeartResult extends Activity {
 		TextView resultText = (TextView) findViewById(R.id.showresult);
 		Button saveRecord = (Button) findViewById(R.id.savebt);
 		Button cancle = (Button) findViewById(R.id.canclebt);
+		final RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.hrradiogp);
 		//获取系统时间
 		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm",Locale.getDefault());       
 		String date = sDateFormat.format(new java.util.Date());  
@@ -40,6 +43,29 @@ public class HeartResult extends Activity {
 		//设置心率类型
 		newBeats.setType(1);
 		
+		//单选框
+		mRadioGroup.check(R.id.statichr);
+		//注册事件
+		mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+					
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+			//点击事件获取的选择对象
+				if(checkedId == R.id.statichr)
+				{
+					newBeats.setType(1);
+				};
+				if(checkedId == R.id.sporthr)
+				{
+					newBeats.setType(2);
+				};
+				if(checkedId == R.id.maxhr)
+				{
+					newBeats.setType(3);
+				};
+							
+				}
+		});
 		saveRecord.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

@@ -1,16 +1,20 @@
 package com.healthlife.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import com.healthlife.R;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.Beats;
-import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 /**
  * This example shows a expandable listview
@@ -27,53 +31,25 @@ public class HeartHistory extends Activity {
 	
 	private DBManager myDB = null;
 	ArrayList <Beats> hrHistory = null;
+	ArrayList <HashMap<String,Object>> heartData = null;
 	View mView = null;
+	SimpleAdapter adapter = null;
 	@Override
 	public void onCreate(Bundle savedData) {
 
 		super.onCreate(savedData);
-		// set the content view for this activity, check the content view xml file
-		// to see how it refers to the ActionSlideExpandableListView view.
 		this.setContentView(R.layout.hearthistory_main);
-		// get a reference to the listview, needed in order
-		// to call setItemActionListener on it
-		final ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.list);
+
 		mView = new View(this);
 		Button clearBt = (Button) findViewById(R.id.hr_clearbt);
 		myDB = new DBManager(this);
 		hrHistory = myDB.getBeatsList();
-//		// fill the list with data
-		list.setAdapter(buildDummyData());
 		
-		// listen for events in the two buttons for every list item.
-		// the 'position' var will tell which list item is clicked
-		list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
-
-			@Override
-			public void onClick(View listView, View buttonview, int position) {
-
-				/**
-				 * Normally you would put a switch
-				 * statement here, and depending on
-				 * view.getId() you would perform a
-				 * different action.
-				 */
-				if(buttonview.getId()==R.id.hr_upload) {
-				} 
-				//删除
-				else {
-					myDB.removeBeat(hrHistory.get(hrHistory.size()-1-position).getBeatId());
-					hrHistory.remove(hrHistory.size()-1-position);
-					//重绑adapter刷新listview
-					list.setAdapter(buildDummyData());
-				}
-				
-			}
-
-		// note that we also add 1 or more ids to the setItemActionListener
-		// this is needed in order for the listview to discover the buttons
-		}, R.id.hr_upload, R.id.hr_delete);
-		
+		ListView hrList = (ListView) findViewById(R.id.hr_list);
+		heartData = getHeartRateData();
+		adapter = new SimpleAdapter(this,heartData,R.layout.hearthistory_listview,
+				new String[]{"history","type"},new int[]{R.id.hr_listhistory,R.id.hr_listtype} );
+		hrList.setAdapter(adapter);
 		//清空
 		clearBt.setOnClickListener(new View.OnClickListener() {
 			
@@ -86,28 +62,66 @@ public class HeartHistory extends Activity {
 				}
 				hrHistory.clear();
 				//重绑adapter刷新listviews
-				list.setAdapter(buildDummyData());
+				heartData.clear();
+				adapter.notifyDataSetChanged();
+//				list.setAdapter(buildDummyData());
 			}
 		});
+		 // listview注册上下文菜单
+		this.registerForContextMenu(hrList);
 	}
+	
 
-	/**
-	 * Builds dummy data for the test.
-	 * In a real app this would be an adapter
-	 * for your data. For example a CursorAdapter
-	 */
-	//数据库读数据存入hrHistory
-	public ListAdapter buildDummyData() {
-//		final int Size = 20;
-		String[] values = new String[hrHistory.size()];
-		for(int i=0;i<hrHistory.size();i++) {
-			values[i] = hrHistory.get(hrHistory.size()-1-i).getBeats()+"\n"+hrHistory.get(i).getDate();
+	
+	ArrayList <HashMap<String,Object>> getHeartRateData(){
+		ArrayList <HashMap<String,Object>> data = new ArrayList <HashMap<String,Object>>();
+		int n = hrHistory.size();
+		for(int i=0;i<n;i++)
+		{
+			HashMap <String,Object> map = new HashMap <String,Object>();
+			map.put("history", hrHistory.get(n-i-1).getBeats()+"\n"+hrHistory.get(n-i-1).getDate());
+			switch(hrHistory.get(n-i-1).getType())
+			{
+			case 1:
+				map.put("type", "静息心率");break;
+			case 2:
+				map.put("type", "运动后心率");break;
+			case 3:
+				map.put("type", "最大心率");break;
+			default:
+				;
+			}
+			data.add(map);
 		}
-		return new ArrayAdapter<String>(
-				this,
-				R.layout.hrexpand_listview,
-				R.id.hr_history,
-				values
-		);
+		return data;
 	}
+	
+	//创建菜单
+	public void onCreateContextMenu(ContextMenu menu, View v,  
+	        ContextMenuInfo menuInfo) {  
+	    // set context menu title  
+	    menu.setHeaderTitle("心率历史");  
+	    // add context menu item  
+	    menu.add(0, 1, Menu.NONE, "删除");  
+	}  
+	//菜单按键响应
+	public boolean onContextItemSelected(MenuItem item) {  
+	    // 得到当前被选中的item信息  
+	    AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();  
+	   // Log.v("TAG", "context item seleted ID="+ menuInfo.id);  
+	      
+	    switch(item.getItemId()) {  
+	    case 1:  
+	        // do something  
+	    	int n = (int) (hrHistory.size()-menuInfo.id);
+	    	myDB.removeBeat(hrHistory.get(n).getBeatId());
+	    	hrHistory.remove(n);
+	    	heartData.remove(n);
+	    	adapter.notifyDataSetChanged();
+	    	break;  
+	    default:  
+	        return super.onContextItemSelected(item);  
+	    }  
+	    return true;  
+	}  
 }
