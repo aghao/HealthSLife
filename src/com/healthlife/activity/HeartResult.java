@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ public class HeartResult extends Activity {
 		Button cancle = (Button) findViewById(R.id.canclebt);
 		final RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.hrradiogp);
 		//获取系统时间
-		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm",Locale.getDefault());       
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd  ahh-mm",Locale.getDefault());       
 		String date = sDateFormat.format(new java.util.Date());  
 		newBeats.setDate(date);
 		resultText.setText(date+"心率结果"+newBeats.getBeats());

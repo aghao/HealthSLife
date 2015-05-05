@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 public class HeartRate extends Activity {
 
-	private static final int NUM = 96;
+	private static final int NUM = 64;
 	private Button historyButton = null ;
 	private static Camera mCamera = null ;
 	private CameraView myCV = null ;
@@ -36,7 +36,7 @@ public class HeartRate extends Activity {
 	private TextView helpText = null;
 	private double [] red = new double [NUM];
 	private int point = 0;
-	//计时变量
+	//计时变量/
 	private long startTime = 0;
 	private long endTime = 0;
 	
@@ -47,7 +47,7 @@ public class HeartRate extends Activity {
 		setContentView(R.layout.heartrate_main);
 		historyButton = (Button) findViewById(R.id.historybt);
 		lastText = (TextView) findViewById(R.id.hrlast);
-		lastText.setText("无记录");
+		lastText.setText("无记录"+"\n");
 		//检测摄像头
 //		if(checkCameraHardware(this)){
 //			Log.e("==========", "摄像头存在");
@@ -59,6 +59,7 @@ public class HeartRate extends Activity {
 		
 
 		helpText.setText("点击开始测量");
+		helpText.setGravity(Gravity.CENTER);
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.CENTER;
 		cameraButton.setLayoutParams(lp);
@@ -84,7 +85,7 @@ public class HeartRate extends Activity {
 				if(null == mCamera)
 				{
 					startPreview(myCV.getSurfaceHolder());
-					helpText.setText("请将手指轻放在摄像头上");
+					helpText.setText("请将手指轻放在"+"\n"+"摄像头上");
 				}
 				else
 				{
@@ -153,7 +154,7 @@ public class HeartRate extends Activity {
 	         double redAvg = YuvToRGB.getRed(data.clone(), width, height);
 	         if(redAvg == -1)
 	         {
-	        	 helpText.setText("请将手指轻放在摄像头上");
+	        	 helpText.setText("请将手指轻放在"+"\n"+"摄像头上");
 	        	 point =0;
 	         }
 	         else
@@ -161,7 +162,7 @@ public class HeartRate extends Activity {
 	        	 if(point == 0)
 	        	 {
 	        		 startTime = System.currentTimeMillis();
-	        		 helpText.setText("正在测量请勿移动手指");
+	        		 helpText.setText("正在测量请勿"+"\n"+"移动手指");
 	        	 }
 		         red[point]=redAvg;
 //		         Log.v("rrrrrrrred",""+redAvg);
@@ -174,8 +175,6 @@ public class HeartRate extends Activity {
 		        	 stopCamera();
 		         }
 	         }
-	         Log.v("point",""+point);
-	        
 		}
 		
 	};
@@ -259,19 +258,18 @@ public class HeartRate extends Activity {
 		//寻找峰数NUM
 		for(int i =1;i<NUM-1;i++)
 		{
+//			Log.v("RESULT",""+output[i]);
 			//2个数为long，存在很多位相等最后几位不相等的情况
-			if((output[i]-output[i-1]>0.1)&&(output[i]-output[i+1]>0.1)
+			if((output[i]-output[i-1]>0)&&(output[i]-output[i+1]>0)
 					&&(output[i]-output[i-1]<8)&&(output[i]-output[i+1]<8))
 			{
-				if(num == 1)
+				num++;
+				if(num == 2)
 				{
 					start = i;
 				}
-				num++;
 				end = i;
-				Log.v("NUM",""+num);
-
-				Log.v("RESULT",""+output[i-1]+"\t"+output[i]+"\t"+output[i+1]);
+				
 			}
 		}
 //
@@ -281,7 +279,8 @@ public class HeartRate extends Activity {
 		endTime = startTime = 0;
 		//寻峰计算心率
 		time = time *(end-start+1)/NUM;
-		num = (int) ((num-1)/time);
+		num = (int) ((num-4)/time);
+		
 		helpText.setText(num+"bmp");
 		Intent intent = new Intent();
 		intent.putExtra("heartrate", num);
@@ -328,7 +327,8 @@ public class HeartRate extends Activity {
 		}
 		else
 		{
-			lastText.setText("无记录");
+			lastText.setText("无记录"+"\n");
+			typeText.setText("");
 		}
 	}
 }
