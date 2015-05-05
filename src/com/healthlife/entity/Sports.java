@@ -1,11 +1,14 @@
 package com.healthlife.entity;
 
+import java.io.Serializable;
+
 /*
  * a abstract class for vrious sports
  */
 
 
-public class Sports {
+@SuppressWarnings("serial")
+public class Sports implements Serializable{
 	
 	private long sportsID;
 	private String Date;

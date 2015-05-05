@@ -1,9 +1,12 @@
 package com.healthlife.util;
 
+import com.healthlife.entity.Sports;
+
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -11,11 +14,23 @@ public class SitUpService extends Service {
 
 	private SensorManager sensorManager;
 	private Sensor sensor;
-	private SitUpDetector sitUpDetector;
+	private SitUpAnalyser sitUpAnalyser;
+	private Sports sitUp;
+	private DBinder dBinder =  new DBinder();
+	
+	public class DBinder extends Binder{
+		
+		public Sports getSitUp(){
+			
+			sitUp = sitUpAnalyser.getSitUp();
+			return sitUp;
+		}
+		
+	}
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
-		return null;
+		return dBinder;
 	}
 	
 	public void onCreate(){
@@ -31,12 +46,12 @@ public class SitUpService extends Service {
 	
 	protected void startSitUpDetector() {
 		
-		sitUpDetector = new SitUpDetector();
+		sitUpAnalyser = new SitUpAnalyser();
 		
 		sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
 		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 		// TODO Auto-generated method stub
-		sensorManager.registerListener(sitUpDetector,sensor,sensorManager.SENSOR_DELAY_FASTEST);
+		sensorManager.registerListener(sitUpAnalyser,sensor,SensorManager.SENSOR_DELAY_FASTEST);
 		
 	}
 
@@ -46,8 +61,8 @@ public class SitUpService extends Service {
     
     public void onDestroy() {
         super.onDestroy();
-        if (sitUpDetector != null) {
-            sensorManager.unregisterListener(sitUpDetector);    
+        if (sitUpAnalyser != null) {
+            sensorManager.unregisterListener(sitUpAnalyser);    
         }
     }
 

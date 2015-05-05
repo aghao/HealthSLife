@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 	
@@ -13,36 +12,37 @@ public class DBHelper extends SQLiteOpenHelper {
 		super(context, name, factory, version);
 		// TODO Auto-generated constructor stub
 	}
-	public static final String CREATE_USERS = " CREATE TABLE USERS ( "
+	/*private static final String CREATE_USERS = " CREATE TABLE USERS ( "
 			+ "USERID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+ "KEYWORD TEXT"
+			+ "KEYWORD VARCHAR(50)"
 		    + ")";
-		
-	public static final String CREATE_RECORDS = " CREATE TABLE RECORDS ("
+	*/
+	
+	private static final String CREATE_RECORDS = " CREATE TABLE RECORDS ("
 			+"RECORDID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+"USERID INTEGER REFERENCES USERS(USERID) ON DELETE CASCADE,"
+			+"USERID INTEGER NOT NULL,"
 			+"AVGSPEED REAL,"
 			+"NUMPUSHUP INTEGER,"
-			+"NUMSITUP INTERGER,"
+			+"NUMSITUP INTEGER,"
 			+"VALIDRATEPUSHUP REAL,"
 			+"VALIDRATESITUP REAL,"
 			+"DISTANCE REAL,"
-			+"AVGEPACE REAL,"
+			+"AVGPACE REAL,"
 			+"PERFECTRATEPUSHUP REAL,"
 			+"PERFECTRATESITUP REAL,"
-			+"GRADEPUSHUP INTEGER,"
-			+"GRADESITUP INTEGER,"
-			+"TOTALDISTANCE INTEGER,"
+			+"GRADEPUSHUP REAL,"
+			+"GRADESITUP REAL,"
+			+"TOTALDISTANCE REAL,"
 			+"TOTALNUMPUSHUP INTEGER,"
 			+"TOTALNUMSITUP INTEGER,"
 			+"STEPS INTEGER"
 			+")";
-	public static final String CREATE_SPORTS = "CREATE TABLE SPORTS (" 
+	private static final String CREATE_SPORTS = "CREATE TABLE SPORTS (" 
 			+"SPORTID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+"DATE TEXT "
-			+"DURATION TEXT,"
+			+"DATE VARCHAR(50) "
+			+"DURATION VARCHAR(50),"
 			+"TYPE INTEGER,"
-			+"USERID INTEGER REFERENCES USERS(USERID) ON DELETE CASCADE,"
+			+"USERID INTEGER NOT NULL,"
 			+"NUM INTEGER,"
 			+"AVGSPEED REAL,"
 			+"VALIDRATE REAL,"
@@ -51,19 +51,19 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"MAXSPEED REAL,"
 			+"DISTANCE REAL"
 			+")";
-	public static final String CREATE_BEATS = "CREATE TABLE BEATS ("
+	private static final String CREATE_BEATS = "CREATE TABLE BEATS ("
 			+"BEATID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+"USERID INTEGER REFERENCES USERS(USERID) ON DELETE CASCADE,"
-			+"DATE TIMESTAMP,"
+			+"USERID INTEGER NOT NULL,"
+			+"DATE VARCHAR(50),"
 			+"BEATS INTEGER,"
 			+"TYPE INT"
 			+")";
 	
-	public static final String CREATE_MUSIC = "CREATE TABLE MUSIC ("
+	private static final String CREATE_MUSIC = "CREATE TABLE MUSIC ("
 	
 			+"MUSICID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+"MUSICNAME TEXT,"
-			+"PATH TEXT,"
+			+"MUSICNAME VARCHAR(50),"
+			+"PATH VARCHAR(50),"
 			+"PACE INTEGER,"
 			+"IFACTIVE INTEGER"
 			+")";
@@ -71,13 +71,12 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL(CREATE_USERS);
+		//db.execSQL(CREATE_USERS);
 		db.execSQL(CREATE_SPORTS);
 		db.execSQL(CREATE_RECORDS);
 		db.execSQL(CREATE_BEATS);
 		db.execSQL(CREATE_MUSIC);
 		db.execSQL("PRAGMA foreign_keys = ON");
-		Log.i("db", "foreign key support succeed");
 	}
 	
 	@Override

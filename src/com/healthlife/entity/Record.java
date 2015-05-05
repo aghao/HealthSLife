@@ -23,9 +23,6 @@ public class Record {
 	public long getRecordId() {
 		return recordId;
 	}
-	public void setRecordId(int recordId) {
-		this.recordId = recordId;
-	}
 	public float getAVGSpeed() {
 		return AVGSpeed;
 	}
@@ -59,8 +56,8 @@ public class Record {
 	public float getAVGPace() {
 		return AVGPace;
 	}
-	public void setAVGPace(float aVGPace) {
-		AVGPace = aVGPace;
+	public void setAVGPace(float AVGPace) {
+		this.AVGPace = AVGPace;
 	}
 	public float getPerfectRatePushUp() {
 		return perfectRatePushUp;

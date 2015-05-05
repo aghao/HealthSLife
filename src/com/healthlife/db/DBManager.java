@@ -2,23 +2,27 @@ package com.healthlife.db;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.healthlife.entity.*;
 
 public class DBManager {
 	
-	private DBHelper dbHelper = null;
-	private SQLiteDatabase db = null;
-	private ContentValues values = new ContentValues();
+	private DBHelper dbHelper;
+	private SQLiteDatabase db;
+	private ContentValues values;
+	private long userId;
 	
 	public DBManager(Context context){
-		
+		values = new ContentValues();
 		dbHelper = new DBHelper(context,"HealthSlife.db",null,1);
 		db = dbHelper.getWritableDatabase();
-		db.execSQL("PRAGMA foreign_keys = ON");
+		SharedPreferences pref = context.getSharedPreferences("CurrentUser",Activity.MODE_PRIVATE);
+		userId=pref.getLong("userId", 0);
 	}
 	
 	public long insertMusic(Music music){
@@ -58,7 +62,7 @@ public class DBManager {
 		values.put("DATE",beats.getDate().toString());
 		values.put("BEATS",beats.getBeats());
 		values.put("TYPE",beats.getType());
-		values.put("USERID",GlobalVariables.CURRENT_USERID);
+		values.put("USERID",userId);
 		
 		beats.setBeatId(db.insert("BEATS", null, values));
 		values.clear();
@@ -104,7 +108,7 @@ public class DBManager {
 		Sports sports = null;
 		ArrayList<Sports> sportsList = null;
 		
-		Cursor cursor = db.query("SPORTS", null, "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)}, null, null, "SPORTSID");
+		Cursor cursor = db.query("SPORTS", null, "USERID = ?", new String [] {String.valueOf(userId)}, null, null, "SPORTID");
 		
 		if(cursor!=null)
 		{
@@ -230,7 +234,7 @@ public class DBManager {
 		Beats beats = null;
 		ArrayList<Beats> beatsList = null;
 		
-		Cursor cursor =  db.query("BEATS", null, "USERID = ?",new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)}, null, null, null);
+		Cursor cursor =  db.query("BEATS", null, "USERID = ?",new String [] {String.valueOf(userId)}, null, null, null);
 		
 		if(cursor!=null)
 		{
@@ -262,7 +266,7 @@ public class DBManager {
 		
 		Sports sports = new Sports();
 		
-		Cursor cursor = db.query("SPORTS", null, "SPORTSID = ?", new String [] {String.valueOf(sportsId)}, null, null, null);
+		Cursor cursor = db.query("SPORTS", null, "SPORTID = ?", new String [] {String.valueOf(sportsId)}, null, null, null);
 		
 		if(cursor.moveToNext()){
 			
@@ -292,7 +296,7 @@ public class DBManager {
 		
 		Record record = new Record();
 		
-		Cursor cursor = db.query("RECORD", null, "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)}, null, null, null);
+		Cursor cursor = db.query("RECORDS", null, "USERID = ?", new String [] {String.valueOf(userId)}, null, null, null);
 		
 		if(cursor.moveToNext())
 		{
@@ -320,56 +324,70 @@ public class DBManager {
 		
 	}
 	
-	public void updateRecord(Record record,int [] updateMode){
-		
-		if(updateMode [GlobalVariables.RECORD_TYPE_AVGSPEED]==1)			
-			values.put("AVGSPEED", record.getAVGSpeed());
-		if(updateMode [GlobalVariables.RECORD_TYPE_NUMPUSHUP]==1)			
-			values.put("NUMPUSHUP", record.getNumPushUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_NUMSITUP]==1)			
-			values.put("NUMSITUP", record.getNumSitUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_VALIDRATEPUSHUP]==1)		
-			values.put("VALIDRATEPUSHUP", record.getValidRatePushUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_VALIDRATESITUP]==1)		
-			values.put("VALIDRATESITUP", record.getValidRateSitUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_DISTANCE]==1)			
-			values.put("DISTANCE",record.getDistance());
-		if(updateMode [GlobalVariables.RECORD_TYPE_AVGPACE]==1)				
-			values.put("AVGPACE",record.getAVGPace());
-		if(updateMode [GlobalVariables.RECORD_TYPE_PERFECTRATEPUSHUP]==1)	
-			values.put("PERFECTRATEPUSHUP",record.getPerfectRatePushUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_PERFECTRATESITUP]==1)	
-			values.put("PERFECTRATESITUP",record.getPerfectRateSitUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_GRADEPUSHUP]==1)			
-			values.put("GRADEPUSHUP",record.getGradePushUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_GRADESITUP]==1)			
-			values.put("GRADESITUP",record.getGradeSitUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_TOTALDISTANCE]==1)		
-			values.put("TOTALDISTANCE",record.getTotalDistance());
-		if(updateMode [GlobalVariables.RECORD_TYPE_TOTALNUMPUSHUP]==1)		
-			values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_TOTALNUMSITUP]==1)		
-			values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
-		if(updateMode [GlobalVariables.RECORD_TYPE_STEPS]==1)				
-			values.put("STEPS",record.getSteps());
+	public void updateRecord(Record record){
+							
+		values.put("AVGSPEED", record.getAVGSpeed());
+		values.put("NUMPUSHUP", record.getNumPushUp());
+		values.put("NUMSITUP", record.getNumSitUp());
+		values.put("VALIDRATEPUSHUP", record.getValidRatePushUp());
+		values.put("VALIDRATESITUP", record.getValidRateSitUp());
+		values.put("DISTANCE",record.getDistance());
+		values.put("AVGPACE",record.getAVGPace());
+		values.put("PERFECTRATEPUSHUP",record.getPerfectRatePushUp());
+		values.put("PERFECTRATESITUP",record.getPerfectRateSitUp());
+		values.put("GRADEPUSHUP",record.getGradePushUp());
+		values.put("GRADESITUP",record.getGradeSitUp());
+		values.put("TOTALDISTANCE",record.getTotalDistance());
+		values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
+		values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
+		values.put("STEPS",record.getSteps());
 		
 		if(values.size()!=0)
-		db.update("RECORD", values, "RECORDID = ?", new String[] {String.valueOf(GlobalVariables.CURRENT_USERID)});
+			db.update("RECORDS", values, "RECORDID = ?", new String[] {String.valueOf(record.getRecordId())});
 		values.clear();	}
 	
 	public void clearRecord(long recordId){
 		
-		db.delete("RECORDS", "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)});
-		values.put("RECORDID", db.insert("RECORDS", null, values));
-		db.update("USERS", values, "USERID = ?", new String [] {String.valueOf(GlobalVariables.CURRENT_USERID)});
-		values.clear();
+		Record record = new Record();
+		record.setUserId(userId);
+
+		this.updateRecord(record);
 	}
 	
-	public long insertFakeUser(){
-		values.put("keyword", "asd");
-		long a = db.insert("USERS", null, values);
+	public void removeRecord(long userId){
+		
+		db.delete("RECORDS", "USERID = ?", new String [] {String.valueOf(userId)});
+		
+	}
+	
+	public void inertRecord(Record record){
+		
+		values.put("AVGSPEED", record.getAVGSpeed());
+		values.put("NUMPUSHUP", record.getNumPushUp());
+		values.put("NUMSITUP", record.getNumSitUp());
+		values.put("VALIDRATEPUSHUP", record.getValidRatePushUp());
+		values.put("VALIDRATESITUP", record.getValidRateSitUp());
+		values.put("DISTANCE",record.getDistance());
+		values.put("AVGPACE",record.getAVGPace());
+		values.put("PERFECTRATEPUSHUP",record.getPerfectRatePushUp());
+		values.put("PERFECTRATESITUP",record.getPerfectRateSitUp());
+		values.put("GRADEPUSHUP",record.getGradePushUp());
+		values.put("GRADESITUP",record.getGradeSitUp());
+		values.put("TOTALDISTANCE",record.getTotalDistance());
+		values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
+		values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
+		values.put("STEPS",record.getSteps());
+		values.put("USERID", record.getUserId());
+		
+		db.insert("RECORDS", null, values);
 		values.clear();
-		return a;
+	}
 
+	public void removeAll(long userId){
+		
+		db.delete("SPORTS", "USERID = ?", new String[] {String.valueOf(userId)});
+		db.delete("RECORDS", "USERID = ?", new String [] {String.valueOf(userId)});
+		db.delete("BEATS", "USERID = ?", new String [] {String.valueOf(userId)});
+		this.clearRecord(userId);
 	}
 }
