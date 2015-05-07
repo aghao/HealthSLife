@@ -3,9 +3,13 @@
     tools:context="com.healthslife.GetLocation" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/location_returnloc"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="我的位置"/>
+    <item
+        android:id="@+id/location_switchtype"
+        android:showAsAction="never"
+        android:title="切换至卫星图"/>
 
 </menu>
