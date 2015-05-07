@@ -260,8 +260,7 @@ public class HeartRate extends Activity {
 		{
 //			Log.v("RESULT",""+output[i]);
 			//2个数为long，存在很多位相等最后几位不相等的情况
-			if((output[i]-output[i-1]>0)&&(output[i]-output[i+1]>0)
-					&&(output[i]-output[i-1]<8)&&(output[i]-output[i+1]<8))
+			if((output[i]>output[i-1])&&(output[i]>output[i+1]))
 			{
 				num++;
 				if(num == 2)

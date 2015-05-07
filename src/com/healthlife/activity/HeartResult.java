@@ -65,6 +65,7 @@ public class HeartResult extends Activity {
 							
 				}
 		});
+		//保存按钮
 		saveRecord.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -72,7 +73,7 @@ public class HeartResult extends Activity {
 				// TODO Auto-generated method stub
 				DBManager myDB = new DBManager(HeartResult.this);
 				long ID = myDB.insertBeats(newBeats);
-				Log.v("id",""+ID);
+				
 				if(ID == -1)
 				{
 					myDB.insertUserForFake();
@@ -95,7 +96,7 @@ public class HeartResult extends Activity {
 			}
 		});
 	}
-
+	//创建menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

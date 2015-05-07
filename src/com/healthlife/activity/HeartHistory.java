@@ -40,12 +40,13 @@ public class HeartHistory extends Activity {
 		super.onCreate(savedData);
 		this.setContentView(R.layout.hearthistory_main);
 
+		//init
 		mView = new View(this);
 		Button clearBt = (Button) findViewById(R.id.hr_clearbt);
 		myDB = new DBManager(this);
 		hrHistory = myDB.getBeatsList();
-		
 		ListView hrList = (ListView) findViewById(R.id.hr_list);
+		
 		heartData = getHeartRateData();
 		adapter = new SimpleAdapter(this,heartData,R.layout.hearthistory_listview,
 				new String[]{"history","type"},new int[]{R.id.hr_listhistory,R.id.hr_listtype} );
@@ -95,6 +96,8 @@ public class HeartHistory extends Activity {
 		}
 		return data;
 	}
+	
+	
 	
 	//´´½¨²Ëµ¥
 	public void onCreateContextMenu(ContextMenu menu, View v,  
