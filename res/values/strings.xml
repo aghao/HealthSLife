@@ -20,4 +20,6 @@
     <string name="hrmax">最大心率</string>
     <string name="hrsport">运动后心率</string>
     <string name="hrlast">最近一次的测量</string>
+    <string name="bmp">BMP</string>
+    <string name="hrinit">00</string>
 </resources>
