@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/apk/res/com.healthlife"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
@@ -13,11 +14,45 @@
         />
     
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:id="@+id/cameraview"
         android:layout_centerInParent="true"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/hrinit"
+            android:id="@+id/hrresulttext"
+            android:textSize="50sp"/>
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="90dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="78dp"
+            android:layout_marginLeft="90dp"
+            android:text="@string/bmp"
+            android:textSize="12sp"/>
+        <com.healthlife.util.RoundProgressBar 
+            android:id="@+id/roundbar"    
+	        android:layout_width="160dip"    
+	        android:layout_height="160dip"      
+	        android:layout_marginBottom="78dp"    
+	       	android:layout_gravity="bottom"     
+	            
+	        android_custom:roundColor="#D1D1D1"    
+	        android_custom:roundProgressColor="@android:color/black"    
+	        android_custom:textColor="#9A32CD"    
+	        android_custom:textIsDisplayable="false"    
+	        android_custom:roundWidth="10dip"    
+	        android_custom:textSize="18sp"/>  
     </FrameLayout>    
     
  
@@ -36,7 +71,8 @@
 	    	android:layout_height="wrap_content"
 	    	android:text="@string/hrlast"
 	    	android:layout_above="@id/hrlast"
-	    	/>
+	    	android:textSize="15sp"
+	    	android:textStyle="bold"/>
 	     <TextView
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"

@@ -29,7 +29,7 @@ public class YuvToRGB {
 	        }  
 	        red = red/numOfPixel;
 	        Log.v("num",""+red);
-	        if(red < 80 || red > 250)
+	        if(red < 105 || red > 150)
 	        	return -1;
 	        return (double)(red);  
 

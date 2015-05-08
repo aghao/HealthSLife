@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String CREATE_BEATS = "CREATE TABLE BEATS ("
 			+"BEATID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"USERID INTEGER REFERENCES USERS(USERID) ON DELETE CASCADE,"
-			+"DATE TIMESTAMP,"
+			+"DATE TEXT,"
 			+"BEATS INTEGER,"
 			+"TYPE INT"
 			+")";
