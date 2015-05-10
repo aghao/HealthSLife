@@ -24,14 +24,14 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"AVGSPEED REAL,"
 			+"NUMPUSHUP INTEGER,"
 			+"NUMSITUP INTEGER,"
-			+"VALIDRATEPUSHUP REAL,"
-			+"VALIDRATESITUP REAL,"
+			+"VALIDNUMPUSHUP REAL,"
+			+"VALIDNUMSITUP REAL,"
 			+"DISTANCE REAL,"
 			+"AVGPACE REAL,"
-			+"PERFECTRATEPUSHUP REAL,"
-			+"PERFECTRATESITUP REAL,"
-			+"GRADEPUSHUP REAL,"
-			+"GRADESITUP REAL,"
+			+"PERFECTNUMPUSHUP REAL,"
+			+"PERFECTNUMSITUP REAL,"
+			+"GOODNUMPUSHUP REAL,"
+			+"GOODNUMESITUP REAL,"
 			+"TOTALDISTANCE REAL,"
 			+"TOTALNUMPUSHUP INTEGER,"
 			+"TOTALNUMSITUP INTEGER,"
@@ -39,15 +39,15 @@ public class DBHelper extends SQLiteOpenHelper {
 			+")";
 	private static final String CREATE_SPORTS = "CREATE TABLE SPORTS (" 
 			+"SPORTID INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+"DATE VARCHAR(50) "
+			+"DATE VARCHAR(50),"
 			+"DURATION VARCHAR(50),"
 			+"TYPE INTEGER,"
 			+"USERID INTEGER NOT NULL,"
 			+"NUM INTEGER,"
 			+"AVGSPEED REAL,"
-			+"VALIDRATE REAL,"
-			+"PERFECTRATE REAL,"
-			+"GRADE REAL,"
+			+"VALIDNUM REAL,"
+			+"PERFECTNUM REAL,"
+			+"GOODNUM REAL,"
 			+"MAXSPEED REAL,"
 			+"DISTANCE REAL"
 			+")";
@@ -56,11 +56,16 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"USERID INTEGER NOT NULL,"
 			+"DATE VARCHAR(50),"
 			+"BEATS INTEGER,"
-			+"TYPE INT"
+			+"TYPE INTEGER"
 			+")";
-	
+	private static final String CREATE_POSITIONS ="CREATE TABLE POSITIONS("
+			+"POSITIONID INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+"SPORTID INTEGER REFERENCES SPORTS(SPORTID) ON DELETE CASCADE,"
+			+"LATITUDE REAL,"
+			+"LONGITUDE REAL,"
+			+"TIME VARCHAR(50)"
+			+")";	
 	private static final String CREATE_MUSIC = "CREATE TABLE MUSIC ("
-	
 			+"MUSICID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"MUSICNAME VARCHAR(50),"
 			+"PATH VARCHAR(50),"
@@ -71,11 +76,11 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		//db.execSQL(CREATE_USERS);
 		db.execSQL(CREATE_SPORTS);
 		db.execSQL(CREATE_RECORDS);
 		db.execSQL(CREATE_BEATS);
 		db.execSQL(CREATE_MUSIC);
+		db.execSQL(CREATE_POSITIONS);
 		db.execSQL("PRAGMA foreign_keys = ON");
 	}
 	

@@ -22,7 +22,8 @@ public class DBManager {
 		dbHelper = new DBHelper(context,"HealthSlife.db",null,1);
 		db = dbHelper.getWritableDatabase();
 		SharedPreferences pref = context.getSharedPreferences("CurrentUser",Activity.MODE_PRIVATE);
-		userId=pref.getLong("userId", 0);
+		userId=pref.getLong("userid", 0);
+		db.execSQL("PRAGMA foreign_keys = ON");
 	}
 	
 	public long insertMusic(Music music){
@@ -30,6 +31,7 @@ public class DBManager {
 		values.put("PATH", music.getMusicPath());
 		values.put("IFACTIVE", music.isIfActive());
 		values.put("PACE", music.getPace());
+		values.put("MUSICNAME", music.getMusicName());
 
 		Cursor cursor = db.query("MUSIC", null, "PATH = ?", new String[] {music.getMusicPath()}, null, null, null);
 		if(cursor.getCount()==0)
@@ -82,11 +84,11 @@ public class DBManager {
 		values.put("DATE", sports.getDate().toString());
 		values.put("AVGSPEED", sports.getAVGSpeed());
 		values.put("DISTANCE", sports.getDistance());
-		values.put("GRADE", sports.getGrade());
+		values.put("GOODNUM", sports.getGoodNum());
 		values.put("MAXSPEED", sports.getMaxSpeed());
 		values.put("NUM", sports.getNum());
-		values.put("PERFECTRATE", sports.getPerfectRate());
-		values.put("VALIDRATE", sports.getValidRate());
+		values.put("PERFECTNUM", sports.getPerfectNum());
+		values.put("VALIDNUM", sports.getValidNum());
 		values.put("USERID", sports.getUserId());
 		values.put("TYPE", sports.getType());
 		values.put("DURATION", sports.getDuration().toString());
@@ -108,7 +110,7 @@ public class DBManager {
 		Sports sports = null;
 		ArrayList<Sports> sportsList = null;
 		
-		Cursor cursor = db.query("SPORTS", null, "USERID = ?", new String [] {String.valueOf(userId)}, null, null, "SPORTID");
+		Cursor cursor = db.query("SPORTS", null, "USERID = ?", new String [] {String.valueOf(0)}, null, null, "SPORTID");
 		
 		if(cursor!=null)
 		{
@@ -123,9 +125,9 @@ public class DBManager {
 				sports.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
 				sports.setNum(cursor.getInt(cursor.getColumnIndex("NUM")));
 				sports.setAVGSpeed(cursor.getFloat(cursor.getColumnIndex("AVGSPEED")));
-				sports.setValidRate(cursor.getFloat(cursor.getColumnIndex("VALIDRATE")));
-				sports.setPerfectRate(cursor.getFloat(cursor.getColumnIndex("PERFECTRATE")));
-				sports.setGrade(cursor.getFloat(cursor.getColumnIndex("GRADE")));
+				sports.setValidNum(cursor.getFloat(cursor.getColumnIndex("VALIDNUM")));
+				sports.setPerfectNum(cursor.getFloat(cursor.getColumnIndex("PERFECTNUM")));
+				sports.setGoodNum(cursor.getFloat(cursor.getColumnIndex("GOODNUM")));
 				sports.setMaxSpeed(cursor.getFloat(cursor.getColumnIndex("MAXSPEED")));
 				sports.setDistance(cursor.getInt(cursor.getColumnIndex("DISTANCE")));
 				
@@ -277,9 +279,9 @@ public class DBManager {
 			sports.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
 			sports.setNum(cursor.getInt(cursor.getColumnIndex("NUM")));
 			sports.setAVGSpeed(cursor.getFloat(cursor.getColumnIndex("AVGSPEED")));
-			sports.setValidRate(cursor.getFloat(cursor.getColumnIndex("VALIDRATE")));
-			sports.setPerfectRate(cursor.getFloat(cursor.getColumnIndex("PERFECTRATE")));
-			sports.setGrade(cursor.getFloat(cursor.getColumnIndex("GRADE")));
+			sports.setValidNum(cursor.getFloat(cursor.getColumnIndex("VALIDNUM")));
+			sports.setPerfectNum(cursor.getFloat(cursor.getColumnIndex("PERFECTNUM")));
+			sports.setGoodNum(cursor.getFloat(cursor.getColumnIndex("GOODNUM")));
 			sports.setMaxSpeed(cursor.getFloat(cursor.getColumnIndex("MAXSPEED")));
 			sports.setDistance(cursor.getInt(cursor.getColumnIndex("DISTANCE")));
 		}
@@ -296,27 +298,27 @@ public class DBManager {
 		
 		Record record = new Record();
 		
-		Cursor cursor = db.query("RECORDS", null, "USERID = ?", new String [] {String.valueOf(userId)}, null, null, null);
+		Cursor cursor = db.query("RECORDS", null, "USERID = ?", new String [] {String.valueOf(0)}, null, null, null);
 		
 		if(cursor.moveToNext())
 		{
 			record.setAVGPace(cursor.getInt(cursor.getColumnIndex("AVGPACE")));
 			record.setAVGSpeed(cursor.getFloat(cursor.getColumnIndex("AVGSPEED")));
 			record.setDistance(cursor.getFloat(cursor.getColumnIndex("DISTANCE")));
-			record.setGradePushUp(cursor.getFloat(cursor.getColumnIndex("GRADEPUSHUP")));
-			record.setGradeSitUp(cursor.getFloat(cursor.getColumnIndex("GRADESITUP")));
+			record.setGoodNumPushUp(cursor.getFloat(cursor.getColumnIndex("GOODNUMPUSHUP")));
+			record.setGoodNumSitUp(cursor.getFloat(cursor.getColumnIndex("GOODNUMSITUP")));
 			record.setNumPushUp(cursor.getInt(cursor.getColumnIndex("NUMPUSHUP")));
 			record.setNumSitUp(cursor.getInt(cursor.getColumnIndex("NUMSITUP")));
-			record.setPerfectRatePushUp(cursor.getFloat(cursor.getColumnIndex("PERFECTRATEPUSHUP")));
-			record.setPerfectRateSitUp(cursor.getFloat(cursor.getColumnIndex("PERFECTRATESITUP")));
+			record.setPerfectNumPushUp(cursor.getFloat(cursor.getColumnIndex("PERFECTNUMPUSHUP")));
+			record.setPerfectNumSitUp(cursor.getFloat(cursor.getColumnIndex("PERFECTNUMSITUP")));
 			record.setRecordId(cursor.getLong(cursor.getColumnIndex("RECORDID")));
 			record.setSteps(cursor.getInt(cursor.getColumnIndex("STEPS")));
 			record.setTotalDistance(cursor.getFloat(cursor.getColumnIndex("TOTALDISTANCE")));
 			record.setTotalNumPushUp(cursor.getInt(cursor.getColumnIndex("TOTALNUMPUSHUP")));
 			record.setTotalNumSitUp(cursor.getInt(cursor.getColumnIndex("TOTALNUMSITUP")));
 			record.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
-			record.setValidRatePushUp(cursor.getFloat(cursor.getColumnIndex("VALIDRATEPUSHUP")));
-			record.setValidRateSitUp(cursor.getFloat(cursor.getColumnIndex("VALIDRATESITUP")));
+			record.setValidNumPushUp(cursor.getFloat(cursor.getColumnIndex("VALIDNUMPUSHUP")));
+			record.setValidNumSitUp(cursor.getFloat(cursor.getColumnIndex("VALIDNUMSITUP")));
 		}
 		cursor.close();
 		
@@ -329,14 +331,14 @@ public class DBManager {
 		values.put("AVGSPEED", record.getAVGSpeed());
 		values.put("NUMPUSHUP", record.getNumPushUp());
 		values.put("NUMSITUP", record.getNumSitUp());
-		values.put("VALIDRATEPUSHUP", record.getValidRatePushUp());
-		values.put("VALIDRATESITUP", record.getValidRateSitUp());
+		values.put("VALIDNUMPUSHUP", record.getValidNumPushUp());
+		values.put("VALIDNUMSITUP", record.getValidNumSitUp());
 		values.put("DISTANCE",record.getDistance());
 		values.put("AVGPACE",record.getAVGPace());
-		values.put("PERFECTRATEPUSHUP",record.getPerfectRatePushUp());
-		values.put("PERFECTRATESITUP",record.getPerfectRateSitUp());
-		values.put("GRADEPUSHUP",record.getGradePushUp());
-		values.put("GRADESITUP",record.getGradeSitUp());
+		values.put("PERFECTNUMPUSHUP",record.getPerfectNumPushUp());
+		values.put("PERFECTNUMSITUP",record.getPerfectNumSitUp());
+		values.put("GOODNUMPUSHUP",record.getNumPushUp());
+		values.put("GOODNUMSITUP",record.getNumSitUp());
 		values.put("TOTALDISTANCE",record.getTotalDistance());
 		values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
 		values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
@@ -360,19 +362,19 @@ public class DBManager {
 		
 	}
 	
-	public void inertRecord(Record record){
+	public void insertRecord(Record record){
 		
 		values.put("AVGSPEED", record.getAVGSpeed());
 		values.put("NUMPUSHUP", record.getNumPushUp());
 		values.put("NUMSITUP", record.getNumSitUp());
-		values.put("VALIDRATEPUSHUP", record.getValidRatePushUp());
-		values.put("VALIDRATESITUP", record.getValidRateSitUp());
+		values.put("VALIDNUMPUSHUP", record.getValidNumPushUp());
+		values.put("VALIDNUMSITUP", record.getValidNumSitUp());
 		values.put("DISTANCE",record.getDistance());
 		values.put("AVGPACE",record.getAVGPace());
-		values.put("PERFECTRATEPUSHUP",record.getPerfectRatePushUp());
-		values.put("PERFECTRATESITUP",record.getPerfectRateSitUp());
-		values.put("GRADEPUSHUP",record.getGradePushUp());
-		values.put("GRADESITUP",record.getGradeSitUp());
+		values.put("PERFECTNUMPUSHUP",record.getPerfectNumPushUp());
+		values.put("PERFECTNUMSITUP",record.getPerfectNumSitUp());
+		values.put("GOODNUMPUSHUP",record.getNumPushUp());
+		values.put("GOODNUMSITUP",record.getNumSitUp());
 		values.put("TOTALDISTANCE",record.getTotalDistance());
 		values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
 		values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
@@ -383,11 +385,79 @@ public class DBManager {
 		values.clear();
 	}
 
-	public void removeAll(long userId){
+	public long insertPosition(Position position){
 		
-		db.delete("SPORTS", "USERID = ?", new String[] {String.valueOf(userId)});
-		db.delete("RECORDS", "USERID = ?", new String [] {String.valueOf(userId)});
+		values.put("LATITUDE",position.getLatitude());
+		values.put("LONGITUDE", position.getLongitude());
+		values.put("SPORTID", position.getSportId());
+		values.put("TIME", position.getTime());
+		
+		position.setPositionId(db.insert("POSITIONS", null, values));
+		
+		values.clear();
+		return position.getPositionId();
+		
+	}
+	
+	public ArrayList<Position>getPositionsByUerId(long userId){
+		
+		ArrayList<Position> positionList=new ArrayList<Position>();
+		ArrayList<Long> sportIdList =  new ArrayList<Long>();
+		
+		Cursor cursor = db.query("SPORTS",null, "USERID = ?", new String [] {String.valueOf(userId)}, null, null, null);
+		
+		while(cursor.moveToNext()){			
+			sportIdList.add(cursor.getLong(cursor.getColumnIndex("SPORTID")));		
+		}
+		
+		cursor.close();
+		int i;
+		for(i=0;i<sportIdList.size();i++){
+			cursor = db.query("POSITIONS", null, "SPORTID = ?", new String [] {String.valueOf(sportIdList.get(i))}, null, null, null);	
+			
+			while(cursor.moveToNext()){
+				
+				Position position = new Position();
+				
+				position.setPositionId(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
+				position.setLatitude(cursor.getDouble(cursor.getColumnIndex("LATITUDE")));
+				position.setLongitude(cursor.getDouble(cursor.getColumnIndex("LONGITUDE")));
+				position.setTime(cursor.getLong(cursor.getColumnIndex("TIME")));
+				position.setSportId(cursor.getLong(cursor.getColumnIndex("SPORTID")));
+				
+				positionList.add(position);
+			}
+		}
+		return positionList;
+	}
+	
+	public ArrayList<Position> getPosList(long jogId){
+	
+		ArrayList<Position> positionList = new ArrayList<Position>();
+		Cursor cursor = db.query("POSITIONS", null, "SPORTID = ?", new String [] {String.valueOf(jogId)}, null, null, null); 
+		
+		while(cursor.moveToNext()){
+			
+			Position position = new Position();
+			
+			position.setPositionId(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
+			position.setLatitude(cursor.getDouble(cursor.getColumnIndex("LATITUDE")));
+			position.setLongitude(cursor.getDouble(cursor.getColumnIndex("LONGITUDE")));
+			position.setTime(cursor.getLong(cursor.getColumnIndex("TIME")));
+			position.setSportId(cursor.getLong(cursor.getColumnIndex("SPORTID")));
+			
+			positionList.add(position);
+		}
+		cursor.close();
+		
+		return positionList;
+	}
+
+	public void removeAllBeats(long userId){
 		db.delete("BEATS", "USERID = ?", new String [] {String.valueOf(userId)});
-		this.clearRecord(userId);
+	}
+	
+	public void removeAllSports(long userId){
+		db.delete("SPORTS", "USERID = ?", new String[] {String.valueOf(userId)});
 	}
 }
