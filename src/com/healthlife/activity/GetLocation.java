@@ -117,29 +117,30 @@ public class GetLocation extends Activity {
 			@Override
 			public void onClick(View v) {
 			
-				chronometer.stop();
-				recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
-				
-				String sh = "";
-				String sm = "";
-				String ss = "";
-				long hour = recordTime / 3600;
-				long minute = (recordTime - hour * 60 * 60) / 60;
-				long second = recordTime - hour * 60 * 60 - minute * 60;
-				if(hour < 10)
-					sh = "0" + String.valueOf(hour);
-				else
-					sh = String.valueOf(hour);
-				if(minute < 10)
-					sm = "0" + String.valueOf(minute);
-				else
-					sm = String.valueOf(minute);
-				if(second < 10)
-					ss = "0" + String.valueOf(second);
-				else
-					ss = String.valueOf(second);
-				duration = sh + ":" + sm + ":" + ss;
 				if(points.size() > 1){
+					chronometer.stop();
+					recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
+					
+					String sh = "";
+					String sm = "";
+					String ss = "";
+					long hour = recordTime / 3600;
+					long minute = (recordTime - hour * 60 * 60) / 60;
+					long second = recordTime - hour * 60 * 60 - minute * 60;
+					if(hour < 10)
+						sh = "0" + String.valueOf(hour);
+					else
+						sh = String.valueOf(hour);
+					if(minute < 10)
+						sm = "0" + String.valueOf(minute);
+					else
+						sm = String.valueOf(minute);
+					if(second < 10)
+						ss = "0" + String.valueOf(second);
+					else
+						ss = String.valueOf(second);
+					duration = sh + ":" + sm + ":" + ss;
+					
 					Intent intent = new Intent();
 					intent.setClass(GetLocation.this, LocationResult.class);
 					intent.putExtra("locinfo", (Serializable) points);
