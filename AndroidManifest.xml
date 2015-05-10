@@ -73,6 +73,10 @@
             android:label="@string/title_activity_get_location" >
         </activity>
         <activity
+            android:name="com.healthlife.activity.LocationResult"
+            android:label="@string/title_activity_location_result" >
+        </activity>
+        <activity
             android:name="com.healthlife.activity.HeartResult"
             android:label="@string/title_activity_heart_result" >
         </activity>

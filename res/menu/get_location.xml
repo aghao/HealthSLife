@@ -1,15 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.healthslife.GetLocation" >
-
-    <item
-        android:id="@+id/location_returnloc"
+	
+	<item
+        android:id="@+id/action_switch"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="我的位置"/>
-    <item
-        android:id="@+id/location_switchtype"
-        android:showAsAction="never"
         android:title="切换至卫星图"/>
-
+    <item
+        android:id="@+id/action_showpoint"
+        android:showAsAction="never"
+        android:title="显示各个定位点"/>
+    <item
+        android:id="@+id/action_drawroute"
+        android:showAsAction="never"
+        android:title="画出路线"/>
+    <item
+        android:id="@+id/action_locate"
+        android:showAsAction="never"
+        android:title="我的位置"/>
 </menu>
