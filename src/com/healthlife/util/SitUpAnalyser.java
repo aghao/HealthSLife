@@ -2,6 +2,7 @@ package com.healthlife.util;
 
 import java.text.SimpleDateFormat;
 
+import com.healthlife.activity.MusicService;
 import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Sports;
 
@@ -198,19 +199,19 @@ public class SitUpAnalyser implements SensorEventListener {
 			if(mBasePerfectFLag&&mPerfectFlag){
 				mPerfectNum+=1;
 				mNum +=1;
-				mPaceAnalyse();
+				paceAnalyse();
 				sendBroadcast();
 			}
 			else if (mBaseGoodFlag&&mGoodFlag){
 				mGoodNum+=1;
 				mNum +=1;
-				mPaceAnalyse();
+				paceAnalyse();
 				sendBroadcast();
 			}
 			else if (mBaseValidFlag&&mValidFlag){
 				mValidNum+=1;
 				mNum +=1;
-				mPaceAnalyse();
+				paceAnalyse();
 				sendBroadcast();
 			}
 			Log.i("dd", "mValidNum: "+mValidNum+"   mGoodNum: "+mGoodNum+"   mPerfectNum: "+mPerfectNum+"  mNum:  "+mNum);
@@ -230,12 +231,12 @@ public class SitUpAnalyser implements SensorEventListener {
 		operateTime();
 	}
 
-	private void mPaceAnalyse() {
+	private void paceAnalyse() {
 		// TODO Auto-generated method stub
-    	if(mEndTime-mPaceStartTime<60000)
+    	if(mEndTime-mPaceStartTime<6000)
     		mPaceSamples+=1;
     	
-    	else if(mEndTime-mPaceStartTime>=60000){
+    	else if(mEndTime-mPaceStartTime>=6000){
     		if(mPaceSamples>=0&&mPaceSamples<=15)
     			mPace=1;
     		else if(mPaceSamples>15&&mPaceSamples<=30)
@@ -249,8 +250,9 @@ public class SitUpAnalyser implements SensorEventListener {
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent("com.healthlife.activity.MusicService");
-    		intent.putExtra("pace", mPace);
+    		Intent intent = new Intent(context,MusicService.class);
+    		intent.putExtra("Pace", String.valueOf(mPace));
+    		intent.setAction("PaceSetting");
     		context.startService(intent);
     	}
     		

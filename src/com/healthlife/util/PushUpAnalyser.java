@@ -9,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
+import com.healthlife.activity.MusicService;
 import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Sports;
 
@@ -60,6 +61,7 @@ public class PushUpAnalyser implements SensorEventListener {
 	public PushUpAnalyser(Context context){
 		this.context=context;
 		mStartFlag = true;
+		mPaceStartTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -134,7 +136,7 @@ public class PushUpAnalyser implements SensorEventListener {
 		//Log.i("dd", "direction: "+mDirection+"     mLastDirection:  "+mLastDirection);
 		if(mLastDirection==-1&&mDirection==-1&&mValidFlag&&mInTop){
 				mNum +=1;
-				mPaceAnalyse();
+				paceAnalyse();
 				//Log.i("dd", "get motion");
 			if(mPerfectFLag)
 				mPerfectNum+=1;
@@ -187,12 +189,12 @@ public class PushUpAnalyser implements SensorEventListener {
 		//Log.i("ss", "mValidNum: "+mValidNum+"   mGoodNum: "+mGoodNum+"   mPerfectNum: "+mPerfectNum);
 	}
 	
-	private void mPaceAnalyse() {
+	private void paceAnalyse() {
 		// TODO Auto-generated method stub
-    	if(mEndTime-mPaceStartTime<60000)
+    	if(mCurrentTime-mPaceStartTime<60000)
     		mPaceSamples+=1;
     	
-    	else if(mEndTime-mPaceStartTime>=60000){
+    	else if(mCurrentTime-mPaceStartTime>=60000){
     		if(mPaceSamples>=0&&mPaceSamples<=15)
     			mPace=1;
     		else if(mPaceSamples>15&&mPaceSamples<=30)
@@ -206,8 +208,9 @@ public class PushUpAnalyser implements SensorEventListener {
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent("com.healthlife.activity.MusicService");
-    		intent.putExtra("pace", mPace);
+    		Intent intent = new Intent(context,MusicService.class);
+    		intent.putExtra("Pace", String.valueOf(mPace));
+    		intent.setAction("PaceSetting");
     		context.startService(intent);
     	}
 	}

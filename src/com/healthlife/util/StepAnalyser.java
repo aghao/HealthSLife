@@ -2,6 +2,7 @@ package com.healthlife.util;
 
 import java.text.SimpleDateFormat;
 
+import com.healthlife.activity.MusicService;
 import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Sports;
 
@@ -65,6 +66,7 @@ public class StepAnalyser implements SensorEventListener {
         mDate=formatter.format(new java.util.Date());
         mStartFlag=false;      
         this.context = context;
+        mPaceStartTime = System.currentTimeMillis();
     }
  
     //当传感器检测到的数值发生变化时就会调用这个方法
@@ -112,7 +114,7 @@ public class StepAnalyser implements SensorEventListener {
  
                                 mStep++;
                                 
-                                mPaceAnalyse();
+                                paceAnalyse();
                                 Intent intent = new Intent("com.healthlife.activity.WalkActivity.MotionAdd");  
            					 	intent.putExtra("motionNum", mStep);
            					 	context.sendBroadcast(intent);
@@ -133,7 +135,7 @@ public class StepAnalyser implements SensorEventListener {
  
         }
     }
-    private void mPaceAnalyse() {
+    private void paceAnalyse() {
 		// TODO Auto-generated method stub
     	if(mEndTime-mPaceStartTime<120000)
     		mPaceSamples+=1;
@@ -152,8 +154,9 @@ public class StepAnalyser implements SensorEventListener {
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent("com.healthlife.activity.MusicService");
-    		intent.putExtra("pace", mPace);
+    		Intent intent = new Intent(context,MusicService.class);
+    		intent.putExtra("Pace", String.valueOf(mPace));
+    		intent.setAction("PaceSetting");
     		context.startService(intent);
     	}
     		
