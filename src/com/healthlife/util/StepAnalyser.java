@@ -39,6 +39,7 @@ public class StepAnalyser implements SensorEventListener {
     private long mPaceStartTime;
     private int mPaceSamples;
     private long mCurrentTime;
+    private int mLastPace;
     
     private Sports walk;
     /**
@@ -137,27 +138,30 @@ public class StepAnalyser implements SensorEventListener {
     }
     private void paceAnalyse() {
 		// TODO Auto-generated method stub
-    	if(mEndTime-mPaceStartTime<120000)
+    	if(mEndTime-mPaceStartTime<30000)
     		mPaceSamples+=1;
     	
-    	else if(mEndTime-mPaceStartTime>=120000){
-    		if(mPaceSamples>=0&&mPaceSamples<=50)
+    	else if(mEndTime-mPaceStartTime>=30000){
+    		if(mPaceSamples>=0&&mPaceSamples<=100)
     			mPace=1;
-    		else if(mPaceSamples>50&&mPaceSamples<=100)
+    		else if(mPaceSamples>100&&mPaceSamples<=140)
     			mPace=2;
-    		else if(mPaceSamples>100&&mPaceSamples<=150)
+    		else if(mPaceSamples>140&&mPaceSamples<=180)
     			mPace=3;
-    		else if(mPaceSamples<150&&mPaceSamples<=200)
+    		else if(mPaceSamples<180&&mPaceSamples<=200)
     			mPace=4;
     		else if(mPaceSamples>200)
     			mPace=5;
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent(context,MusicService.class);
-    		intent.putExtra("Pace", String.valueOf(mPace));
-    		intent.setAction("PaceSetting");
-    		context.startService(intent);
+    		if(mPace!=mLastPace){
+    			mLastPace = mPace;
+	    		Intent intent = new Intent(context,MusicService.class);
+	    		intent.putExtra("Pace", String.valueOf(mPace));
+	    		intent.setAction("PaceSetting");
+	    		context.startService(intent);    		
+    		}
     	}
     		
 		

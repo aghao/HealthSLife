@@ -41,6 +41,7 @@ public class PushUpAnalyser implements SensorEventListener {
 	private int mPace;
 	private long mPaceStartTime;
 	private int mPaceSamples;
+	private int mLastPace;
 		
 	private String mDate;
 	private String mDuration;
@@ -191,150 +192,32 @@ public class PushUpAnalyser implements SensorEventListener {
 	
 	private void paceAnalyse() {
 		// TODO Auto-generated method stub
-    	if(mCurrentTime-mPaceStartTime<60000)
+    	if(mCurrentTime-mPaceStartTime<30000)
     		mPaceSamples+=1;
     	
-    	else if(mCurrentTime-mPaceStartTime>=60000){
+    	else if(mCurrentTime-mPaceStartTime>=30000){
     		if(mPaceSamples>=0&&mPaceSamples<=15)
     			mPace=1;
-    		else if(mPaceSamples>15&&mPaceSamples<=30)
+    		else if(mPaceSamples>15&&mPaceSamples<=25)
     			mPace=2;
-    		else if(mPaceSamples>30&&mPaceSamples<=45)
+    		else if(mPaceSamples>25&&mPaceSamples<=35)
     			mPace=3;
-    		else if(mPaceSamples<60&&mPaceSamples<=75)
+    		else if(mPaceSamples<35&&mPaceSamples<=45)
     			mPace=4;
-    		else if(mPaceSamples>75)
+    		else if(mPaceSamples>45)
     			mPace=5;
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent(context,MusicService.class);
-    		intent.putExtra("Pace", String.valueOf(mPace));
-    		intent.setAction("PaceSetting");
-    		context.startService(intent);
+    		if(mPace!=mLastPace){
+    			mLastPace = mPace;
+	    		Intent intent = new Intent(context,MusicService.class);
+	    		intent.putExtra("Pace", String.valueOf(mPace));
+	    		intent.setAction("PaceSetting");
+	    		context.startService(intent);    		
+    		}
     	}
 	}
 	
 	
 }
-
-
-
-
-
-
-	/*private final long TIMEGAPGATE = 100;
-	
-	private float mProximity;
-	private int mMotionAmount;
-	private int mValidMotionAmount;
-	private int mPerfectMotionAmount;
-	private long mLastTime;
-	private long mCurrentTime;
-	private long mTimeGap;
-	private boolean mValidFlag;
-	private boolean mTimeGapFlag;
-	private long mStartTime;
-	private long mEndTime;
-	private String mDate;
-	private String mDuration;
-	private Intent intent;
-
-	private Sports pushUp;
-	private Context context;
-	
-	@SuppressLint("SimpleDateFormat")
-	public PushUpAnalyser(Context context){
-		mValidMotionAmount = 0;
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");
-		mDate = formatter.format(new java.util.Date());
-		this.context=context;
-		intent = new Intent("com.healthlife.activity.PushUpActivity.MotionAdd");
-	}
-	@SuppressLint("SimpleDateFormat")
-	public void onSensorChanged(SensorEvent event) {
-				
-		synchronized (this){
-
-			Sensor sensor = event.sensor;
-			if(sensor.getType()== Sensor.TYPE_PROXIMITY);
-			{	
-				Log.i("dd","proximityX:" + String.valueOf(event.values[0]));
-				if(mStartTime==0) 
-					mStartTime=System.currentTimeMillis();	     
-				
-				mTimeGapFlag=isTimeGapEnough();
-				mProximity = event.values[0];
-				
-				if(mProximity<3&&mTimeGapFlag)
-				{
-					mValidMotionAmount+=1;
-					mValidFlag=true;
-					mEndTime=System.currentTimeMillis();
-					
-					intent.putExtra("motionNum", mValidMotionAmount);
-					context.sendBroadcast(intent);
-
-				}
-				else if(mProximity>=3&&isValid())
-				{
-					mPerfectMotionAmount+=1;
-					mEndTime=System.currentTimeMillis();
-				}
-				
-
-			}
-		}
-	}
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-	}
-	
-	private boolean isTimeGapEnough(){
-		
-		mCurrentTime=System.currentTimeMillis();
-		mTimeGap=mCurrentTime-mLastTime;
-		mLastTime=mCurrentTime;
-		
-		if(mTimeGap>=TIMEGAPGATE) 
-		{
-			return true;
-		}
-		
-		else 
-			return false;
-	}
-	
-	private boolean isValid(){
-		if(mValidFlag==true)
-		{
-			mValidFlag=false;
-			return true;
-		}
-		else 
-			return false;
-		
-	}
-
-	@SuppressLint("SimpleDateFormat")
-	public String getDuration(){
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-		mDuration = formatter.format(mEndTime-mStartTime);
-		return mDuration;
-	}
-	
-	public Sports getPushUp(){
-		pushUp = new Sports();
-		
-		pushUp.setType(GlobalVariables.SPORTS_TYPE_PUSHUP);
-		pushUp.setNum(mValidMotionAmount);
-		//pushUp.setValidRate(getValidRate());
-		//pushUp.setPerfectRate(getPerfectRate());
-		pushUp.setDuration(getDuration());
-		pushUp.setDate(mDate);
-		
-		return pushUp;
-	}
-
-}*/

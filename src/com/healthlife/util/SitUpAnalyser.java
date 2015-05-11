@@ -54,6 +54,7 @@ public class SitUpAnalyser implements SensorEventListener {
 	
 	private long mPaceStartTime;
 	private int mPaceSamples;
+	private int mLastPace;
 	
 	private static final float VALID_POINT=225;
 	private static final float GOOD_POINT=255;
@@ -233,174 +234,33 @@ public class SitUpAnalyser implements SensorEventListener {
 
 	private void paceAnalyse() {
 		// TODO Auto-generated method stub
-    	if(mEndTime-mPaceStartTime<6000)
+    	if(mEndTime-mPaceStartTime<30000)
     		mPaceSamples+=1;
     	
-    	else if(mEndTime-mPaceStartTime>=6000){
-    		if(mPaceSamples>=0&&mPaceSamples<=15)
+    	else if(mEndTime-mPaceStartTime>=30000){
+    		if(mPaceSamples>=0&&mPaceSamples<=10)
     			mPace=1;
-    		else if(mPaceSamples>15&&mPaceSamples<=30)
+    		else if(mPaceSamples>10&&mPaceSamples<=20)
     			mPace=2;
-    		else if(mPaceSamples>30&&mPaceSamples<=45)
+    		else if(mPaceSamples>20&&mPaceSamples<=30)
     			mPace=3;
-    		else if(mPaceSamples<60&&mPaceSamples<=75)
+    		else if(mPaceSamples<30&&mPaceSamples<=40)
     			mPace=4;
-    		else if(mPaceSamples>75)
+    		else if(mPaceSamples>40)
     			mPace=5;
     		
     		mPaceStartTime=System.currentTimeMillis();
     		mPaceSamples=0;
-    		Intent intent = new Intent(context,MusicService.class);
-    		intent.putExtra("Pace", String.valueOf(mPace));
-    		intent.setAction("PaceSetting");
-    		context.startService(intent);
+    		if(mPace!=mLastPace){
+    			mLastPace = mPace;
+	    		Intent intent = new Intent(context,MusicService.class);
+	    		intent.putExtra("Pace", String.valueOf(mPace));
+	    		intent.setAction("PaceSetting");
+	    		context.startService(intent);    		
+    		}
     	}
     		
 		
 	}
 
 }
-
-
-
-
-
-
-
-
-/*
-public class SitUpAnalyser implements SensorEventListener {
-
-	private Sensor sensor;
-	private float mYOrientation;
-	private float mLastYOrientation;
-	private boolean mButtomFlag;
-	private int mMotionAmount;
-	private int mValidMotionAmount;
-	private int mPerfectMotionAmount;
-	private long mCurrentTime;
-	private long mTimeGap;
-	private long mLastTime;
-	private long mStartTime;
-	private long mEndTime;
-	private String mDate;
-	private String mDuration;
-	
-	private Sports sitUp;
-	private Context context;
-	private Intent intent;
-	
-	private final float BUTTOM_ORIENTATION = 30;
-	private final float VALID_ORIENTATION = 100;
-	private final float PERFECT_ORIENTATION = 170;
-	private final float TIME_GAP_GATE=1000;
-	private final float SENSITIVITY=5;
-}
-	
-	
-	@SuppressLint("SimpleDateFormat")
-	public SitUpAnalyser(Context context){
-		this.context = context;
-		
-		SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		mDate = simpleFormatter.format( new java.util.Date());
-		
-		intent = new Intent("com.healthlife.activity.SitUpActivity.MotionAdd");
-
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
-		
-		 synchronized (this){ 
-			 sensor = event.sensor; 
-			 
-			 if(sensor.getType()==Sensor.TYPE_GYROSCOPE){
-				 mYOrientation = -event.values[1];
-				 Log.i("dd", String.valueOf(event.values[2]));
-				 			 
-				 if(mStartTime==0)
-					 mStartTime=System.currentTimeMillis();
-				 
-				 getDirection();//(mLastYOrientation>mYOrientation?-1:(mLastYOrientation<mYOrientation?1:0));
-				 if(mYOrientation<=BUTTOM_ORIENTATION){
-					 mButtomFlag=true;
-				 }
-				 
-					 //Log.i("dd", String.valueOf(mDirection));
-				 if(mButtomFlag&&mYOrientation>VALID_ORIENTATION){
-					 mMotionAmount+=1;
-					 //Log.i("dd", String.valueOf(mMotionAmount));
-					 mEndTime=System.currentTimeMillis();
-					 mButtomFlag=false;
-					 
-					 intent.putExtra("motionNum", mValidMotionAmount+1);
-					 context.sendBroadcast(intent);
-					
-					 if(mYOrientation>VALID_ORIENTATION)
-						mValidMotionAmount+=1;
-					 else if(mYOrientation>PERFECT_ORIENTATION)
-						//Log.i("dd", String.valueOf(mMotionAmount));
-						mPerfectMotionAmount+=1; 
-				 }
-				 mLastYOrientation = mYOrientation;
-			 }	 
-		 }
-	}
-
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private boolean isTimeGapEnough(){
-		
-		mCurrentTime=System.currentTimeMillis();
-		mTimeGap=mCurrentTime-mLastTime;
-		mLastTime=mCurrentTime;
-
-		if(mTimeGap>=TIME_GAP_GATE) 
-		{
-			return true;
-		}
-		
-		else 
-			return false;
-	}
-
-	@SuppressLint("SimpleDateFormat")
-	public Sports getSitUp(){
-		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat ("hh:mm:ss");
-		mDuration = dateFormatter.format(mEndTime-mStartTime);
-		sitUp = new Sports();
-		
-		sitUp.setType(GlobalVariables.SPORTS_TYPE_SITUP);
-		sitUp.setDate(mDate);
-		sitUp.setNum(mMotionAmount);
-		sitUp.setValidNum(mValidMotionAmount);
-		sitUp.setPerfectNum(mPerfectMotionAmount);
-		sitUp.setDuration(mDuration);
-		
-		return sitUp;
-		
-	}
-	
-	public String getDuration(){
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-		mDuration = formatter.format(mEndTime-mStartTime);
-		return mDuration;
-	}
-
-	public void getDirection(){
-		if(mLastYOrientation-mYOrientation>=(10-SENSITIVITY)) {
-		} else if(mYOrientation-mLastYOrientation>=(10-SENSITIVITY)) {
-		}
-	}
-
-}
-*/
