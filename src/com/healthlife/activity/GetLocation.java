@@ -88,6 +88,7 @@ public class GetLocation extends Activity {
     private long recordTime;
     private String date;
     private String duration;
+    private static final String IOS = "Test";
     
     //计时器用变量
     private MotionReceiver motionReceiver;
