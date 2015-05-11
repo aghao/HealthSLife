@@ -1,9 +1,6 @@
 package com.healthlife.activity;
 
 import com.healthlife.R;
-import com.healthlife.R.id;
-import com.healthlife.R.layout;
-import com.healthlife.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

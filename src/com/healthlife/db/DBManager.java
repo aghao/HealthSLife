@@ -389,13 +389,13 @@ public class DBManager {
 		
 		values.put("LATITUDE",position.getLatitude());
 		values.put("LONGITUDE", position.getLongitude());
-		values.put("SPORTID", position.getSportID());
+		values.put("SPORTID", position.getSportId());
 		values.put("TIME", position.getTime());
 		
-		position.setPositionID(db.insert("POSITIONS", null, values));
+		position.setPositionId(db.insert("POSITIONS", null, values));
 		
 		values.clear();
-		return position.getPositionID();
+		return position.getPositionId();
 		
 	}
 	
@@ -419,11 +419,11 @@ public class DBManager {
 				
 				Position position = new Position();
 				
-				position.setPositionID(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
+				position.setPositionId(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
 				position.setLatitude(cursor.getDouble(cursor.getColumnIndex("LATITUDE")));
 				position.setLongitude(cursor.getDouble(cursor.getColumnIndex("LONGITUDE")));
 				position.setTime(cursor.getLong(cursor.getColumnIndex("TIME")));
-				position.setSportID(cursor.getLong(cursor.getColumnIndex("SPORTID")));
+				position.setSportId(cursor.getLong(cursor.getColumnIndex("SPORTID")));
 				
 				positionList.add(position);
 			}
@@ -440,11 +440,11 @@ public class DBManager {
 			
 			Position position = new Position();
 			
-			position.setPositionID(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
+			position.setPositionId(cursor.getLong(cursor.getColumnIndex("POSITIONID")));
 			position.setLatitude(cursor.getDouble(cursor.getColumnIndex("LATITUDE")));
 			position.setLongitude(cursor.getDouble(cursor.getColumnIndex("LONGITUDE")));
 			position.setTime(cursor.getLong(cursor.getColumnIndex("TIME")));
-			position.setSportID(cursor.getLong(cursor.getColumnIndex("SPORTID")));
+			position.setSportId(cursor.getLong(cursor.getColumnIndex("SPORTID")));
 			
 			positionList.add(position);
 		}

@@ -4,19 +4,19 @@ import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
+
+import com.healthlife.entity.Sports;
  
 public class StepService extends Service {
+	
+	private DBinder dBinder = new DBinder();
     public static Boolean flag = false;
     private SensorManager sensorManager;
-    private StepDetector stepDetector;
- 
-    @Override
-    public IBinder onBind(Intent arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    private StepAnalyser stepAnalyser;
+    
+    private Sports walk;
  
     @Override
     public void onCreate() {
@@ -24,20 +24,20 @@ public class StepService extends Service {
         //这里开启了一个线程，因为后台服务也是在主线程中进行，这样可以安全点，防止主线程阻塞
         new Thread(new Runnable() {
             public void run() {
-                startStepDetector();
+                analyseWalk();
             }
         }).start();
  
     }
  
-    private void startStepDetector() {
+    private void analyseWalk() {
         flag = true;
-        stepDetector = new StepDetector(this);
+        stepAnalyser = new StepAnalyser(this);
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);//获取传感器管理器的实例
         Sensor sensor = sensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//获得传感器的类型，这里获得的类型是加速度传感器
         //此方法用来注册，只有注册过才会生效，参数：SensorEventListener的实例，Sensor的实例，更新速率
-        sensorManager.registerListener(stepDetector, sensor,
+        sensorManager.registerListener(stepAnalyser, sensor,
                 SensorManager.SENSOR_DELAY_FASTEST);
     }
  
@@ -50,8 +50,23 @@ public class StepService extends Service {
     public void onDestroy() {
         super.onDestroy();
         flag = false;
-        if (stepDetector != null) {
-            sensorManager.unregisterListener(stepDetector);
+        if (stepAnalyser != null) {
+            sensorManager.unregisterListener(stepAnalyser);
         }
     }
+
+	public class DBinder extends Binder{
+		
+		public Sports getWalk(){
+			
+			walk=stepAnalyser.getWalk();
+			return walk;
+		}
+	}
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return dBinder;
+	}
+    
 }

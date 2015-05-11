@@ -389,8 +389,8 @@ public class ClientService extends Service{
 	  			jsonObject.put("time", position.getTime());
 	  			jsonObject.put("latitude", position.getLatitude());
 	  			jsonObject.put("longitude", position.getLongitude());
-	  			jsonObject.put("sportId", position.getSportID());
-	  			jsonObject.put("positionId", position.getPositionID());
+	  			jsonObject.put("sportId", position.getSportId());
+	  			jsonObject.put("positionId", position.getPositionId());
 	  			positionArray.put(jsonObject);
 	  	}
 	  	
@@ -588,13 +588,13 @@ public class ClientService extends Service{
         		
         		position.setLatitude(object.getDouble("latitude"));
         		position.setLongitude(object.getDouble("longitude"));
-        		position.setSportID(object.getLong("sportId"));
-        		position.setPositionID(object.getLong("positionId"));
+        		position.setSportId(object.getLong("sportId"));
+        		position.setPositionId(object.getLong("positionId"));
         		
-        		long remoteId=position.getSportID();
+        		long remoteId=position.getSportId();
         		long localId=findLoIdByReId(IdReferList, remoteId);
         		
-        		position.setSportID(localId);
+        		position.setSportId(localId);
         		
         		db.insertPosition(position);
         

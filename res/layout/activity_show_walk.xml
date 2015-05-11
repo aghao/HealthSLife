@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+    
+    
+    <TextView
+        android:id="@+id/text_steps_num"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="10dp"
+        android:text="Steps:" />      
+    
+    <TextView
+        android:id="@+id/text_total_step"
+        android:layout_below="@id/text_steps_num"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Total Steps:" />
+
+    <TextView
+	    android:id="@+id/text_steps_date"
+	    android:layout_below="@id/text_total_step"
+	    android:layout_width="150dp"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginLeft="10dp"
+	    android:text="Date:" />
+        
+    <TextView
+	    android:id="@+id/text_steps_duration"
+	    android:layout_below="@id/text_steps_date"
+	    android:layout_width="200dp"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginLeft="10dp"
+	    android:text="Duration:" />
+    
+
+
+ 
+    <Button
+        android:id="@+id/button_save_sports"
+        android:layout_below="@id/text_steps_duration"
+        android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_sports"
+        android:layout_centerHorizontal="true"
+        />
+    
+    <Button 
+        android:id="@+id/button_drop_sports"
+        android:layout_below="@id/button_save_sports"
+       	android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_drop_sports"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

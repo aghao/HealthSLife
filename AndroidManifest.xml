@@ -10,6 +10,7 @@
 
 	<uses-feature android:name="android.hardware.camera" />
 	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.VIBRATE" />
 	
 	<!-- **********************定位所需权限**************************** -->
     <!-- 进行网络定位 -->
@@ -115,7 +116,58 @@
         <activity
             android:name="com.healthlife.activity.RegisterActivity"
             android:label="@string/title_activity_register" >
-        </activity>        
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.SelectSportsActivity"
+            android:label="@string/title_activity_select_sports" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.JogActivity"
+            android:label="@string/title_activity_jogging" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.PushUpActivity"
+            android:label="@string/title_activity_push_up" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.SitUpActivity"
+            android:label="@string/title_activity_sit_up" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.WalkActivity"
+            android:label="@string/title_activity_walking" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowPushUpOrSitUpActivity"
+            android:label="@string/title_activity_show_push_up" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowJogActivity"
+            android:label="@string/title_activity_show_jog" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowWalkActivity"
+            android:label="@string/title_activity_show_walk" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowSitUpActivity"
+            android:label="@string/title_activity_show_sit_up" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowRecordActivity"
+            android:label="@string/title_activity_show_record" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowSportsHistoryActivity"
+            android:label="@string/title_activity_show_sports_history" >
+        </activity>
+
+        <service android:name="com.healthlife.util.PushUpService" >
+        </service>
+        <service android:name="com.healthlife.util.SitUpService" >
+        </service>
+        <service android:name="com.healthlife.util.StepService" >
+        </service>
     </application>
 
 </manifest>

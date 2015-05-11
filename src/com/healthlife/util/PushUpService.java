@@ -4,20 +4,33 @@ import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.healthlife.entity.Sports;
+
 public class PushUpService extends Service {
 	
-	
-	private PushUpDetector pushUpDetector;
+	private DBinder dBinder = new DBinder();
+	private PushUpAnalyser pushUpAnalyser;
 	private SensorManager sensorManager;
 	private Sensor sensor;
+	private Sports pushUp;
 
+public class DBinder extends Binder{
+		
+		public Sports getPushUp(){
+			
+			pushUp = pushUpAnalyser.getPushUp();
+			return pushUp;
+		}
+		
+	}
 	@Override
-	public IBinder onBind(Intent arg0) {
+	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
-		return null;
+		return dBinder;
 	}
 	
 	@Override
@@ -26,20 +39,20 @@ public class PushUpService extends Service {
 		
 		new Thread (new Runnable(){
 			public void run(){
-				startPushUpDetector();
+				analysePushUp();
 			}
 		}).start();
 	}
 	
 	@SuppressWarnings("static-access")
-	public void startPushUpDetector(){
+	public void analysePushUp(){
 		
-		pushUpDetector = new PushUpDetector();
+		pushUpAnalyser = new PushUpAnalyser(this);
 		
 		sensorManager = (SensorManager)this.getSystemService(Service.SENSOR_SERVICE);
-		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-		sensorManager.registerListener(pushUpDetector,sensor,sensorManager.SENSOR_DELAY_FASTEST);
-
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+		sensorManager.registerListener(pushUpAnalyser,sensor,sensorManager.SENSOR_DELAY_UI);
+		Log.i("dd", "aaaaaaaa");
 	}
 	
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -48,8 +61,8 @@ public class PushUpService extends Service {
 	
 	public void onDestroy() {
         super.onDestroy();
-        if (pushUpDetector != null) {
-            sensorManager.unregisterListener(pushUpDetector);    
+        if (pushUpAnalyser != null) {
+            sensorManager.unregisterListener(pushUpAnalyser);    
         }
  
     }

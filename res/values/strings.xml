@@ -31,4 +31,25 @@
     <string name="title_activity_recovery">RecoveryActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_select_sports">SelectSportsActivity</string>
+    <string name="btn_select_jog">Jog</string>
+    <string name="btn_select_pushup">Push-Up</string>
+    <string name="btn_select_situp">Sit-Up</string>
+    <string name="btn_select_walk">Walk</string>
+    <string name="btn_start_sport">Start</string>
+    <string name="btn_stop_sport">Stop</string>
+    <string name="btn_save_sports">Save</string>
+    <string name="btn_drop_sports">Delete</string>
+    <string name="title_activity_jogging">JoggingActivity</string>
+    <string name="title_activity_push_up">PushUpActivity</string>
+    <string name="title_activity_sit_up">SitUpActivity</string>
+    <string name="title_activity_walking">WalkingActivity</string>
+    <string name="title_activity_show_push_up">ShowPushUpActivity</string>
+    <string name="title_activity_show_jog">ShowJogActivity</string>
+    <string name="title_activity_show_walk">ShowWalkActivity</string>
+    <string name="title_activity_show_sit_up">ShowSitUpActivity</string>
+    <string name="title_activity_show_record">ShowRecordActivity</string>
+    <string name="title_activity_show_sports_history">ShowSportsHistoryActivity</string>
+    <string name="text_inited_motion_number">0</string>
+    <string name="btn_clear_record">Clear</string>
 </resources>

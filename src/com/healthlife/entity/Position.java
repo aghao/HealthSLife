@@ -1,13 +1,13 @@
 package com.healthlife.entity;
 
-import java.io.Serializable;
 
-public class Position implements Serializable{
+public class Position {
+	
 	private long time;
 	private double latitude;
 	private double longitude;
-	private long sportID;
-	private long positionID;
+	private long sportId;
+	private long positionId;
 	
 	public long getTime() {
 		return time;
@@ -27,16 +27,17 @@ public class Position implements Serializable{
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public long getSportID() {
-		return sportID;
+	public long getPositionId() {
+		return positionId;
 	}
-	public void setSportID(long sportID) {
-		this.sportID = sportID;
+	public void setPositionId(long positionId) {
+		this.positionId = positionId;
 	}
-	public long getPositionID() {
-		return positionID;
+	public long getSportId() {
+		return sportId;
 	}
-	public void setPositionID(long positionID) {
-		this.positionID = positionID;
+	public void setSportId(long sportId) {
+		this.sportId = sportId;
 	}
+
 }

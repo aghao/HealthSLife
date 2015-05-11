@@ -37,6 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"TOTALNUMSITUP INTEGER,"
 			+"STEPS INTEGER"
 			+")";
+	
 	private static final String CREATE_SPORTS = "CREATE TABLE SPORTS (" 
 			+"SPORTID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"DATE VARCHAR(50),"
@@ -51,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"MAXSPEED REAL,"
 			+"DISTANCE REAL"
 			+")";
+	
 	private static final String CREATE_BEATS = "CREATE TABLE BEATS ("
 			+"BEATID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"USERID INTEGER NOT NULL,"

@@ -74,7 +74,7 @@ public class LocationResult extends Activity{
 		newPosition = new Position();
 		//newSports.setUserId(1); //≤‚ ‘”√1
 		newSports.setDate(date);
-		newSports.setType(GlobalVariables.JOG_TYPE);
+		newSports.setType(GlobalVariables.SPORTS_TYPE_JOG);
 		newSports.setDistance((float)distance);
 		newSports.setDuration(duration);
 		newSports.setAVGSpeed(speed);
@@ -137,7 +137,7 @@ public class LocationResult extends Activity{
 					
 					sportID = myDB.insertSport(newSports);
 					for(int i=0;i<points.size();i++){
-						newPosition.setSportID(sportID);
+						newPosition.setSportId(sportID);
 						newPosition.setTime(points.get(i).getTime());
 						newPosition.setLatitude(points.get(i).getLatitude());
 						newPosition.setLongitude(points.get(i).getLongitude());

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ImageView 
+        android:id="@+id/image_sports_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+    
+    <TextView
+        android:id="@+id/text_list_date"
+        android:layout_toRightOf="@id/image_sports_type"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        />
+    
+    <TextView
+        android:id="@+id/text_list_num"
+        android:layout_below="@id/text_list_date"
+        android:layout_toRightOf="@id/image_sports_type"
+        android:layout_width="fill_parent"
+        android:layout_height="15dp"
+        />
+
+</RelativeLayout>

@@ -1,21 +1,36 @@
 package com.healthlife.util;
 
+import com.healthlife.entity.Sports;
+
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
 public class SitUpService extends Service {
 
 	private SensorManager sensorManager;
-	private Sensor sensor;
-	private SitUpDetector sitUpDetector;
+	private Sensor accSensor,magSensor;
+	private SitUpAnalyser sitUpAnalyser;
+	private Sports sitUp;
+	private DBinder dBinder =  new DBinder();
+	
+	public class DBinder extends Binder{
+		
+		public Sports getSitUp(){
+			
+			sitUp=sitUpAnalyser.getSitUp();
+			return sitUp;
+		}
+	}
+	
+
 	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
+	public IBinder onBind(Intent intent) {	
+		return dBinder;
 	}
 	
 	public void onCreate(){
@@ -31,13 +46,14 @@ public class SitUpService extends Service {
 	
 	protected void startSitUpDetector() {
 		
-		sitUpDetector = new SitUpDetector();
+		sitUpAnalyser = new SitUpAnalyser(this);
 		
 		sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
-		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+		accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		// TODO Auto-generated method stub
-		sensorManager.registerListener(sitUpDetector,sensor,sensorManager.SENSOR_DELAY_FASTEST);
-		
+		sensorManager.registerListener(sitUpAnalyser,accSensor,SensorManager.SENSOR_DELAY_UI);	
+		sensorManager.registerListener(sitUpAnalyser,magSensor,SensorManager.SENSOR_DELAY_UI);	
 	}
 
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -46,8 +62,8 @@ public class SitUpService extends Service {
     
     public void onDestroy() {
         super.onDestroy();
-        if (sitUpDetector != null) {
-            sensorManager.unregisterListener(sitUpDetector);    
+        if (sitUpAnalyser != null) {
+            sensorManager.unregisterListener(sitUpAnalyser);    
         }
     }
 

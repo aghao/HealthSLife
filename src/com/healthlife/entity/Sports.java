@@ -94,5 +94,9 @@ public class Sports implements Serializable{
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
+	
+
+	
+
 }
 
