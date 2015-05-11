@@ -159,7 +159,9 @@ public class GetLocation extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-			
+				//解除绑定计步器服务
+				unbindService(connection);
+				
 				if(points.size() > 0){
 					chronometer.stop();
 					recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
