@@ -46,6 +46,10 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service android:name="com.healthlife.activity.MusicService" >
+        </service>
+        <service android:name="com.healthlife.activity.ClientService" >
+        </service>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -84,6 +88,34 @@
             android:name="com.healthlife.activity.HeartHistory"
             android:label="@string/title_activity_heart_history" >
         </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicMain"
+            android:label="@string/title_activity_music_main" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicPlayer"
+            android:label="@string/title_activity_music_player" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicList"
+            android:label="@string/title_activity_music_list" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.BackupsActivity"
+            android:label="@string/title_activity_backups" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ClientMain"
+            android:label="@string/title_activity_client_main" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.RegisterActivity"
+            android:label="@string/title_activity_register" >
+        </activity>        
     </application>
 
 </manifest>

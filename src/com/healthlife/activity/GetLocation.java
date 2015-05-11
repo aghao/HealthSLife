@@ -41,7 +41,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.healthlife.R;
-import com.healthlife.entity.Point;
+import com.healthlife.entity.Position;
 import com.healthlife.util.MyOrientationListener;
 import com.healthlife.util.MyOrientationListener.OnOrientationListener;
 /**
@@ -73,14 +73,14 @@ public class GetLocation extends Activity {
     private Button finishBtn;
     private TextView disText;
     private TextView paceText;
-    private Point resultPoint;
-	private List<Point> points;
+	private List<Position> points;
     private List<LatLng> pts;
 	private double subLat;
 	private double subLon;
     private float mCurrentX;
     private double distance;
     private long recordTime;
+    private String date;
     private String duration;
     private static final String IOS = "Test";
 	
@@ -105,7 +105,10 @@ public class GetLocation extends Activity {
 		subLon = 0.0;
 		distance = 0.0;
 		recordTime = 0;
-		points = new ArrayList<Point>();
+		points = new ArrayList<Position>();
+		
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());       
+		date = sDateFormat.format(new java.util.Date());
 		
 		initMap();
 		initMyLocation();
@@ -117,7 +120,7 @@ public class GetLocation extends Activity {
 			@Override
 			public void onClick(View v) {
 			
-				if(points.size() > 1){
+				if(points.size() > 0){
 					chronometer.stop();
 					recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
 					
@@ -140,7 +143,7 @@ public class GetLocation extends Activity {
 					else
 						ss = String.valueOf(second);
 					duration = sh + ":" + sm + ":" + ss;
-					
+					Log.i("Test", "Intent之前！");
 					Intent intent = new Intent();
 					intent.setClass(GetLocation.this, LocationResult.class);
 					intent.putExtra("locinfo", (Serializable) points);
@@ -149,7 +152,9 @@ public class GetLocation extends Activity {
 					intent.putExtra("distance", distance);
 					intent.putExtra("duration", duration);
 					intent.putExtra("rectime", recordTime);
+					intent.putExtra("date", date);
 					startActivity(intent);
+					Log.i("Test", "Intent之后！");
 				}else {
 					Toast.makeText(GetLocation.this, "运动数据为0！", Toast.LENGTH_SHORT).show();
 				}
@@ -168,7 +173,7 @@ public class GetLocation extends Activity {
 		option.setLocationMode(LocationMode.Hight_Accuracy);// 设置定位模式
 		option.setOpenGps(true);// 打开gps
 		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(5000);
+		option.setScanSpan(6000);
 		mLocationClient.setLocOption(option);
 		
 		//方向传感器监听事件
@@ -217,8 +222,10 @@ public class GetLocation extends Activity {
 			mCurrentLatitude = location.getLatitude();  
             mCurrentLongitude = location.getLongitude();
             
-            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());       
-    		String date = sDateFormat.format(new java.util.Date());
+//          SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());       
+//    		String date = sDateFormat.format(new java.util.Date());
+            long potTime = SystemClock.elapsedRealtime();
+            
     		if (isFirstCompare)
 			{
             	isFirstCompare = false;
@@ -229,7 +236,7 @@ public class GetLocation extends Activity {
             	minLongitude = maxLongitude;
             	centerLatitude = mCurrentLatitude;
             	centerLongitude = mCurrentLongitude;
-        		addPoints(date, mCurrentLatitude, mCurrentLongitude);
+        		addPoints(potTime, mCurrentLatitude, mCurrentLongitude);
 			}else {
 				subLat = Math.abs(points.get(points.size()-1).getLatitude() - mCurrentLatitude);
 	    		subLon = Math.abs(points.get(points.size()-1).getLongitude() - mCurrentLongitude);
@@ -258,7 +265,7 @@ public class GetLocation extends Activity {
 		            centerLatitude = (maxLatitude + minLatitude)/2.0;
 		            centerLongitude = (maxLongitude + minLongitude)/2.0;
 		            
-		            addPoints(date, mCurrentLatitude, mCurrentLongitude);
+		            addPoints(potTime, mCurrentLatitude, mCurrentLongitude);
 		            Log.i("Test", "有反映了");
     			}
     		}
@@ -320,9 +327,9 @@ public class GetLocation extends Activity {
         mBaiduMap.animateMapStatus(u);
 	}
 	
-	private void addPoints(String date, Double mCurrentLat, Double mCurrentLon){
-		Point p = new Point();
-		p.setDate(date);
+	private void addPoints(long time, Double mCurrentLat, Double mCurrentLon){
+		Position p = new Position();
+		p.setTime(time);
 		p.setLatitude(mCurrentLat);
 		p.setLongitude(mCurrentLon);
 		points.add(p);

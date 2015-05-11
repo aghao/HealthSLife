@@ -128,4 +128,15 @@
 		    </LinearLayout>
 	    </LinearLayout>
 	</LinearLayout>
+	
+	<Button
+        android:id="@+id/location_result_savebtn"
+        android:layout_height="58dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:background="#3498db"
+        android:text="保存结果" />
 </RelativeLayout>

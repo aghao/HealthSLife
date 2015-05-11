@@ -72,8 +72,6 @@ public class HeartHistory extends Activity {
 		this.registerForContextMenu(hrList);
 	}
 	
-
-	
 	ArrayList <HashMap<String,Object>> getHeartRateData(){
 		ArrayList <HashMap<String,Object>> data = new ArrayList <HashMap<String,Object>>();
 		int n = hrHistory.size();

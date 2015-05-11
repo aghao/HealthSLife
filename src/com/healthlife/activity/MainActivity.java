@@ -59,9 +59,9 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-			//	Intent intent = new Intent();
-			//	intent.setClass(MainActivity.this, GetLocation.class);
-			//	startActivity(intent);
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, MusicMain.class);
+				startActivity(intent);
 			}
 		});
 		//运动数据按钮响应

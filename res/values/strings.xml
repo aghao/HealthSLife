@@ -23,4 +23,12 @@
     <string name="hrlast">最近一次的测量</string>
     <string name="bmp">BMP</string>
     <string name="hrinit">00</string>
+    <string name="title_activity_music_main">MusicMain</string>
+    <string name="title_activity_music_player">MusicPlayer</string>
+    <string name="title_activity_music_list">MusicList</string>
+    <string name="title_activity_backups">BackupsActivity</string>
+    <string name="title_activity_client_main">ClientMain</string>
+    <string name="title_activity_recovery">RecoveryActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
