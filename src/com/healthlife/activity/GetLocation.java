@@ -8,8 +8,14 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
@@ -82,9 +88,15 @@ public class GetLocation extends Activity {
     private long recordTime;
     private String date;
     private String duration;
-    private static final String IOS = "Test";
-	
-	@Override
+    
+    //计时器用变量
+    private MotionReceiver motionReceiver;
+    private IntentFilter intentFilterforStep;
+    private ServiceConnection connection;
+    private int steps;
+
+    
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -113,6 +125,33 @@ public class GetLocation extends Activity {
 		initMap();
 		initMyLocation();
 		initTime();
+		
+		//开始初始化计步器
+		//********************************************************************************************************************
+		intentFilterforStep = new IntentFilter();
+		intentFilterforStep.addAction("com.healthlife.activity.WalkActivity.MotionAdd");
+		
+		motionReceiver = new MotionReceiver();
+		
+		registerReceiver(motionReceiver,intentFilterforStep);
+		
+		connection = new ServiceConnection(){
+
+			@Override
+			public void onServiceConnected(ComponentName name, IBinder service) {
+			}
+
+			@Override
+			public void onServiceDisconnected(ComponentName arg0) {
+				
+				
+			}
+		};
+		
+		Intent intntBind = new Intent(this,com.healthlife.util.StepService.class);
+		bindService(intntBind,connection,BIND_AUTO_CREATE);
+		//******************************************************************************************************************************
+		//计步器初始化结束
 		
 		//结束运动按钮响应
 		finishBtn.setOnClickListener(new OnClickListener() {
@@ -432,5 +471,15 @@ public class GetLocation extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	//计步器广播接收器
+	class MotionReceiver extends BroadcastReceiver{
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			steps = intent.getIntExtra("motionNum",-1);
+			paceText.setText(String.valueOf(steps));	
+		}
+		
 	}
 }
