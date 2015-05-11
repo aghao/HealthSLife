@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HealthSLife</string>
+    <string name="app_name">健康S生活</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_get_location">GetLocation</string>
+    <string name="title_activity_get_location">地图定位</string>
+    <string name="title_activity_heart_rate">心率测量</string>
+    <string name="histroy">历史记录</string>
+    <string name="title_activity_heart_result">心率结果</string>
+    <string name="title_activity_heart_history">心率历史</string>
+    <string name="download">下载记录</string>
+    <string name="clear">清空</string>
+    <string name="cancle">取消</string>
+    <string name="back">返回</string>
+    <string name="saverecord">保存本次记录</string>
+    <string name="hrupload">上传此次记录</string>
+    <string name="hrdelete">删除此次记录</string>
+    <string name="hrstatic">静息心率</string>
+    <string name="hrmax">最大心率</string>
+    <string name="hrsport">运动后心率</string>
+    <string name="hrlast">最近一次的测量</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_music_main">MusicMain</string>
+    <string name="title_activity_music_player">MusicPlayer</string>
+    <string name="title_activity_music_list">MusicList</string>
+    <string name="title_activity_backups">BackupsActivity</string>
+    <string name="title_activity_client_main">ClientMain</string>
+    <string name="title_activity_recovery">RecoveryActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 
 </resources>

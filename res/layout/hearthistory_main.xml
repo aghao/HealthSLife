@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    android:layout_alignParentTop="true" 
+	    android:id="@+id/hrheadbt">
+	    <Button 
+            style="?android:attr/borderlessButtonStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:id="@+id/hr_clearbt"
+	        android:text="@string/clear"/>
+	    
+	    <Button 
+	        style="?android:attr/borderlessButtonStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:id="@+id/hr_downloadbt"
+	        android:text="@string/download"/>
+	    
+	    
+    </LinearLayout>
+	<ListView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/hr_list"
+	    android:layout_below="@id/hrheadbt"
+	    />	
+
+</RelativeLayout>

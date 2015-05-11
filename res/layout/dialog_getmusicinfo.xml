@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/getmusicinfo_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	<View
+	    android:layout_width="match_parent"
+        android:layout_height="10dp"
+	    />
+	
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView 
+            android:layout_width="120dp"
+       		android:layout_height="wrap_content"
+       		android:layout_marginLeft="30dp"
+       		android:textSize="20sp"
+       		android:text="音乐名："
+            
+            />
+         <TextView 
+            android:id="@+id/dialog_musicname"
+            android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:textSize="20sp"
+       		android:text="记得"
+            
+            />
+    </TableRow>
+    <View
+	    android:layout_width="match_parent"
+        android:layout_height="5dp"
+	    />
+		<View
+	    android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+	    />
+		<View
+	    android:layout_width="match_parent"
+        android:layout_height="5dp"
+	    />
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView 
+            android:layout_width="120dp"
+       		android:layout_height="wrap_content"
+       		android:layout_marginLeft="30dp"
+       		android:textSize="20sp"
+       		android:text="音乐节奏："
+            
+            />
+         <TextView
+            android:id="@+id/dialog_musicpace" 
+            android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:textSize="20sp"
+       		android:text="3"
+            
+            />
+    </TableRow>
+	<View
+	    android:layout_width="match_parent"
+        android:layout_height="5dp"
+	    />
+		<View
+	    android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+	    />
+		<View
+	    android:layout_width="match_parent"
+        android:layout_height="5dp"
+	    />
+        <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView 
+            android:layout_width="120dp"
+       		android:layout_height="wrap_content"
+       		android:layout_marginLeft="30dp"
+       		android:textSize="20sp"
+       		android:text="是否播放："
+            
+            />
+       <TextView
+            android:id="@+id/dialog_ifactive" 
+            android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:textSize="20sp"
+       		android:text="是"
+            
+            />
+    </TableRow>
+    <View
+	    android:layout_width="match_parent"
+        android:layout_height="10dp"
+	    />
+	
+	
+</LinearLayout>

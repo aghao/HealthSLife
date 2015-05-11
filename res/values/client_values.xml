@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="confirm">确认密码</string>
+     <string name="login">登陆</string>
+     <string name="register">注册</string>
+     <string name="cancel">取消</string>
+     <string name="backups">备份</string>
+     <string name="recovery">还原</string>
+     <string name="historyrecord">历史记录</string>
+</resources>

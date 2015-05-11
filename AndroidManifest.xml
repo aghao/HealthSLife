@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.healthslife"
+    package="com.healthlife"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,14 +8,59 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-	<uses-feature android:name="android.hardware.camera" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- **********************定位所需权限**************************** -->
+    <!-- 进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 获取并支持提供运营商信息相关接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 访问WIFI网络相关信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取wifi的获取权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- **********************百度地图所需权限**************************** -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service android:name="com.healthlife.activity.MusicService" >
+        </service>
+         <service android:name="com.healthlife.activity.ClientService" >
+        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="1ra2qcvsPAIc05rGqHxIZPQl" />
+
         <activity
             android:name="com.healthlife.activity.MainActivity"
             android:label="@string/app_name" >
@@ -26,8 +71,56 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.healthlife.activity.HeartRate"
+            android:label="@string/title_activity_heart_rate" >
+        </activity>
+        <activity
             android:name="com.healthlife.activity.GetLocation"
             android:label="@string/title_activity_get_location" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.HeartResult"
+            android:label="@string/title_activity_heart_result" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.HeartHistory"
+            android:label="@string/title_activity_heart_history" >
+        </activity>
+        <activity
+            android:name="com.healthlife.TestActivity"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicMain"
+            android:label="@string/title_activity_music_main" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicPlayer"
+            android:label="@string/title_activity_music_player" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.MusicList"
+            android:label="@string/title_activity_music_list" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.BackupsActivity"
+            android:label="@string/title_activity_backups" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ClientMain"
+            android:label="@string/title_activity_client_main" >
+        </activity>
+        <activity
+            android:name="com.healthlife.RecoveryActivity"
+            android:label="@string/title_activity_recovery" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+        	android:name="com.healthlife.activity.RegisterActivity"
+            android:label="@string/title_activity_register" >
         </activity>
     </application>
 

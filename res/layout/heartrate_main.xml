@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
     
-
-    <Button 
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/historybt"
+        android:text="@string/histroy"
         />
     
-    <SurfaceView 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/surface"
-        />
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cameraview"
+        android:layout_centerInParent="true"
+        >
+    </FrameLayout>    
+    
+ 
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_alignParentBottom="true">
+	   
+	    <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content" 
+	    	android:id="@+id/hrlast"
+	    	android:layout_alignParentBottom="true"/>
+	     <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="@string/hrlast"
+	    	android:layout_above="@id/hrlast"
+	    	/>
+	     <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_alignTop="@id/hrlast" 
+	    	android:layout_alignBottom="@id/hrlast"
+	    	android:id="@+id/hrlasttype"
+	    	android:layout_alignParentRight="true"/>
+	</RelativeLayout>
+    
+    
+</RelativeLayout>

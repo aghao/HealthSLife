@@ -8,9 +8,16 @@
 # Java class files
 *.class
 
+# Play Store Image
+ic_launcher1-web.png
+
 # Generated files
 bin/
 gen/
+
+# MainActivity
+MainActivity.java
+healthlife_main.xml
 
 # Gradle files
 .gradle/
