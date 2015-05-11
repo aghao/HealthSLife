@@ -98,6 +98,7 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			intentNextActivity.putExtra("pushup",pushUp);
 			intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_PUSHUP);
 			startActivity(intentNextActivity);
+			finish();
 			break;
 		}
 		

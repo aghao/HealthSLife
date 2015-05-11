@@ -90,6 +90,7 @@ public class SitUpActivity extends Activity implements OnClickListener {
 			intentNextActivity.putExtra("situp",sitUp);
 			intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_SITUP);
 			startActivity(intentNextActivity);
+			finish();
 			break;
 			
 			default:
