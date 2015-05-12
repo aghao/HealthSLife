@@ -11,10 +11,38 @@
             backward-compatibility can go here.
         -->
     </style>
-
+ 	 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle" >@style/myActionBarStyle</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
+    <style name="myActionBarStyle" parent="android:Widget.ActionBar" >  
+        <item name="android:background">#e74c3c</item>
+        <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>  
+    </style>
+    <style name="AcBar_titleStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>  
+    </style>
+    
+    <style name="SitupTheme" parent="AppBaseTheme">
+          <item name="android:actionBarStyle">@style/situpBarStyle</item>
+    </style>
+    <style name="situpBarStyle" parent="android:Widget.ActionBar" >  
+        <item name="android:background">#f1c40f</item> 
+    </style>
+    <style name="PushupTheme" parent="AppBaseTheme">
+          <item name="android:actionBarStyle">@style/pushupBarStyle</item>
+    </style>
+    <style name="pushupBarStyle" parent="android:Widget.ActionBar" >  
+        <item name="android:background">#f39c12</item> 
+    </style>
+    <style name="JogTheme" parent="AppBaseTheme">
+          <item name="android:actionBarStyle">@style/jogBarStyle</item>
+    </style>
+    <style name="jogBarStyle" parent="android:Widget.ActionBar" >  
+        <item name="android:background">#3498db</item> 
+        <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>  
+    </style>
 </resources>

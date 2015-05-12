@@ -16,7 +16,7 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 	private Button btnJog;
 	private Button btnPushUp;
 	private Button btnSitUp;
-	private Button btnWalk;
+//	private Button btnWalk;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,9 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 		btnJog=(Button)findViewById(R.id.button_select_jog);
 		btnPushUp=(Button)findViewById(R.id.button_select_pushup);
 		btnSitUp=(Button)findViewById(R.id.button_select_situp);
-		btnWalk=(Button)findViewById(R.id.button_select_walk);
+//		btnWalk=(Button)findViewById(R.id.button_select_walk);
 		
-		btnWalk.setOnClickListener(this);
+//		btnWalk.setOnClickListener(this);
 		btnPushUp.setOnClickListener(this);
 		btnSitUp.setOnClickListener(this);
 		btnJog.setOnClickListener(this);
@@ -37,16 +37,12 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.select_sports, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -59,25 +55,26 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 
 		switch (v.getId()){
 		
-		case R.id.button_select_jog:;
-		//intent =new Intent(this,JogActivity.class);
-		//startActivity(intent);
-		break;
-		
 		case R.id.button_select_pushup:;
-		Intent startPushUp =new Intent(this,com.healthlife.activity.PushUpActivity.class);
+		Intent startPushUp =new Intent(SelectSportsActivity.this, PushUpActivity.class);
 		startActivity(startPushUp);
 		break;
 		
-		case R.id.button_select_situp:;
-		Intent startSitUp =new Intent(this,com.healthlife.activity.SitUpActivity.class);
-		startActivity(startSitUp);
+		case R.id.button_select_jog:;
+		Intent intent = new Intent();
+		intent.setClass(SelectSportsActivity.this, GetLocation.class);
+		startActivity(intent);
 		break;
 		
-		case R.id.button_select_walk:;
-		// startWalk =new Intent(this,com.healthlife.activity.WalkActivity.class);
-		//startActivity(startWalk);
+		case R.id.button_select_situp:;
+		Intent startSitUp =new Intent(SelectSportsActivity.this, SitUpActivity.class);
+		startActivity(startSitUp);
 		break;
+
+//		case R.id.button_select_walk:;
+//		Intent startWalk =new Intent(this,com.healthlife.activity.WalkActivity.class);
+//		startActivity(startWalk);
+//		break;
 		}
 	}
 }

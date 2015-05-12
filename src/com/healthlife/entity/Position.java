@@ -1,7 +1,9 @@
 package com.healthlife.entity;
 
+import java.io.Serializable;
 
-public class Position {
+
+public class Position implements Serializable{
 	
 	private long time;
 	private double latitude;
