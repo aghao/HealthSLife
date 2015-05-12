@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,7 +14,7 @@ import com.healthlife.db.DBManager;
 import com.healthlife.entity.Record;
 
 
-public class ShowRecordActivity extends Activity {
+public class ShowRecordActivity extends Activity implements OnClickListener {
 	
 	private DBManager db;
 	private Record record;
@@ -47,9 +46,14 @@ public class ShowRecordActivity extends Activity {
 		totalSteps=(TextView)findViewById(R.id.text_total_steps);		
 		
 		db = new DBManager(this);
-		record = db.queryRecord();
 		
-		String hours,minutes,seconds;
+		updateStatics();
+			
+		btnClear.setOnClickListener(this);
+	}
+	
+	private void updateStatics(){
+		record = db.queryRecord();
 		
 		BigDecimal  bd = new BigDecimal(record.getCalOfPushUp());
 		float f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
@@ -91,15 +95,13 @@ public class ShowRecordActivity extends Activity {
 		totalNumPushUp.setText("慢跑总距离: "+String.valueOf(record.getTotalDistance())+" 次");
 		totalNumSitUp.setText("俯卧撑总数: "+String.valueOf(record.getTotalNumPushUp())+" 次");
 		totalSteps.setText("仰卧起坐总数: "+String.valueOf(record.getTotalNumSitUp())+" 步");
-			
-		btnClear.setOnClickListener(new OnClickListener(){
+	}
 
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				db.clearRecord(record.getRecordId());
-			}		
-		});
-		Log.i("dd", "aaa");
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		db.clearRecord(record.getRecordId());
+		updateStatics();
+		
 	}
 }

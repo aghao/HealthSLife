@@ -357,8 +357,9 @@ public class DBManager {
 		
 		Record record = new Record();
 		record.setUserId(userId);
+		record.setRecordId(recordId);
 
-		this.updateRecord(record);
+		updateRecord(record);
 	}
 	
 	public void removeRecord(long userId){
@@ -497,7 +498,6 @@ public class DBManager {
 		}
 		
 		cursor.close();
-
 		return sportsList;
 	}
 }
