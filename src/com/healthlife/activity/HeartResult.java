@@ -75,7 +75,7 @@ public class HeartResult extends Activity {
 				
 				if(ID == -1)
 				{
-					myDB.insertUserForFake();
+//					myDB.insertFakeUser();
 					ID= myDB.insertBeats(newBeats);
 				}
 				Intent intent = new Intent();

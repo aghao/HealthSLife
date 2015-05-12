@@ -1,20 +1,65 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context="com.iosilent.locatetest.MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="25sp"
-        android:text="地图显示" />
+    <com.baidu.mapapi.map.MapView  
+	    android:id="@+id/location_main_bmapView"  
+	    android:layout_width="fill_parent"  
+	    android:layout_height="fill_parent"  
+	    android:clickable="true" />
     
-    <WebView
-        android:id="@+id/webview"
+    <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:background="#ffffff"
+        android:alpha="0.8"
+        android:orientation="vertical" >
+        <Chronometer
+	        android:id="@+id/location_main_chronotime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:textSize="30sp" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="horizontal" >
+	        <TextView
+		        android:id="@+id/location_main_distance"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="15dp"
+		        android:layout_marginLeft="15dp"
+		        android:layout_weight="1"
+				android:textSize="20sp"
+		        android:text="路程：" />
+	
+	    	<TextView
+	    	    android:id="@+id/location_main_pace"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:layout_marginTop="15dp"
+	    	    android:layout_marginRight="15dp"
+	    	    android:layout_weight="1"
+	    	    android:textSize="20sp"
+	    	    android:text="步数：" />
+    	</LinearLayout>
+    </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/location_main_finishbtn"
+        android:layout_height="58dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:background="#ff4f4f"
+        android:text="结束运动" />
+
+</RelativeLayout>

@@ -2,16 +2,17 @@ package com.healthlife.entity;
 
 public class GlobalVariables {
 	
-	public static long CURRENT_USERID =1;
-	
-	public final static int JOG_TYPE = 0;
-	public final static int PUSHUP_TYPE = 1;
-	public final static int SITUP_TYPE = 2;
-	public final static int WALK_TYPE = 3;
+	public final static int SPORTS_TYPE_JOG = 0;
+	public final static int SPORTS_TYPE_PUSHUP = 1;
+	public final static int SPORTS_TYPE_SITUP = 2;
+	public final static int SPORTS_TYPE_WALK = 3;
 	
 	public final static int PACE_LEVEL_FAST = 0;
 	public final static int PACE_LEVEL_MEDIUM = 1;
 	public final static int PACE_LEVEL_SLOW = 2;
+	
+	public final static int MODE_SHOW_UNSAVED = 0;
+	public final static int MODE_SHOW_SAVED =1;
 	
 	public final static int RECORD_TYPE_AVGSPEED= 0;
 	public final static int RECORD_TYPE_AVGPACE= 1;
@@ -27,11 +28,6 @@ public class GlobalVariables {
 	public final static int RECORD_TYPE_TOTALDISTANCE = 11;
 	public final static int RECORD_TYPE_TOTALNUMPUSHUP = 12;
 	public final static int RECORD_TYPE_TOTALNUMSITUP = 13;
-	public final static int RECORD_TYPE_STEPS = 14;
-	
-
-	
-	
-	
+	public final static int RECORD_TYPE_STEPS = 14;	
 
 }

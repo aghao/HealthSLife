@@ -1,27 +1,27 @@
 package com.healthlife.entity;
 
+import java.io.Serializable;
+
 /*
  * a abstract class for vrious sports
  */
 
 
-public class Sports {
+@SuppressWarnings("serial")
+public class Sports implements Serializable{
 	
 	private long sportsID;
 	private String Date;
 	private int type;
 	private long userId;
 	private int num;
-	private float ValidRate;
-	private float perfectRate;
-	private float grade;
-	private float MaxSpeed;
+	private float validNum;
+	private float perfectNum;
+	private float goodNum;
+	private float maxSpeed;
 	private float AVGSpeed;
 	private float distance;
 	private String duration;
-	
-
-	
 	public long getSportsID() {
 		return sportsID;
 	}
@@ -32,7 +32,7 @@ public class Sports {
 		return Date;
 	}
 	public void setDate(String date) {
-		this.Date = date;
+		Date = date;
 	}
 	public int getType() {
 		return type;
@@ -52,35 +52,35 @@ public class Sports {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public float getValidRate() {
-		return ValidRate;
+	public float getValidNum() {
+		return validNum;
 	}
-	public void setValidRate(float validRate) {
-		this.ValidRate = validRate;
+	public void setValidNum(float validNum) {
+		this.validNum = validNum;
 	}
-	public float getPerfectRate() {
-		return perfectRate;
+	public float getPerfectNum() {
+		return perfectNum;
 	}
-	public void setPerfectRate(float perfectRate) {
-		this.perfectRate = perfectRate;
+	public void setPerfectNum(float perfectNum) {
+		this.perfectNum = perfectNum;
 	}
-	public float getGrade() {
-		return grade;
+	public float getGoodNum() {
+		return goodNum;
 	}
-	public void setGrade(float grade) {
-		this.grade = grade;
+	public void setGoodNum(float goodNum) {
+		this.goodNum = goodNum;
 	}
 	public float getMaxSpeed() {
-		return MaxSpeed;
+		return maxSpeed;
 	}
 	public void setMaxSpeed(float maxSpeed) {
-		this.MaxSpeed = maxSpeed;
+		this.maxSpeed = maxSpeed;
 	}
 	public float getAVGSpeed() {
 		return AVGSpeed;
 	}
-	public void setAVGSpeed(float AVGSpeed) {
-		this.AVGSpeed = AVGSpeed;
+	public void setAVGSpeed(float aVGSpeed) {
+		AVGSpeed = aVGSpeed;
 	}
 	public float getDistance() {
 		return distance;
@@ -94,5 +94,9 @@ public class Sports {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
+	
+
+	
+
 }
 

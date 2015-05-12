@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string name="play_button">"播放"</string>
+     <string name="stop_button">"停止 "</string>
+     <string name="changesongs_button">"换歌"</string>
+</resources>
