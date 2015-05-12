@@ -18,7 +18,7 @@ public class Sports implements Serializable{
 	private float validNum;
 	private float perfectNum;
 	private float goodNum;
-	private float maxSpeed;
+	private float calorie;
 	private float AVGSpeed;
 	private float distance;
 	private String duration;
@@ -70,11 +70,11 @@ public class Sports implements Serializable{
 	public void setGoodNum(float goodNum) {
 		this.goodNum = goodNum;
 	}
-	public float getMaxSpeed() {
-		return maxSpeed;
+	public float getCalorie() {
+		return calorie;
 	}
-	public void setMaxSpeed(float maxSpeed) {
-		this.maxSpeed = maxSpeed;
+	public void setCalorie(float maxSpeed) {
+		this.calorie = maxSpeed;
 	}
 	public float getAVGSpeed() {
 		return AVGSpeed;
