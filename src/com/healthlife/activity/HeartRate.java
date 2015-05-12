@@ -299,7 +299,7 @@ public class HeartRate extends Activity {
 		double timeFinal = (double)(time[end]-time[start])/60000;
 		//Ñ°·å¼ÆËãĞÄÂÊ
 		num = (int) ((num-1)/timeFinal);
-		num = num-20;
+		num = num-10;
 		resultText.setText(num+"");
 		if(point == 63)
 		{

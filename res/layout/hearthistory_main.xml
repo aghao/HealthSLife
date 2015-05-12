@@ -6,25 +6,20 @@
     <LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:orientation="horizontal" 
+	    android:orientation="vertical" 
 	    android:layout_alignParentTop="true" 
 	    android:id="@+id/hrheadbt">
 	    <Button 
             style="?android:attr/borderlessButtonStyle"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
 	        android:id="@+id/hr_clearbt"
 	        android:text="@string/clear"/>
-	    
-	    <Button 
-	        style="?android:attr/borderlessButtonStyle"
+	    <com.github.mikephil.charting.charts.BarChart
+	        android:id="@+id/heart_barchart"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:id="@+id/hr_downloadbt"
-	        android:text="@string/download"/>
-	    
+	        android:layout_height="320dp"
+	        android:layout_gravity="center_horizontal"/>
 	    
     </LinearLayout>
 	<ListView
