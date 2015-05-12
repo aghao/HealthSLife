@@ -162,7 +162,7 @@ public class GetLocation extends Activity {
 				//解除绑定计步器服务
 				unbindService(connection);
 				
-				if(points.size() > 0){
+				if(points.size() > 1){
 					chronometer.stop();
 					recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
 					
@@ -196,6 +196,7 @@ public class GetLocation extends Activity {
 					intent.putExtra("rectime", recordTime);
 					intent.putExtra("date", date);
 					startActivity(intent);
+					finish();
 					Log.i("Test", "Intent之后！");
 				}else {
 					Toast.makeText(GetLocation.this, "运动数据为0！", Toast.LENGTH_SHORT).show();
