@@ -5,6 +5,7 @@ import com.healthlife.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Contacts.Intents;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,13 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if(id == R.id.sport_history){
+			Intent intent = new Intent();
+			intent.setClass(SelectSportsActivity.this, ShowSportsHistoryActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
