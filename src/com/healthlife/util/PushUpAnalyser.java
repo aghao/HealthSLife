@@ -179,6 +179,7 @@ public class PushUpAnalyser implements SensorEventListener {
 		pushUp.setGoodNum(mGoodNum);
 		pushUp.setDuration(getDuration());
 		pushUp.setDate(mDate);
+		pushUp.setCalorie((mValidNum*2/3+mGoodNum*4/5+mPerfectNum*1)*0.3f);//其实是卡路里，暂时用最高速度代替
 		
 		return pushUp;
 	}

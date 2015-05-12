@@ -14,12 +14,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
  
-/**
- * 这是一个实现了信号监听的记步的类
- * 这是从谷歌找来的一个记步的算法，看不太懂
- * @author Liyachao Date:2015-1-6
- *
- */
 public class StepAnalyser implements SensorEventListener {
  
     private int mStep = 0;
