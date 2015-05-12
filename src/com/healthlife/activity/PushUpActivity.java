@@ -71,8 +71,7 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			}
 		};
 		
-		Intent intntBind = new Intent(this,com.healthlife.util.PushUpService.class);
-		bindService(intntBind,connection,BIND_AUTO_CREATE);
+
 		
 	}
 
@@ -81,8 +80,10 @@ public class PushUpActivity extends Activity implements OnClickListener {
 		
 		switch(v.getId()){
 		case R.id.button_start_pushup:
-			Intent intentStart = new Intent(this,PushUpService.class);
-			startService(intentStart);
+			//Intent intentStart = new Intent(this,PushUpService.class);
+			//startService(intentStart);
+			Intent intntBind = new Intent(this,com.healthlife.util.PushUpService.class);
+			bindService(intntBind,connection,BIND_AUTO_CREATE);
 			break;
 			
 		case R.id.button_stop_pushup:
