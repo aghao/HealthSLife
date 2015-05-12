@@ -7,6 +7,42 @@
     <ListView
         android:id="@+id/list_sports_history"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="500dp" />
+    
+    <Button   
+        android:id="@+id/button_show_total_history"
+        android:layout_below="@id/list_sports_history"
+        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:text="总览"
+        />
+    
+    <Button   
+        android:id="@+id/button_show_pushup_history"
+        android:layout_below="@id/list_sports_history"
+        android:layout_toRightOf="@+id/button_show_total_history"
+        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:text="俯卧撑"
+        />
+        
+    <Button   
+        android:id="@+id/button_show_situp_history"
+        android:layout_below="@id/list_sports_history"
+        android:layout_toRightOf="@id/button_show_pushup_history"
+        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:text="仰卧起坐"
+        />
+            
+    <Button   
+        android:id="@+id/button_show_jog_history"
+        android:layout_below="@id/list_sports_history"
+        android:layout_toRightOf="@id/button_show_situp_history"
+        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:text="长跑"
+        />
+    
 
 </RelativeLayout>
