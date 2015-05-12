@@ -695,8 +695,7 @@ public class MusicList extends Activity {
 	 */
 	private void SearchMusic()
     {
-    	
-		search_music(Environment.getRootDirectory().getAbsolutePath());
+		//search_music(Environment.getRootDirectory().getAbsolutePath());
 		search_music(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 	

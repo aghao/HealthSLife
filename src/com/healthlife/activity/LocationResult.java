@@ -58,6 +58,7 @@ public class LocationResult extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("Test", "ytehathjt");
 		setContentView(R.layout.location_result);
 		
 		Intent intent = getIntent();
