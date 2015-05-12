@@ -22,7 +22,7 @@ import com.healthlife.util.VibratorUtil;
 
 public class PushUpActivity extends Activity implements OnClickListener {
 		
-	private Button btnStart,btnStop;
+	private Button btnStart;
 	private TextView textNum;
 	
 	private PushUpService.DBinder dBinder;
@@ -33,12 +33,15 @@ public class PushUpActivity extends Activity implements OnClickListener {
 	
 	private Sports pushUp;
 	private Activity thisActivity;
+	private boolean startFlag;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pushup);
+		
+		startFlag=false;
 		
 		thisActivity=this;
 		
@@ -51,12 +54,10 @@ public class PushUpActivity extends Activity implements OnClickListener {
 		
 		
 		btnStart=(Button)findViewById(R.id.button_start_pushup);
-		btnStop=(Button)findViewById(R.id.button_stop_pushup);
 		
 		textNum=(TextView)findViewById(R.id.text_pushup_amount);
 		
 		btnStart.setOnClickListener(this);
-		btnStop.setOnClickListener(this);
 		
 		connection = new ServiceConnection(){
 			
@@ -77,16 +78,16 @@ public class PushUpActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		
-		switch(v.getId()){
-		case R.id.button_start_pushup:
-			//Intent intentStart = new Intent(this,PushUpService.class);
-			//startService(intentStart);
+	
+
+			if(!startFlag){
 			Intent intntBind = new Intent(this,com.healthlife.util.PushUpService.class);
 			bindService(intntBind,connection,BIND_AUTO_CREATE);
-			break;
+			btnStart.setText("Stop");
+			startFlag=true;
+			}
 			
-		case R.id.button_stop_pushup:
+			else{
 			pushUp = dBinder.getPushUp();
 			unregisterReceiver(motionReceiver);
 			unbindService(connection);
@@ -99,10 +100,10 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_PUSHUP);
 			startActivity(intentNextActivity);
 			finish();
-			break;
+			}
 		}
 		
-	}
+	
 
 	class MotionReceiver extends BroadcastReceiver{
 		@Override
