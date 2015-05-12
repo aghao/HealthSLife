@@ -69,9 +69,6 @@ public class SitUpActivity extends Activity implements OnClickListener {
 				dBinder = (SitUpService.DBinder) service;
 			}
 		};
-		
-		Intent intentBind = new Intent(this,com.healthlife.util.SitUpService.class);
-		bindService(intentBind,connection,BIND_AUTO_CREATE);
 	}
 
 	@Override
@@ -79,8 +76,8 @@ public class SitUpActivity extends Activity implements OnClickListener {
 		
 		switch(v.getId()){
 		case R.id.button_start_situp:
-			Intent intentStart = new Intent(this,SitUpService.class);
-			startService(intentStart);
+			Intent intentBind = new Intent(this,com.healthlife.util.SitUpService.class);
+			bindService(intentBind,connection,BIND_AUTO_CREATE);
 			break;
 			
 		case R.id.button_stop_situp:

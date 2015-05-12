@@ -75,8 +75,8 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 		break;
 		
 		case R.id.button_select_walk:;
-		Intent startWalk =new Intent(this,com.healthlife.activity.WalkActivity.class);
-		startActivity(startWalk);
+		// startWalk =new Intent(this,com.healthlife.activity.WalkActivity.class);
+		//startActivity(startWalk);
 		break;
 		}
 	}
