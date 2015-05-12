@@ -1,7 +1,5 @@
 package com.healthlife.util;
 
-import android.util.Log;
-
 
 public class YuvToRGB {
 	
@@ -28,7 +26,6 @@ public class YuvToRGB {
 	            }  
 	        }  
 	        red = red/numOfPixel;
-	        Log.v("num",""+red);
 	        if(red < 105 || red > 150)
 	        	return -1;
 	        return (double)(red);  

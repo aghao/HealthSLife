@@ -10,7 +10,6 @@ import com.healthlife.entity.Beats;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -78,7 +77,6 @@ public class HeartResult extends Activity {
 				{
 //					myDB.insertFakeUser();
 					ID= myDB.insertBeats(newBeats);
-					Log.v("id",""+ID);
 				}
 				Intent intent = new Intent();
 				intent.setClass(HeartResult.this, HeartHistory.class);
