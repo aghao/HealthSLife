@@ -67,7 +67,7 @@
 					   		 />
                            
                             <ImageButton
-						        android:id="@+id/listenmusic_bt"
+						        android:id="@+id/multiselect_bt"
 						        android:layout_width="60dp"
 						        android:layout_height="60dp"
 						        android:background="@drawable/multiselect_bt"
@@ -105,8 +105,25 @@
 		                    android:layout_alignParentBottom="true"
 		                    
                           >
+                            <ImageButton
+						        android:id="@+id/music_image"
+						        android:layout_width="60dp"
+						        android:layout_height="60dp"
+						        android:background="@drawable/music_image"
+						        
+					   		 />
+                            
+                            <ImageButton
+						        android:id="@+id/batchdelete_bt"
+						        android:layout_width="60dp"
+						        android:layout_height="60dp"
+						        android:layout_alignParentRight="true"
+						        android:background="@drawable/multiselect_bt"
+						        
+					   		 />
+                            
                             <TextView 
-                                android:id="@+id/current_music"
+                                android:id="@+id/playingmusic_name"
 			                    android:layout_width="wrap_content"
 			                    android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"

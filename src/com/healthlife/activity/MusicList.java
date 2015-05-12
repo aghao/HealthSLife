@@ -13,12 +13,16 @@ import com.healthlife.entity.Music;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,13 +41,20 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MusicList extends Activity {
+
+	
+
+
+
 
 	//记录数据库里面存在的全部音乐信息
 	ArrayList<Music> all_music_data;
@@ -57,13 +68,45 @@ public class MusicList extends Activity {
 	ListView allmusic_list;
 	ListView activemusic_list;
 	ImageButton searchmusic_bt;
-	ImageButton listenmusic_bt;
+	ImageButton multiselect_bt;
+	ImageButton batchdelete_bt;
+	TextView playingmusic_name;
+	
+	
 	boolean ifmultiselect=true;
+	boolean ifbatchdelete=true;
+	
+	//CheckBox checkbox;
+	
+	private BroadcastReceiver musicname_receiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			// TODO Auto-generated method stub
+			String MusicName=arg1.getStringExtra("MusicName");
+			//Bundle bundle = arg1.getExtras();
+			//String s=bundle.getString("Result");
+			Log.i("TEST","receive:"+MusicName);
+			if(MusicName.equals("blank"))
+				playingmusic_name.setText("");
+			else
+				playingmusic_name.setText(MusicName);
+		}
+		
+		
+	};
 	
 	
-	CheckBox checkbox;
-	
-	boolean if_longclick=false;
+	private BroadcastReceiver directplay_receiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			// TODO Auto-generated method stub
+			Toast.makeText(MusicList.this,"智能模式下无法试听", Toast.LENGTH_LONG).show();
+		}
+		
+		
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +134,9 @@ public class MusicList extends Activity {
 
 		allmusic_list=(ListView)findViewById(R.id.allmusic_list);
 		
-		allmusic_list.setOnItemClickListener(new ShowMusicItemInfo());
+		//allmusic_list.setOnItemClickListener(new ShowMusicItemInfo());
 		
-		allmusic_list.setOnItemLongClickListener(new ModifyMusicItemInfo());
+		//allmusic_list.setOnItemLongClickListener(new ModifyMusicItemInfo());
 		
 		activemusic_list=(ListView)findViewById(R.id.activemusic_list);
 		
@@ -102,11 +145,26 @@ public class MusicList extends Activity {
 		
 		searchmusic_bt.setOnClickListener(new RefreshMusicList());
 		
-		listenmusic_bt=(ImageButton)findViewById(R.id.listenmusic_bt);
+		multiselect_bt=(ImageButton)findViewById(R.id.multiselect_bt);
 		//listenmusic_bt.setText("多选");
-		listenmusic_bt.setOnClickListener(new MultiSelect());
+		multiselect_bt.setOnClickListener(new MultiSelect());
 		
+		batchdelete_bt=(ImageButton)findViewById(R.id.batchdelete_bt);
+		batchdelete_bt.setOnClickListener(new BatchDelete());
+		
+		playingmusic_name=(TextView)findViewById(R.id.playingmusic_name);
+		registerReceiver(musicname_receiver,new IntentFilter("MusicName"));
+		registerReceiver(directplay_receiver,new IntentFilter("DirectPlayRet"));
 	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unregisterReceiver(musicname_receiver);
+		unregisterReceiver(directplay_receiver);
+	}
+
 	
 	@Override
 	protected void onStart() {
@@ -119,12 +177,25 @@ public class MusicList extends Activity {
 		all_activemusic_data=new ArrayList<Music>();
 		
 		
+		
 		ReadMusicData();
 		ShowMusicList();
 		
 		
+		ShowPlayingMusic();
+
 	}
 	
+	
+	
+	private void ShowPlayingMusic(){
+		
+		Intent intent = new Intent(MusicList.this, 
+        		MusicService.class); 
+		intent.setAction("GetMediaInfo");
+		intent.putExtra("Type", "MusicName");
+        startService(intent);
+	}
 	/**
 	 * 从数据库读取音乐文件数据
 	 */
@@ -164,45 +235,45 @@ public class MusicList extends Activity {
 	 * @author Maniger
 	 *
 	 */
-	class ShowMusicItemInfo implements OnItemClickListener{
-
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			// TODO Auto-generated method stub
-			AlertDialog.Builder builder = new Builder(MusicList.this);
-			builder.setTitle("歌曲信息");
-			//获取布局
-			LayoutInflater inflater = getLayoutInflater();
-			View layout = inflater.inflate(R.layout.dialog_getmusicinfo,
-			     (ViewGroup) findViewById(R.id.getmusicinfo_dialog));
-			builder.setView(layout);
-			
-			//获取歌曲项信息
-			Music music=new Music(all_music_data.get(arg2));
-			
-			//获取控件信息
-			TextView music_name=(TextView) layout.findViewById(R.id.dialog_musicname);
-			TextView music_pace=(TextView) layout.findViewById(R.id.dialog_musicpace);
-			TextView ifactice=(TextView) layout.findViewById(R.id.dialog_ifactive);
-			//设置控件内容
-			music_name.setText(music.getMusicName());
-			music_pace.setText(""+music.getPace());
-			if(1==music.isIfActive())
-				ifactice.setText("是");
-			else
-				ifactice.setText("否");	
-			
-				
-			builder.setPositiveButton("确认",null);
-			builder.setNegativeButton("取消", null);
-			//显示
-			builder.show();
-
-		}
-
-		
-	}
+//	class ShowMusicItemInfo implements OnItemClickListener{
+//
+//		@Override
+//		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//				long arg3) {
+//			// TODO Auto-generated method stub
+//			AlertDialog.Builder builder = new Builder(MusicList.this);
+//			builder.setTitle("歌曲信息");
+//			//获取布局
+//			LayoutInflater inflater = getLayoutInflater();
+//			View layout = inflater.inflate(R.layout.dialog_getmusicinfo,
+//			     (ViewGroup) findViewById(R.id.getmusicinfo_dialog));
+//			builder.setView(layout);
+//			
+//			//获取歌曲项信息
+//			Music music=new Music(all_music_data.get(arg2));
+//			
+//			//获取控件信息
+//			TextView music_name=(TextView) layout.findViewById(R.id.dialog_musicname);
+//			TextView music_pace=(TextView) layout.findViewById(R.id.dialog_musicpace);
+//			TextView ifactice=(TextView) layout.findViewById(R.id.dialog_ifactive);
+//			//设置控件内容
+//			music_name.setText(music.getMusicName());
+//			music_pace.setText(""+music.getPace());
+//			if(1==music.isIfActive())
+//				ifactice.setText("是");
+//			else
+//				ifactice.setText("否");	
+//			
+//				
+//			builder.setPositiveButton("确认",null);
+//			builder.setNegativeButton("取消", null);
+//			//显示
+//			builder.show();
+//
+//		}
+//
+//		
+//	}
 	
 	
 	/**
@@ -210,11 +281,101 @@ public class MusicList extends Activity {
 	 * @author Maniger
 	 *
 	 */
-	class ModifyMusicItemInfo implements OnItemLongClickListener{
-
+//	class ModifyMusicItemInfo implements OnItemLongClickListener{
+//
+//		@Override
+//		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+//				int arg2, long arg3) {
+//			// TODO Auto-generated method stub
+//			AlertDialog.Builder builder = new Builder(MusicList.this);
+//			builder.setTitle("歌曲信息");
+//			//获取布局
+//			LayoutInflater inflater = getLayoutInflater();
+//			View layout = inflater.inflate(R.layout.dialog_modifymusicinfo,
+//			     (ViewGroup) findViewById(R.id.modifymusicinfo_dialog));
+//			
+//			final Music music=new Music(all_music_data.get(arg2));
+//			
+//			
+//			//显示音乐名
+//			final EditText music_name=(EditText)layout.findViewById(R.id.dialog_musicname_m);   
+//			music_name.setText(music.getMusicName());
+//			
+//			//显示音乐节奏
+//			final Spinner music_pace;
+//			ArrayList<String> list = new ArrayList<String>(); 
+//			ArrayAdapter<String> adapter;
+//	    	
+//	    	//给列表添加音乐节奏
+//	    	list.add("1");
+//	    	list.add("2");
+//	    	list.add("3");
+//	    	list.add("4");
+//	    	list.add("5");
+//	    	
+//	    	 //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项    
+//	    	music_pace = (Spinner)layout.findViewById(R.id.dialog_musicpace_m);    
+//	        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list。    
+//	        adapter = new ArrayAdapter<String>(MusicList.this,R.layout.style_musicpacelist, list);    
+//	        //第三步：为适配器设置下拉列表下拉时的菜单样式。    
+//	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);    
+//	        //第四步：将适配器添加到下拉列表上    
+//	        music_pace.setAdapter(adapter);      
+//	        //设置音乐节奏
+//	        music_pace.setSelection(list.indexOf(""+music.getPace()), true);
+//			
+//	        //是否在播放列表
+//	        final CheckBox ifactive=(CheckBox)layout.findViewById(R.id.dialog_ifactive_m);
+//	        if(1==music.isIfActive())
+//	        	ifactive.setChecked(true);
+//	        else
+//	        	ifactive.setChecked(false);
+//	        
+//	        
+//	        
+//			builder.setView(layout);
+//			builder.setPositiveButton("确认",new DialogInterface.OnClickListener(){
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					// TODO Auto-generated method stub
+//					music.setMusicName(music_name.getText().toString());
+//					TextView tempTextView=(TextView)music_pace.getChildAt(0);
+//					music.setPace(Integer.valueOf((String) tempTextView.getText()));
+//					if(ifactive.isChecked())
+//						music.setIfActive(1);
+//					else
+//						music.setIfActive(0);
+//					
+//					temp_music_data.clear();
+//					temp_music_data.add(music);
+//					UpdateMusicData();
+//					ShowMusicList();
+//				}
+//				
+//			});
+//			  
+//			builder.setNegativeButton("取消", null);
+//
+//			builder.show();
+//
+//			//下面的返回值很重要，能区分长按和短按
+//			return true;
+//		}
+//		
+//		
+//	}
+	
+	class ModifyMusicInfo implements OnClickListener{
+		int position;
+		ArrayList<Music> musiclist;
+		public ModifyMusicInfo(int position,ArrayList<Music> musiclist)
+		{
+			this.position=position;
+			this.musiclist=musiclist;
+		}
+		
 		@Override
-		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-				int arg2, long arg3) {
+		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			AlertDialog.Builder builder = new Builder(MusicList.this);
 			builder.setTitle("歌曲信息");
@@ -223,7 +384,7 @@ public class MusicList extends Activity {
 			View layout = inflater.inflate(R.layout.dialog_modifymusicinfo,
 			     (ViewGroup) findViewById(R.id.modifymusicinfo_dialog));
 			
-			final Music music=new Music(all_music_data.get(arg2));
+			final Music music=new Music(musiclist.get(position));
 			
 			
 			//显示音乐名
@@ -287,14 +448,9 @@ public class MusicList extends Activity {
 
 			builder.show();
 
-			//下面的返回值很重要，能区分长按和短按
-			return true;
 		}
 		
-		
 	}
-	
-	
 	
 	
 	/**
@@ -384,6 +540,76 @@ public class MusicList extends Activity {
 	}
 	
 	
+	
+	
+	class PlayMusicInPlayList implements OnClickListener{
+		int position;
+		public PlayMusicInPlayList(int position)
+		{
+			this.position=position;
+		}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+				
+			Music music=new Music(all_activemusic_data.get(position));
+						
+			Intent intent = new Intent(MusicList.this, 
+	        		MusicService.class); 
+			intent.setAction("PlayerControl");
+			intent.putExtra("PlayerAction", "DirectPlay");
+			intent.putExtra("MusicPath", music.getMusicPath());
+	        startService(intent);
+			
+			
+			
+			
+		}
+		
+	}
+	
+	
+	
+	class AllMusicListAdapter extends SimpleAdapter{
+		private int mResource;
+	    private List<? extends Map<String, ?>> mData;
+
+		
+		public AllMusicListAdapter(Context context, List<? extends Map<String, ?>> data,
+				int resource, String[] from, int[] to) {
+			super(context, data, resource, from, to);
+			// TODO Auto-generated constructor stub
+			this.mResource = resource;
+            this.mData = data;
+            
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			
+			LayoutInflater layoutInflater = getLayoutInflater();
+			View view = layoutInflater.inflate(mResource, null);
+		    
+			TextView music_name = (TextView) view.findViewById(R.id.music_name);
+		    music_name.setText(mData.get(position).get("music_name").toString());
+		    TextView music_path = (TextView) view.findViewById(R.id.music_path);
+		    music_path.setText(mData.get(position).get("music_path").toString()); 
+		    TextView music_id = (TextView) view.findViewById(R.id.music_id);
+		    music_id.setText(mData.get(position).get("music_id").toString()); 
+		    TextView music_pace = (TextView) view.findViewById(R.id.music_pace);
+		    music_pace.setText(mData.get(position).get("music_pace").toString()); 
+		    TextView ifactive = (TextView) view.findViewById(R.id.ifactive);
+		    ifactive.setText(mData.get(position).get("ifactive").toString()); 
+		    
+		    ImageButton detailinfo_bt=(ImageButton)view.findViewById(R.id.detailinfo_bt);
+		    detailinfo_bt.setVisibility(View.VISIBLE);
+		    detailinfo_bt.setOnClickListener(new ModifyMusicInfo(position,all_music_data));
+			
+			return view;
+		}
+	}
 	/**
 	 * 自定义多项选择ListView适配器
 	 * @author Maniger
@@ -422,6 +648,8 @@ public class MusicList extends Activity {
 		    TextView ifactive = (TextView) view.findViewById(R.id.ifactive);
 		    ifactive.setText(mData.get(position).get("ifactive").toString()); 
 		    
+		    
+		    
 		    CheckBox check=(CheckBox)view.findViewById(R.id.check);
 		    check.setVisibility(View.VISIBLE);
 		    if(mData.get(position).get("ifactive").equals(Integer.valueOf(1)))
@@ -442,16 +670,16 @@ public class MusicList extends Activity {
 	
 	/**
 	 * 自定义多项选择ListView适配器
-	 * @author Maniger
+	 *
 	 *
 	 */
 	class PlayListAdapter extends SimpleAdapter{
 		
 		private int mResource;
 	    private List<? extends Map<String, ?>> mData;
-
+	    
 		
-		public PlayListAdapter(Context context, List<? extends Map<String, ?>> data,
+		public PlayListAdapter(boolean ifbatchdelete,Context context, List<? extends Map<String, ?>> data,
 				int resource, String[] from, int[] to) {
 			super(context, data, resource, from, to);
 			// TODO Auto-generated constructor stub
@@ -478,12 +706,25 @@ public class MusicList extends Activity {
 		    TextView ifactive = (TextView) view.findViewById(R.id.ifactive);
 		    ifactive.setText(mData.get(position).get("ifactive").toString()); 
 		    
-		    ImageButton image=(ImageButton)view.findViewById(R.id.delete_bt);
-		    image.setVisibility(View.VISIBLE);
-		    image.setOnClickListener(new RemoveMusicInPlayList(position));
-		    
-		    
-		         
+		    if(!ifbatchdelete)
+		    {
+			    ImageButton image=(ImageButton)view.findViewById(R.id.delete_bt);
+			    image.setVisibility(View.VISIBLE);
+			    image.setOnClickListener(new RemoveMusicInPlayList(position));
+			    
+			    ImageButton modify_bt=(ImageButton)view.findViewById(R.id.modifyinfo_bt);
+			    modify_bt.setVisibility(View.VISIBLE);
+			    modify_bt.setOnClickListener(new ModifyMusicInfo(position,all_activemusic_data));
+			   
+		    }
+		    else
+		    {
+		    	ImageButton image=(ImageButton)view.findViewById(R.id.listen_bt);
+			    image.setVisibility(View.VISIBLE);
+			    image.setOnClickListener(new PlayMusicInPlayList(position));
+			    
+			    
+		    }
 			
 			return view;
 		}
@@ -492,19 +733,24 @@ public class MusicList extends Activity {
 	
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * 显示歌曲列表
 	 */
 	private void ShowMusicList()
 	{
-		SimpleAdapter adapter1 = new SimpleAdapter(this,getAllMusicList(),R.layout.listview_music_list,
+		AllMusicListAdapter adapter1 = new AllMusicListAdapter(this,getAllMusicList(),R.layout.listview_allmusic_list,
                 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
                 new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
 		
 		allmusic_list.setAdapter(adapter1);
 		
 		
-		PlayListAdapter adapter2 = new PlayListAdapter(this,getActiveMusicList(),R.layout.listview_music_list,
+		PlayListAdapter adapter2 = new PlayListAdapter(ifbatchdelete,this,getActiveMusicList(),R.layout.listview_activemusic_list,
 				 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
 	             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
 		
@@ -598,9 +844,11 @@ public class MusicList extends Activity {
 			// TODO Auto-generated method stub
 			if(ifmultiselect)
 			{
+				
+				
 				temp_music_data.clear();
 				
-				MultiSelectAdapter adapter = new MultiSelectAdapter(MusicList.this,getAllMusicList(),R.layout.listview_music_list,
+				MultiSelectAdapter adapter = new MultiSelectAdapter(MusicList.this,getAllMusicList(),R.layout.listview_allmusic_list,
 						 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
 			             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
 				
@@ -613,8 +861,9 @@ public class MusicList extends Activity {
 			{
 			
 				  AlertDialog.Builder builder = new Builder(MusicList.this);
+				  builder.setCancelable(false);
 				  builder.setMessage("确认把选中的歌曲添加到播放列表？");
-
+				  
 				  builder.setTitle("提示");
 
 				  builder.setPositiveButton("确认",new DialogInterface.OnClickListener() {
@@ -625,18 +874,32 @@ public class MusicList extends Activity {
 							UpdateMusicData();
 							ShowMusicList();
 							
+							AllMusicListAdapter adapter = new AllMusicListAdapter(MusicList.this,getAllMusicList(),R.layout.listview_allmusic_list,
+									 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
+						             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
+							
+							allmusic_list.setAdapter(adapter);
+							ifmultiselect=true;
 						}
 				  });
 				  
-				  builder.setNegativeButton("取消", null);
+				  builder.setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						 AllMusicListAdapter adapter = new AllMusicListAdapter(MusicList.this,getAllMusicList(),R.layout.listview_allmusic_list,
+								 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
+					             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
+						
+						  allmusic_list.setAdapter(adapter);
+						  ifmultiselect=true;
+					}
+					  
+				  });
 				  builder.show();
 				  
-				  SimpleAdapter adapter = new SimpleAdapter(MusicList.this,getAllMusicList(),R.layout.listview_music_list,
-							 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
-				             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
-					
-				  allmusic_list.setAdapter(adapter);
-				  ifmultiselect=true;
+				 
 			}
 			
 		}
@@ -645,7 +908,71 @@ public class MusicList extends Activity {
 	
 	
 	
+	class BatchDelete implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+
+			PlayListAdapter adapter = new PlayListAdapter(ifbatchdelete,MusicList.this,getActiveMusicList(),R.layout.listview_activemusic_list,
+					 new String[]{"music_name","music_path","music_id","music_pace","ifactive"},
+		             new int[]{R.id.music_name,R.id.music_path,R.id.music_id,R.id.music_pace,R.id.ifactive});
+			
+			activemusic_list.setAdapter(adapter);
+			
+			if(ifbatchdelete)
+				ifbatchdelete=false;
+			else
+			    ifbatchdelete=true;
+			
+		
+			
+			
+		}
+		
+	}
 	
+	
+	
+	private void RefreshMusic(ProgressDialog dialog)
+	{
+		DBManager database=new DBManager(MusicList.this);
+		SearchMusic();
+		
+		Music music;
+		String music_path;
+		String music_name;
+		long music_id;
+		
+		//Log.i("TEST","size:"+all_music.size());
+		for(int i=0;i<all_music_path.size();i++)
+		{
+			
+			music_path=all_music_path.get(i);
+			music_name=music_path.substring(music_path.lastIndexOf("/")+1, music_path.lastIndexOf("."));
+			music=new Music(1,music_name,music_path,3,0);
+			music_id=database.insertMusic(music);
+			music.setMusicId(music_id);
+			
+			
+		}
+		ReadMusicData();
+		dialog.dismiss();
+		mHandler.post(mUpdateResults);
+	}
+	
+	
+	
+	
+	Handler mHandler = new Handler();  
+    Runnable mUpdateResults = new Runnable() {  
+        public void run() {  
+        	
+        	ShowMusicList(); // 更新视图  
+      
+        }  
+    };  
+    
 	
 	/**
 	 * 重新搜索音乐并刷新音乐列表
@@ -655,35 +982,26 @@ public class MusicList extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			DBManager database=new DBManager(MusicList.this);
 			
-		
-			SearchMusic();
+			 final ProgressDialog dialog;
+			 dialog = new ProgressDialog(MusicList.this);
+		     dialog.setTitle("提示");
+		     dialog.setMessage("正在搜索歌曲，请稍后...");
+		     // dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); 
+		     dialog.setCancelable(false);
+		     dialog.show();
+		        
+		     new Thread(new Runnable() {                    
+                    @Override
+                    public void run() {
+                    	RefreshMusic(dialog);                      
+                    }
+                }).start();
+			  
 			
-			Music music;
-			String music_path;
-			String music_name;
-			long music_id;
+			//ShowMusicList();
 			
-			//Log.i("TEST","size:"+all_music.size());
-			for(int i=0;i<all_music_path.size();i++)
-			{
-				
-				music_path=all_music_path.get(i);
-				//Log.i("TEST","path:"+music_path);
-				music_name=music_path.substring(music_path.lastIndexOf("/")+1, music_path.lastIndexOf("."));
-				
-				
-				//Log.i("TEST","name:"+music_name);
-				
-				music=new Music(1,music_name,music_path,3,0);
-				music_id=database.insertMusic(music);
-				music.setMusicId(music_id);
-				
-				
-			}
-			ReadMusicData();
-			ShowMusicList();
+			//dialog.dismiss();
 		}
 		
 	}
@@ -695,7 +1013,8 @@ public class MusicList extends Activity {
 	 */
 	private void SearchMusic()
     {
-		//search_music(Environment.getRootDirectory().getAbsolutePath());
+    	
+		search_music(Environment.getRootDirectory().getAbsolutePath());
 		search_music(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 	

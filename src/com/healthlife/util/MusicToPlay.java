@@ -13,7 +13,7 @@ import android.media.MediaPlayer;
 public class MusicToPlay {
 	
 	
-	public static String musicpath="none";
+	public static String musicpath="blank";
 	public static boolean if_music_change=false;
 	public static boolean if_lyric_change=false;
 
@@ -33,6 +33,36 @@ public class MusicToPlay {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public static void StartMusic(){
+		mediaPlayer.start();
+		musicstate=PLAYING;
+	}	
+	
+	public static void PauseMusic(){
+		mediaPlayer.pause();
+		musicstate=PAUSE;
+	}
+	
+	public static void StopMusic(){
+		mediaPlayer.stop();
+		musicstate=STOP;
+	}
+	
+
+	public static int GetMediaState(){
+		return musicstate;
+	}
+	
+	public static String GetMusicPath(){
+		return musicpath;
+	}
+	
+	public static boolean ifMusicAvailable(){
+		if(!MusicToPlay.musicpath.equals("blank"))
+			return true;
+		else
+			return false;
+	}
 	
 	public static void ResetMusic() {  
 		   

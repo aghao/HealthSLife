@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+     >
+    	<ImageButton
+    	  android:layout_width="40dp"
+            android:layout_height="40dp" 
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/music_image2"
+    	    />
+    	
+		<TextView android:id="@+id/music_name" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="60dp"
+         	android:textColor="#ccffffff"
+            android:textSize="22sp" />
+		
+        <TextView android:id="@+id/music_path" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="60dp"
+            android:textColor="#ccffffff"
+            android:textSize="13sp" />
+        
+        
+        <TextView android:id="@+id/music_id" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:visibility="invisible"
+            />
+        
+        <TextView android:id="@+id/music_pace" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="60dp"
+            android:textSize="13sp"
+            android:textColor="#ccffffff"
+             />
+        
+        <TextView android:id="@+id/ifactive" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="60dp"
+            android:visibility="invisible" />
+        
+        <CheckBox
+	       android:id="@+id/check"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	     	
+	       android:layout_alignParentRight="true"
+	       android:layout_marginRight="20dp"
+	       android:layout_marginTop="10dp"
+	       android:visibility="invisible"
+	      />
+        
+        <ImageButton 
+           android:id="@+id/detailinfo_bt"
+           android:layout_width="50dp"
+	       android:layout_height="50dp"
+	       android:layout_alignParentRight="true"
+	       android:layout_marginRight="20dp"
+	       android:layout_marginTop="10dp"
+	       android:background="@drawable/multiselect_bt"
+	       android:visibility="invisible"
+            />
+        
+</RelativeLayout>
