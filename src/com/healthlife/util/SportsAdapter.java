@@ -32,20 +32,24 @@ public class SportsAdapter extends ArrayAdapter<Sports> {
 		ImageView  sportsImage = (ImageView)view.findViewById(R.id.image_sports_type);
 		TextView textDate = (TextView)view.findViewById(R.id.text_list_date);
 		TextView textNum = (TextView)view.findViewById(R.id.text_list_num);
-		
+		TextView textDuration = (TextView)view.findViewById(R.id.text_list_num1);
+				
 		switch(sports.getType()){
 		
 		case GlobalVariables.SPORTS_TYPE_JOG:
-			//sportsImage.setImageResource(jogId);
-			textNum.setText(String.valueOf(sports.getDistance()));
+			sportsImage.setImageResource(R.drawable.jog_logo_black);
+			textNum.setText(String.format("%.2f",sports.getDistance()/1000) + " KM");
+			textDuration.setText(sports.getDuration());
 			break;
 		case GlobalVariables.SPORTS_TYPE_PUSHUP:
-			//sportsImage.setImageResource(pushUpId);
-			textNum.setText(String.valueOf(sports.getNum()));
+			sportsImage.setImageResource(R.drawable.pushup_logo);
+			textNum.setText(String.valueOf(sports.getNum()) + " ¸ö");
+			textDuration.setText(sports.getDuration());
 			break;
 		case GlobalVariables.SPORTS_TYPE_SITUP:
-			//sportsImage.setImageResource(sitUpId);
-			textNum.setText(String.valueOf(sports.getNum()));
+			sportsImage.setImageResource(R.drawable.situp_logo);
+			textNum.setText(String.valueOf(sports.getNum()) + " ¸ö");
+			textDuration.setText(sports.getDuration());
 			break;
 		case GlobalVariables.SPORTS_TYPE_WALK:
 			//sportsImage.setImageResource(walkId);

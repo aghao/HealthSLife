@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"  
     android:layout_width="fill_parent"  
-    android:layout_height="fill_parent"  
-    android:background="@drawable/player_bg" >  
+    android:layout_height="fill_parent" >  
   
     <com.healthlife.util.LyricView  
         android:id="@+id/mylrc"  
         android:layout_width="fill_parent"  
         android:layout_height="fill_parent"  
-        android:layout_marginBottom="150dp"  
+        android:layout_marginBottom="150dp" 
+        android:alpha="0.3"
+        android:background="#27ae60" 
         />  
   
  

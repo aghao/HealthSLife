@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <TextView
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" 
-    	android:id="@+id/hr_listhistory"/>
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical" >
+    
      <TextView
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:layout_alignTop="@id/hr_listhistory" 
-    	android:layout_alignBottom="@id/hr_listhistory"
     	android:id="@+id/hr_listtype"
+    	android:textSize="17sp"
+    	android:textColor="#393939"
     	android:layout_alignParentRight="true"/>
-</RelativeLayout>
+     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textColor="#3498db"
+	    	android:id="@+id/hr_listhistory"/>
+     	<TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginLeft="5dp"
+	    	android:textColor="#e74c3c"
+	    	android:text="BPM" />
+     </LinearLayout>
+     
+</LinearLayout>

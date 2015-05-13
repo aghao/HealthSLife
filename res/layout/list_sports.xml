@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginLeft="38dp"
+    android:padding="8dp"
+    android:minHeight="50dp" >
     
     <ImageView 
         android:id="@+id/image_sports_type"
@@ -12,16 +15,37 @@
     <TextView
         android:id="@+id/text_list_date"
         android:layout_toRightOf="@id/image_sports_type"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#e74c3c"
+        android:textSize="19sp"
+        android:text="2434"
         />
     
     <TextView
         android:id="@+id/text_list_num"
         android:layout_below="@id/text_list_date"
         android:layout_toRightOf="@id/image_sports_type"
-        android:layout_width="fill_parent"
-        android:layout_height="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#1abc9c"
+        android:textSize="16sp"
+        android:text="8.55km"
+        />
+    <TextView
+        android:id="@+id/text_list_num1"
+        android:layout_below="@id/text_list_date"
+        android:layout_toRightOf="@id/text_list_num"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#3498db"
+        android:textSize="16sp"
+        android:text="00:34:55"
         />
 
 </RelativeLayout>

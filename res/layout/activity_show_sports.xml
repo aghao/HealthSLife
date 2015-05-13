@@ -2,59 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
     
      <com.github.mikephil.charting.charts.PieChart
          android:id="@+id/piechart_motion"
-         android:layout_marginTop="10dp"
+         android:layout_marginTop="20dp"
          android:layout_width="268dp"
-         android:layout_height="232dp"
+         android:layout_height="250dp"
          android:layout_gravity="center_horizontal" />
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="160dp"
+         android:gravity="center_vertical"
+         android:orientation="vertical"
+         android:background="#f0f0f0" >
+         
+	     <TextView
+		    android:id="@+id/text_sports_date"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="10dp"
+	        android:textSize="19sp"
+		    android:layout_marginTop="10dp" />
+	     <TextView
+		    android:id="@+id/text_sports_duration"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="10dp"
+	        android:textSize="19sp"
+		    android:layout_marginTop="10dp" />
+         <TextView
+	        android:id="@+id/text_motion_num"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+		    android:layout_marginLeft="10dp"
+	        android:textSize="19sp"
+	        android:layout_marginTop="10dp" />
     
-     <TextView
-        android:id="@+id/text_motion_num"
-        android:layout_width="150dp"
+	     <TextView
+	        android:id="@+id/text_perfect_motion"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+		    android:layout_marginLeft="10dp"
+	        android:textSize="19sp"
+	        android:layout_marginTop="10dp" />
+	
+     </LinearLayout>
+    <LinearLayout 
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"     />
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" >
+	    <Button
+	        android:id="@+id/button_save_sports"
+	        android:layout_width="110dp"
+	        android:layout_height="110dp"
+	        android:background="@drawable/pushresult_savebtn_selector" />
     
-    <TextView
-        android:id="@+id/text_perfect_motion"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp" />
-
-    <TextView
-	    android:id="@+id/text_sports_date"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="10dp"
-	    android:layout_marginLeft="50dp"/>
-        
-    <TextView
-	    android:id="@+id/text_sports_duration"
-	    android:layout_width="200dp"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="10dp"
-	    android:layout_marginLeft="50dp"/>
+	    <Button 
+	        android:id="@+id/button_drop_sports"
+	        android:layout_width="110dp"
+	        android:layout_height="110dp"
+	        android:layout_marginLeft="20dp"
+	        android:background="@drawable/pushresult_cancelbtn_selector" />
+    </LinearLayout>
     
-    <Button
-        android:id="@+id/button_save_sports"
-        android:layout_marginTop="10dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_save_sports"
-        android:layout_gravity="center"
-        />
-    
-    <Button 
-        android:id="@+id/button_drop_sports"
-        android:layout_width="200dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_drop_sports"
-        android:layout_gravity="center"
-        />
 
 </LinearLayout>

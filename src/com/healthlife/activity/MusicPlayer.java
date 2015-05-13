@@ -141,36 +141,36 @@ public class MusicPlayer extends Activity {
 	
 	public boolean isMusicPlaying()
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
+		if(MusicToPlay.ifMusicAvailable())
 			return MusicToPlay.mediaPlayer.isPlaying();
 		else
 			return false;
 	}
 	public void startMusic()
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
-			MusicToPlay.mediaPlayer.start();
+		if(MusicToPlay.ifMusicAvailable())
+			MusicToPlay.StartMusic();
 	}
 	public void pauseMusic()
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
-			MusicToPlay.mediaPlayer.pause();  
+		if(MusicToPlay.ifMusicAvailable())
+			MusicToPlay.PauseMusic();
 	}
 	public void MusicSeekto(int position)
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
+		if(MusicToPlay.ifMusicAvailable())
 			MusicToPlay.mediaPlayer.seekTo(position);
 	}
 	public int getMusicDuration()
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
+		if(MusicToPlay.ifMusicAvailable())
 			return MusicToPlay.mediaPlayer.getDuration();
 		else
 			return 0;
 	}
 	public int getMusicCurrentPosition()
 	{
-		if(!MusicToPlay.musicpath.equals("blank"))
+		if(MusicToPlay.ifMusicAvailable())
 			return MusicToPlay.mediaPlayer.getCurrentPosition();
 		else
 			return 0;
