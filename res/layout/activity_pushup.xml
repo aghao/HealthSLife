@@ -75,5 +75,4 @@
 	        android:layout_marginLeft="20dp"
 	        android:background="@drawable/sportresult_cancelbtn_selector" />
 	</LinearLayout>
-
 </LinearLayout>
