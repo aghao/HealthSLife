@@ -368,7 +368,7 @@ public class ClientService extends Service{
 	  			jsonObject.put("ValidRate", sports.getValidNum());
 	  			jsonObject.put("perfectRate", sports.getValidNum());
 	  			jsonObject.put("grade", sports.getGoodNum());
-	  			jsonObject.put("MaxSpeed", sports.getMaxSpeed());
+	  			jsonObject.put("MaxSpeed", sports.getCalorie());
 	  			jsonObject.put("AVGSpeed", sports.getAVGSpeed());
 	  			jsonObject.put("distance", sports.getDistance());
 	  			jsonObject.put("duration", sports.getDuration());
@@ -436,20 +436,20 @@ public class ClientService extends Service{
 	  	JSONObject jsonObject = new JSONObject();
 	  	jsonObject.put("recordId", record.getUserId());
 	  	jsonObject.put("AVGSpeed", record.getAVGSpeed());
-	  	jsonObject.put("numPushUp", record.getNumPushUp());
-	  	jsonObject.put("numSitUp", record.getNumSitUp());
-	  	jsonObject.put("validRateSitUp", record.getValidNumSitUp());
-	  	jsonObject.put("validRatePushUp", record.getValidNumPushUp());
+	  	jsonObject.put("numPushUp", record.getDurationPushUp());
+	  	jsonObject.put("numSitUp", record.getDurationJog());
+	  	jsonObject.put("validRateSitUp", record.getCalOfPushUp());
+	  	jsonObject.put("validRatePushUp", record.getTotalCal());
 	  	jsonObject.put("distance", record.getDistance());
-	  	jsonObject.put("AVGPace", record.getAVGPace());
-	  	jsonObject.put("perfectRatePushUp", record.getValidNumPushUp());
-	  	jsonObject.put("perfectRateSitUp", record.getValidNumSitUp());
-	  	jsonObject.put("gradePushUp", record.getGoodNumPushUp());
-	  	jsonObject.put("gradeSitUp", record.getGoodNumSitUp());
+	  	jsonObject.put("AVGPace", record.getTotalDuration());
+	  	jsonObject.put("perfectRatePushUp", record.getTotalCal());
+	  	jsonObject.put("perfectRateSitUp", record.getCalOfPushUp());
+	  	jsonObject.put("gradePushUp", record.getCalOfSitUp());
+	  	jsonObject.put("gradeSitUp", record.getCalOfJog());
 	  	jsonObject.put("TotalDistance", record.getTotalDistance());
 	  	jsonObject.put("totalNumPushUp", record.getTotalNumPushUp());
 	  	jsonObject.put("totalNumSitUp", record.getTotalNumSitUp());
-	  	jsonObject.put("steps", record.getSteps());
+	  	jsonObject.put("steps", record.getTotalSteps());
 	  	jsonObject.put("userId", record.getUserId());
 	  	jsonArray.put(jsonObject);
 	  	
@@ -564,7 +564,7 @@ public class ClientService extends Service{
         		sports.setValidNum((float)object.getDouble("ValidRate"));
         		sports.setPerfectNum((float)object.getDouble("perfectRate"));
         		sports.setGoodNum((float)object.getDouble("grade"));
-        		sports.setMaxSpeed((float)object.getDouble("MaxSpeed"));
+        		sports.setCalorie((float)object.getDouble("MaxSpeed"));
         		sports.setDistance(object.getInt("distance"));
         		sports.setDuration(object.getString("duration"));
         		
@@ -652,21 +652,21 @@ public class ClientService extends Service{
         		Record record=new Record();
         		record.setRecordId(object.getInt("recordId"));
         		record.setUserId(object.getLong("userId"));
-        		record.setAVGPace(object.getInt("AVGPace"));
+        		record.setTotalDuration(object.getInt("AVGPace"));
         		record.setAVGSpeed(object.getInt("AVGSpeed"));
         		record.setDistance(object.getInt("distance"));
-        		record.setGoodNumPushUp(object.getInt("gradePushUp"));
-        		record.setGoodNumSitUp(object.getInt("gradeSitUp"));
-        		record.setNumPushUp(object.getInt("numPushUp"));
-        		record.setNumSitUp(object.getInt("numSitUp"));
-        		record.setPerfectNumPushUp(object.getInt("perfectRatePushUp"));
-        		record.setPerfectNumSitUp(object.getInt("perfectRateSitUp"));
-        		record.setSteps(object.getInt("steps"));
+        		record.setCalOfSitUp(object.getInt("gradePushUp"));
+        		record.setCalOfJog(object.getInt("gradeSitUp"));
+        		record.setDurationPushUp(object.getInt("numPushUp"));
+        		record.setDurationJog(object.getInt("numSitUp"));
+        		record.setDurationSitUp(object.getInt("perfectRatePushUp"));
+        		record.setDurationPerDay(object.getInt("perfectRateSitUp"));
+        		record.setTotalSteps(object.getInt("steps"));
         		record.setTotalDistance(object.getInt("TotalDistance"));
         		record.setTotalNumPushUp(object.getInt("totalNumPushUp"));
         		record.setTotalNumSitUp(object.getInt("totalNumSitUp"));
-        		record.setValidNumPushUp(object.getInt("validRatePushUp"));
-        		record.setValidNumSitUp(object.getInt("validRateSitUp"));
+        		record.setTotalCal(object.getInt("validRatePushUp"));
+        		record.setCalOfPushUp(object.getInt("validRateSitUp"));
         	    db.insertRecord(record);
                
 

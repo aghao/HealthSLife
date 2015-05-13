@@ -1,8 +1,9 @@
 package com.healthlife.activity;
 
+import java.math.BigDecimal;
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,12 +14,12 @@ import com.healthlife.db.DBManager;
 import com.healthlife.entity.Record;
 
 
-public class ShowRecordActivity extends Activity {
+public class ShowRecordActivity extends Activity implements OnClickListener {
 	
 	private DBManager db;
 	private Record record;
 	private Button btnClear;
-	private TextView textDistance,textSpeed,textPushUps,textPerfectPushUps,textValidPushUps,textSitUps,textValidSitUps,textPerfectSitUps,textSteps,textTotalDistance,textTotalPushUps,textTotalSitUps;
+	private TextView calOfPushUp,calOfSitUp,calOfJog,totalCal,durationPushUp,durationJog,durationSitUp,durationPerDay,totalDuration,totalDistance,totalNumPushUp,totalNumSitUp,totalSteps;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,43 +29,79 @@ public class ShowRecordActivity extends Activity {
 		btnClear = (Button)findViewById(R.id.button_record_clear);
 		
 		
-		textDistance=(TextView)findViewById(R.id.text_record_distance);
-		textSpeed=(TextView)findViewById(R.id.text_record_avgspeed);	
-		textPushUps=(TextView)findViewById(R.id.text_record_pushups);
-		textPerfectPushUps=(TextView)findViewById(R.id.text_record_pushups_perfect);	
-		textValidPushUps=(TextView)findViewById(R.id.text_record_pushups_valid);		
-		textSitUps=(TextView)findViewById(R.id.text_record_situps);
-		textValidSitUps	=(TextView)findViewById(R.id.text_record_situps_valid	);
-		textPerfectSitUps=(TextView)findViewById(R.id.text_record_situps_perfect);
-		textSteps=(TextView)findViewById(R.id.text_record_steps);
-		textTotalDistance=(TextView)findViewById(R.id.text_record_totaldistance);
-		textTotalPushUps=(TextView)findViewById(R.id.text_record_totalpushups);
-		textTotalSitUps=(TextView)findViewById(R.id.text_record_totalsitups);
+		calOfPushUp=(TextView)findViewById(R.id.text_push_cal);
+		calOfSitUp=(TextView)findViewById(R.id.text_situp_cal);	
+		calOfJog=(TextView)findViewById(R.id.text_jog_cal);
+		totalCal=(TextView)findViewById(R.id.text_total_cal);
+		
+		durationPushUp=(TextView)findViewById(R.id.text_pushup_duration);	
+		durationJog=(TextView)findViewById(R.id.text_jog_duration);		
+		durationSitUp=(TextView)findViewById(R.id.text_situp_duration);		
+		durationPerDay	=(TextView)findViewById(R.id.text_daily_duration);
+		totalDuration=(TextView)findViewById(R.id.text_total_duration);
+		
+		totalDistance=(TextView)findViewById(R.id.text_total_distance);		
+		totalNumPushUp=(TextView)findViewById(R.id.text_total_pushup);		
+		totalNumSitUp=(TextView)findViewById(R.id.text_total_situp);		
+		totalSteps=(TextView)findViewById(R.id.text_total_steps);		
 		
 		db = new DBManager(this);
+		
+		updateStatics();
+			
+		btnClear.setOnClickListener(this);
+	}
+	
+	private void updateStatics(){
 		record = db.queryRecord();
 		
-		textDistance.setText("最长距离: "+String.valueOf(""+record.getDistance())+" km");
-		textSpeed.setText("平均速度: "+String.valueOf(""+record.getAVGSpeed())+" km/h");
-		textPushUps.setText("日均俯卧撑次: "+String.valueOf(""+record.getNumPushUp())+" 次");
-		textPerfectPushUps.setText("俯卧撑动作优秀率: "+String.valueOf(record.getPerfectNumPushUp())+" 次");
-		textValidPushUps.setText("俯卧撑动作合格率: "+String.valueOf(record.getValidNumPushUp())+" 次");
-		textSitUps.setText("日均仰卧起坐: "+String.valueOf(record.getNumSitUp())+" 次");
-		textValidSitUps.setText("仰卧起坐优秀率: "+String.valueOf(record.getValidNumSitUp())+" 次");
-		textPerfectSitUps.setText("仰卧起坐合格率: "+String.valueOf(record.getPerfectNumSitUp())+" 次");
-		textSteps.setText("总步数: "+String.valueOf(record.getSteps())+" 次");
-		textTotalDistance.setText("慢跑总距离: "+String.valueOf(record.getTotalDistance())+" km");
-		textTotalPushUps.setText("俯卧撑总数: "+String.valueOf(record.getTotalNumPushUp())+" 次");
-		textTotalSitUps.setText("仰卧起坐总数: "+String.valueOf(record.getTotalNumSitUp())+" 次");
-			
-		btnClear.setOnClickListener(new OnClickListener(){
+		BigDecimal  bd = new BigDecimal(record.getCalOfPushUp());
+		float f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
+		calOfPushUp.setText("俯卧撑消耗: "+String.valueOf(f)+" 卡路里");
+		
+		bd = new BigDecimal(record.getCalOfSitUp());
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
+		calOfSitUp.setText("仰卧起坐消耗: "+String.valueOf(f)+" 卡路里");
+		
+		bd = new BigDecimal(record.getCalOfJog());
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
+		calOfJog.setText("慢跑消耗: "+String.valueOf(f)+" 卡路里");
+		
+		bd = new BigDecimal(record.getTotalCal());
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
+		totalCal.setText("总消耗: "+String.valueOf(f)+" 卡路里");
 
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				db.clearRecord(record.getRecordId());
-			}		
-		});
-		Log.i("dd", "aaa");
+		bd = new BigDecimal(record.getDurationPushUp()/1000/60);
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		durationPushUp.setText("俯卧撑耗时: "+String.valueOf(f)+"Min");
+		
+		bd = new BigDecimal(record.getDurationJog()/1000/60);
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		durationJog.setText("慢跑耗时: "+String.valueOf(f)+"Min");
+		
+		bd = new BigDecimal(record.getDurationSitUp()/1000/60);
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		durationSitUp.setText("仰卧起坐耗时: "+String.valueOf(f)+"Min");
+
+		//durationPerDay.setText("日均运动耗时: "+String.valueOf(record.getCalOfPushUp())+"h");
+		bd = new BigDecimal(record.getTotalDuration()/1000/60);
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		totalDuration.setText("运动总耗时: "+String.valueOf(f)+"Min");
+		
+		bd = new BigDecimal(record.getTotalSteps());
+		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		totalDistance.setText("总步数: "+String.valueOf(f)+" 千米");
+		
+		totalNumPushUp.setText("慢跑总距离: "+String.valueOf(record.getTotalDistance())+" 次");
+		totalNumSitUp.setText("俯卧撑总数: "+String.valueOf(record.getTotalNumPushUp())+" 次");
+		totalSteps.setText("仰卧起坐总数: "+String.valueOf(record.getTotalNumSitUp())+" 步");
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		db.clearRecord(record.getRecordId());
+		updateStatics();
+		
 	}
 }

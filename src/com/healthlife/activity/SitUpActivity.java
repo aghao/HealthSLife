@@ -35,11 +35,13 @@ public class SitUpActivity extends Activity implements OnClickListener {
 	
 	private Sports sitUp;
 	private Activity thisActivity;
+	private boolean startFlag;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_situp);
+		startFlag=false;
 		
 		thisActivity = this;
 		
@@ -51,10 +53,8 @@ public class SitUpActivity extends Activity implements OnClickListener {
 		registerReceiver(motionReceiver,intentFilter);
 		
 		btnStart=(Button)findViewById(R.id.button_start_situp);
-		btnStop=(Button)findViewById(R.id.button_stop_situp);
 		
 		btnStart.setOnClickListener(this);
-		btnStop.setOnClickListener(this);
 		
 		textNum=(TextView)findViewById(R.id.text_situp_amount);
 		
@@ -75,13 +75,15 @@ public class SitUpActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
-		switch(v.getId()){
-		case R.id.button_start_situp:
+
+		if(!startFlag){
 			Intent intentBind = new Intent(this,com.healthlife.util.SitUpService.class);
 			bindService(intentBind,connection,BIND_AUTO_CREATE);
-			break;
+			btnStart.setText("Stop");
+			startFlag=true;
+		}
 			
-		case R.id.button_stop_situp:
+		else{
 			sitUp = dBinder.getSitUp();
 			unregisterReceiver(motionReceiver);
 			unbindService(connection);
@@ -91,9 +93,7 @@ public class SitUpActivity extends Activity implements OnClickListener {
 			intentNextActivity.putExtra("situp",sitUp);
 			intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_SITUP);
 			startActivity(intentNextActivity);
-			break;
-			
-			default:
+			finish();
 		}	
 	}
 	
@@ -103,8 +103,7 @@ public class SitUpActivity extends Activity implements OnClickListener {
 			int motionNum;
 			motionNum = intent.getIntExtra("motionNum",-1);
 			VibratorUtil.Vibrate(thisActivity,100);
-			textNum.setText(String.valueOf(motionNum));	
-			
+			textNum.setText(String.valueOf(motionNum));		
 		}
 		
 	}

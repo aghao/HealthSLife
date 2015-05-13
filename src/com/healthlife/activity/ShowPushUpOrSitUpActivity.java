@@ -1,6 +1,9 @@
 package com.healthlife.activity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,8 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract.Data;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -67,6 +72,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		if(GlobalVariables.MODE_SHOW_SAVED==showMode)
 		{
 			btnSave.setVisibility(View.GONE);
+			btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
 		}
 		
 		textNum = (TextView)findViewById(R.id.text_motion_num);
@@ -74,10 +80,10 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		textDate = (TextView)findViewById(R.id.text_sports_date);
 		textDuration = (TextView)findViewById(R.id.text_sports_duration);
 		
-		textNum.setText("Motion: "+String.valueOf(sports.getNum()));
-		textPerfectNum.setText("Perfect: "+String.valueOf((int)sports.getPerfectNum()));
-		textDate.setText("Date: "+String.valueOf(sports.getDate()));
-		textDuration.setText("Duration: "+String.valueOf(sports.getDuration()));
+		textNum.setText("动作数: "+String.valueOf(sports.getNum()));
+		textPerfectNum.setText("消耗卡路里: "+String.valueOf((int)sports.getCalorie()));
+		textDate.setText("日期: "+String.valueOf(sports.getDate()));
+		textDuration.setText("持续时间: "+String.valueOf(sports.getDuration()));
 		
         mChart = (PieChart) findViewById(R.id.piechart_motion);    
         PieData mPieData = getPieData(4, sports.getNum());    
@@ -94,6 +100,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 				updateRecord();
 			}
 			startActivity(intentToNextActivity);
+			finish();
 			break;
 			
 		case R.id.button_drop_sports:
@@ -113,7 +120,8 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 			public void onClick(DialogInterface arg0, int arg1) {
 				if(GlobalVariables.MODE_SHOW_SAVED==showMode)
 					db.removeSport(sports.getSportsID());
-				startActivity(intentToNextActivity);		
+				startActivity(intentToNextActivity);	
+				finish();
 			}
 		});
 		alertDialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -125,6 +133,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 					updateRecord();
 				}
 				startActivity(intentToNextActivity);
+				finish();
 			}
 		});		
 		alertDialog.show();	
@@ -157,11 +166,19 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
             
         ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容     
         
-        	xValues.add("Not Bad: "+(int)sports.getValidNum());
-        	xValues.add("Good: "+(int)sports.getGoodNum());
-        	xValues.add("Perfect: "+(int)sports.getPerfectNum());
-        	
-    
+//        	if(sports.getValidNum()!=0)
+        		xValues.add("Not Bad: "+(int)sports.getValidNum());
+//        	else
+//        		xValues.add("Not Bad:0");
+//        	if(sports.getGoodNum()!=0)
+        		xValues.add("Good: "+(int)sports.getGoodNum());
+//        	else
+//        		xValues.add("Good:0");
+//        	if(sports.getPerfectNum()!=0)
+        		xValues.add("Perfect: "+(int)sports.getPerfectNum());
+//        	else
+//        		xValues.add("Perfect:0");
+//    
         ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据    
     
         // 饼图数据    
@@ -199,29 +216,43 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 
     private void updateRecord(){
     	record = db.queryRecord();
+    	
     	if(GlobalVariables.SPORTS_TYPE_PUSHUP==sports.getType()){
-    		if(record.getNumPushUp()<sports.getNum())
-    			record.setNumPushUp(sports.getNum());
-    		if(record.getGoodNumPushUp()<sports.getGoodNum())
-    			record.setGoodNumPushUp(sports.getGoodNum());
-    		if(record.getValidNumPushUp()<sports.getValidNum())
-    			record.setValidNumPushUp(sports.getValidNum());
-    		if(record.getPerfectNumPushUp()<sports.getPerfectNum())
-    			record.setPerfectNumPushUp(sports.getPerfectNum());
+    		record.setCalOfPushUp(record.getCalOfPushUp()+sports.getCalorie());
+    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
     		
-    		record.setTotalNumPushUp(record.getTotalNumPushUp()+sports.getNum());
+    		record.setDurationPushUp(record.getDurationPushUp()+getDurationInFloat(sports.getDuration()));
+    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
+    		
+    		record.setTotalNumPushUp(record.getTotalNumPushUp()+sports.getNum()); 
     	}
     	else if(GlobalVariables.SPORTS_TYPE_SITUP==sports.getType()){
-    		if(record.getNumSitUp()<sports.getNum())
-    			record.setNumSitUp(sports.getNum());
-    		if(record.getValidNumSitUp()<sports.getValidNum())
-    			record.setValidNumSitUp(sports.getValidNum());
-    		if(record.getPerfectNumSitUp()<sports.getPerfectNum())
-    			record.setPerfectNumSitUp(sports.getPerfectNum());
+    		record.setCalOfSitUp(record.getCalOfSitUp()+sports.getCalorie());
+    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
     		
-    		record.setTotalNumSitUp(record.getTotalNumSitUp()+sports.getNum());
+    		record.setDurationSitUp(record.getDurationSitUp()+getDurationInFloat(sports.getDuration()));
+    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
     		
+    		record.setTotalNumSitUp(record.getTotalNumSitUp()+sports.getNum());    	
     	}
+    	
+    	db.updateRecord(record);
     		
+    }
+    
+    private float getDurationInFloat(String duration){
+
+    	float millis=-1;
+    	duration="1970-1-1"+" "+duration; 
+    	
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	try {
+			millis = formatter.parse(duration).getTime()-formatter.parse("1970-1-1 00:00:00").getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   
+		return millis;
     }
 }

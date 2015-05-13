@@ -3,94 +3,103 @@ package com.healthlife.entity;
 public class Record {
 	
 	private long recordId;
-	private float AVGSpeed;
-	private int numPushUp;
-	private int numSitUp;
-	private float validNumSitUp;
-	private float validNumPushUp;
-	private float distance;
-	private float AVGPace;
-	private float perfectNumPushUp;
-	private float perfectNumSitUp;
-	private float goodNumPushUp;
-	private float goodNumSitUp;
+	private long userId;
+	
+	private int AVGSpeed;
+	private int distance;
+	
+	private float calOfPushUp;
+	private float calOfSitUp;
+	private float calOfJog;
+	private float totalCal;
+		
+	private float durationPushUp;
+	private float durationJog; 
+	private float durationSitUp;
+	private float durationPerDay;
+	private float totalDuration;
+		
 	private float totalDistance;
 	private int totalNumPushUp;
 	private int totalNumSitUp;
-	private int steps;
-	private long userId;
-	
+	private int totalSteps;
 	public long getRecordId() {
 		return recordId;
 	}
 	public void setRecordId(long recordId) {
 		this.recordId = recordId;
 	}
-	public float getAVGSpeed() {
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	public int getAVGSpeed() {
 		return AVGSpeed;
 	}
-	public void setAVGSpeed(float aVGSpeed) {
+	public void setAVGSpeed(int aVGSpeed) {
 		AVGSpeed = aVGSpeed;
 	}
-	public int getNumPushUp() {
-		return numPushUp;
-	}
-	public void setNumPushUp(int numPushUp) {
-		this.numPushUp = numPushUp;
-	}
-	public int getNumSitUp() {
-		return numSitUp;
-	}
-	public void setNumSitUp(int numSitUp) {
-		this.numSitUp = numSitUp;
-	}
-	public float getValidNumSitUp() {
-		return validNumSitUp;
-	}
-	public void setValidNumSitUp(float validNumSitUp) {
-		this.validNumSitUp = validNumSitUp;
-	}
-	public float getValidNumPushUp() {
-		return validNumPushUp;
-	}
-	public void setValidNumPushUp(float validNumPushUp) {
-		this.validNumPushUp = validNumPushUp;
-	}
-	public float getDistance() {
+	public int getDistance() {
 		return distance;
 	}
-	public void setDistance(float distance) {
+	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public float getAVGPace() {
-		return AVGPace;
+	public float getCalOfPushUp() {
+		return calOfPushUp;
 	}
-	public void setAVGPace(float aVGPace) {
-		AVGPace = aVGPace;
+	public void setCalOfPushUp(float calOfPushUp) {
+		this.calOfPushUp = calOfPushUp;
 	}
-	public float getPerfectNumPushUp() {
-		return perfectNumPushUp;
+	public float getCalOfSitUp() {
+		return calOfSitUp;
 	}
-	public void setPerfectNumPushUp(float perfectNumPushUp) {
-		this.perfectNumPushUp = perfectNumPushUp;
+	public void setCalOfSitUp(float calOfSitUp) {
+		this.calOfSitUp = calOfSitUp;
 	}
-	public float getPerfectNumSitUp() {
-		return perfectNumSitUp;
+	public float getCalOfJog() {
+		return calOfJog;
 	}
-	public void setPerfectNumSitUp(float perfectNumSitUp) {
-		this.perfectNumSitUp = perfectNumSitUp;
+	public void setCalOfJog(float calOfJog) {
+		this.calOfJog = calOfJog;
 	}
-	public float getGoodNumPushUp() {
-		return goodNumPushUp;
+	public float getTotalCal() {
+		return totalCal;
 	}
-	public void setGoodNumPushUp(float goodNumPushUp) {
-		this.goodNumPushUp = goodNumPushUp;
+	public void setTotalCal(float totalCal) {
+		this.totalCal = totalCal;
 	}
-	public float getGoodNumSitUp() {
-		return goodNumSitUp;
+	public float getDurationPushUp() {
+		return durationPushUp;
 	}
-	public void setGoodNumSitUp(float goodNumSitUp) {
-		this.goodNumSitUp = goodNumSitUp;
+	public void setDurationPushUp(float durationPushUp) {
+		this.durationPushUp = durationPushUp;
+	}
+	public float getDurationJog() {
+		return durationJog;
+	}
+	public void setDurationJog(float durationJog) {
+		this.durationJog = durationJog;
+	}
+	public float getDurationSitUp() {
+		return durationSitUp;
+	}
+	public void setDurationSitUp(float durationSitUp) {
+		this.durationSitUp = durationSitUp;
+	}
+	public float getDurationPerDay() {
+		return durationPerDay;
+	}
+	public void setDurationPerDay(float durationPerDay) {
+		this.durationPerDay = durationPerDay;
+	}
+	public float getTotalDuration() {
+		return totalDuration;
+	}
+	public void setTotalDuration(float totalDuration) {
+		this.totalDuration = totalDuration;
 	}
 	public float getTotalDistance() {
 		return totalDistance;
@@ -110,17 +119,12 @@ public class Record {
 	public void setTotalNumSitUp(int totalNumSitUp) {
 		this.totalNumSitUp = totalNumSitUp;
 	}
-	public int getSteps() {
-		return steps;
+	public int getTotalSteps() {
+		return totalSteps;
 	}
-	public void setSteps(int steps) {
-		this.steps = steps;
+	public void setTotalSteps(int totalSteps) {
+		this.totalSteps = totalSteps;
 	}
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+	
 	
 }

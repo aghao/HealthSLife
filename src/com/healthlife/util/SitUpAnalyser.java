@@ -137,6 +137,7 @@ public class SitUpAnalyser implements SensorEventListener {
 		sitUp.setGoodNum(mGoodNum);
 		sitUp.setPerfectNum(mPerfectNum);
 		sitUp.setDuration(getDuration());
+		sitUp.setCalorie((mValidNum*2/3+mGoodNum*4/5+mPerfectNum*1)*0.3f);
 		
 		return sitUp;
 		
