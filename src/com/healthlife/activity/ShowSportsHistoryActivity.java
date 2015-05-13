@@ -86,14 +86,14 @@ public class ShowSportsHistoryActivity extends Activity implements OnClickListen
 					intent.putExtra("situp", sports);
 					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
 					break;
-				case GlobalVariables.SPORTS_TYPE_WALK:
-					//sportsImage.setImageResource(walkId);
-
-					intent = new Intent(context,com.healthlife.activity.ShowWalkActivity.class);
-					intent.putExtra("type", GlobalVariables.SPORTS_TYPE_WALK);
-					intent.putExtra("walk", sports);
-					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
-					break;
+//				case GlobalVariables.SPORTS_TYPE_WALK:
+//					//sportsImage.setImageResource(walkId);
+//
+//					intent = new Intent(context,com.healthlife.activity.ShowWalkActivity.class);
+//					intent.putExtra("type", GlobalVariables.SPORTS_TYPE_WALK);
+//					intent.putExtra("walk", sports);
+//					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
+//					break;
 				default:
 				}				
 				startActivity(intent);
