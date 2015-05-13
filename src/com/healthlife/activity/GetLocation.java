@@ -47,6 +47,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.healthlife.R;
+import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Position;
 import com.healthlife.util.MyOrientationListener;
 import com.healthlife.util.MyOrientationListener.OnOrientationListener;
@@ -88,6 +89,7 @@ public class GetLocation extends Activity {
     private long recordTime;
     private String date;
     private String duration;
+    private String showmode;
     private static final String IOS = "Test";
     
     //计时器用变量
@@ -159,10 +161,10 @@ public class GetLocation extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				//解除绑定计步器服务
-				unbindService(connection);
 				
-				if(points.size() > 0){
+				if(points.size() > 1){
+					//解除绑定计步器服务
+					unbindService(connection);
 					chronometer.stop();
 					recordTime = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
 					
@@ -188,6 +190,7 @@ public class GetLocation extends Activity {
 					Log.i("Test", "Intent之前！");
 					Intent intent = new Intent();
 					intent.setClass(GetLocation.this, LocationResult.class);
+					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_UNSAVED);
 					intent.putExtra("locinfo", (Serializable) points);
 					intent.putExtra("cenlat", centerLatitude);
 					intent.putExtra("cenlon", centerLongitude);
@@ -195,7 +198,9 @@ public class GetLocation extends Activity {
 					intent.putExtra("duration", duration);
 					intent.putExtra("rectime", recordTime);
 					intent.putExtra("date", date);
+					intent.putExtra("steps", steps);
 					startActivity(intent);
+					finish();
 					Log.i("Test", "Intent之后！");
 				}else {
 					Toast.makeText(GetLocation.this, "运动数据为0！", Toast.LENGTH_SHORT).show();
@@ -291,13 +296,13 @@ public class GetLocation extends Activity {
 				
 			}
     		disText.setText("路程为：\n" + String.format("%.1f", distance) + "米");
-    		
-    		//判断定位点是否有效，取0.0003为误差
+    	
+    		//判断定位点是否有效，取0.0009为误差
     		Log.i("Test", "纬度差：" + String.valueOf(subLat));
     		Log.i("Test", "经度差：" + String.valueOf(subLon));
     		finishBtn.setText("纬度差：" + String.valueOf(subLat) + "经度差：" + String.valueOf(subLon));
     		
-    		if (subLat <0.0003 && subLon < 0.0003){
+    		if (subLat <0.0009 && subLon < 0.0009){
     			if(!(subLat == 0.0 && subLon == 0.0)){
     				maxLatitude = maxLatitude(maxLatitude,mCurrentLatitude);
 		            minLatitude = minLatitude(minLatitude,mCurrentLatitude);
@@ -313,8 +318,8 @@ public class GetLocation extends Activity {
     		}
     		
     		Log.i("Test", "有反映么？");
-    		ActionBar actionBar = getActionBar();
-    		actionBar.setTitle(String.valueOf(points.size()));
+//    		ActionBar actionBar = getActionBar();
+//    		actionBar.setTitle(String.valueOf(points.size()));
             
     		Log.i("CenLat", "中心纬度：" + centerLatitude.toString());
     		Log.i("CenLon", "中心经度" + centerLongitude.toString());
@@ -481,7 +486,7 @@ public class GetLocation extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			steps = intent.getIntExtra("motionNum",-1);
-			paceText.setText(String.valueOf(steps));	
+			paceText.setText(String.valueOf(steps));
 		}
 		
 	}

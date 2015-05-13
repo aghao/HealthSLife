@@ -179,8 +179,6 @@ public class LyricView extends View{
         paintHL.setAntiAlias(true);  
         paintHL.setAlpha(255);  
         
-       
-      
         
     }  
      

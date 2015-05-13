@@ -1,32 +1,78 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
-
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="120dp"
+	    android:paddingTop="15dp"
+	    android:background="#f39c12"
+	    android:orientation="horizontal" >
+	    
+	    <ImageView
+	        android:layout_width="30dp"
+	        android:layout_height="30dp"
+	        android:layout_marginLeft="20dp"
+	        android:background="@drawable/sport_info" />
+	    	<LinearLayout 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+	        	android:layout_marginTop="10dp"
+			    android:layout_marginLeft="15dp"
+			    android:orientation="vertical" >
+			    
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="18sp"
+		        android:text="双手支撑，双臂垂直地面" />
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="3dp"
+		        android:textSize="18sp"
+		        android:text="两腿向后方伸展，全身挺直" />
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="3dp"
+		        android:textSize="18sp"
+		        android:text="平起平落，循环往复" />
+	        </LinearLayout>
+	        
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:text="个数" />   
     <TextView 
         android:id="@+id/text_pushup_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:textSize="50sp"
-        android:layout_gravity="center"
-        android:text="@string/text_inited_motion_number"
-        />
-    <Button
-        android:id="@+id/button_start_pushup"
-        android:layout_marginTop="120dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_start_sport" 
-        />
-
-    <Button
-        android:id="@+id/button_stop_pushup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/btn_stop_sport" 
-        />
-
+        android:textSize="80sp"
+        android:layout_gravity="center"
+        android:text="@string/text_inited_motion_number" />
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingTop="50dp"
+	    android:gravity="center"
+	    android:orientation="horizontal" >
+	    <Button
+	        android:id="@+id/button_start_pushup"
+	        android:layout_width="130dp"
+	        android:layout_height="130dp"
+	        android:background="@drawable/sport_beginbtn_selector" />
+	    <Button
+	        android:id="@+id/button_stop_pushup"
+	        android:layout_width="130dp"
+	        android:layout_height="130dp"
+	        android:layout_marginLeft="20dp"
+	        android:background="@drawable/sportresult_cancelbtn_selector" />
+	</LinearLayout>
 </LinearLayout>

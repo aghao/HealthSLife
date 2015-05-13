@@ -61,7 +61,7 @@
             android:value="1ra2qcvsPAIc05rGqHxIZPQl" />
                 
         <activity
-            android:name="com.healthlife.activity.MainActivity"
+            android:name="com.healthlife.activity.AppStart"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,16 +70,24 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.healthlife.activity.MainActivity"
+            android:label="@string/title_activity_maintitle" >
+        </activity>
+        <activity
             android:name="com.healthlife.activity.HeartRate"
             android:label="@string/title_activity_heart_rate" >
         </activity>
         <activity
             android:name="com.healthlife.activity.GetLocation"
-            android:label="@string/title_activity_get_location" >
+            android:label="@string/title_activity_get_location"
+            android:icon="@drawable/jog_logo"
+            android:theme="@style/JogTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.LocationResult"
-            android:label="@string/title_activity_location_result" >
+            android:label="@string/title_activity_location_result"
+            android:icon="@drawable/jog_logo"
+            android:theme="@style/JogTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.HeartResult"
@@ -91,15 +99,21 @@
         </activity>
         <activity
             android:name="com.healthlife.activity.MusicMain"
-            android:label="@string/title_activity_music_main" >
+            android:label="@string/title_activity_music_main"
+            android:icon="@drawable/music_logo"
+            android:theme="@style/MusicTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.MusicPlayer"
-            android:label="@string/title_activity_music_player" >
+            android:label="@string/title_activity_music_player"
+            android:icon="@drawable/music_logo"
+            android:theme="@style/MusicTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.MusicList"
-            android:label="@string/title_activity_music_list" >
+            android:label="@string/title_activity_music_list"
+            android:icon="@drawable/music_logo"
+            android:theme="@style/MusicTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.BackupsActivity"
@@ -127,11 +141,15 @@
         </activity>
         <activity
             android:name="com.healthlife.activity.PushUpActivity"
-            android:label="@string/title_activity_push_up" >
+            android:label="@string/title_activity_push_up"
+            android:icon="@drawable/pushup_logo"
+            android:theme="@style/PushupTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.SitUpActivity"
-            android:label="@string/title_activity_sit_up" >
+            android:label="@string/title_activity_sit_up"
+            android:icon="@drawable/situp_logo"
+            android:theme="@style/SitupTheme" >
         </activity>
         <activity
             android:name="com.healthlife.activity.WalkActivity"

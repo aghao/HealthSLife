@@ -35,12 +35,6 @@ public class Mallat {
 					{
 						temp = temp-flag*2;
 					}
-//					if(temp<0)
-//					{
-//						v1[i][j] += h[k]*v1[i-1][flag*2+temp];
-//						analyzeArray[flag+j] += g[k]*v1[i-1][flag*2+temp];
-//					}
-//					else
 					{
 						v1[i][j] += h[k]*v1[i-1][temp];
 						analyzeArray[flag+j] += g[k]*v1[i-1][temp];
@@ -48,26 +42,17 @@ public class Mallat {
 				}
 			}
 		}
-		//将分解后的数据存在analyzeArray中，前n/8为v3，之后依次为w3,w2,w1
-//		Log.v("wwwwwwwwwwwvvvvvv",""+flag);
 		for(int i=0;i<flag;i++)
 		{
 			analyzeArray[i] = v1[3][i];
-//			Log.v("vvvvv3",""+analyzeArray[i]);
 		}
 		
 		double []output = new double [n];
 		double [][]v = new double [4][n];
 		flag = n/8;
-//		Log.v("wwwwwwwwwwwvvvvvv",""+flag);
-//		for(int i=0;i<n;i++)
-//		{
-//			Log.v("wwwwwwwwwwwvvvvvv",""+analyzeArray[i]);
-//		}
 		for(int i=0;i<flag;i++)
 		{
 			v[0][i]=analyzeArray[i];
-//			Log.v("vvvvv3",""+analyzeArray[i]);
 		}
 		for(int i=1;i<4;i++)
 		{
@@ -86,8 +71,6 @@ public class Mallat {
 					v[i][2*j+1] = v[i][2*j+1]+h[2*k+1]*v[i-1][temp]+g[2*k+1]*analyzeArray[flag+temp];
 					
 				}
-//			Log.v("vvvvv",""+i+"wwww"+v[i][2*j]);
-//			Log.v("vvvvv",""+v[i][2*j+1]);
 			}
 			flag = flag*2;
 			

@@ -6,6 +6,7 @@ import com.healthlife.R.layout;
 import com.healthlife.R.menu;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -27,7 +29,6 @@ public class RegisterActivity extends Activity {
 	private EditText passwordText;
 	private EditText confirmText;
 	private Button register_bt;
-	private Button cancel_bt;
 	
 	private BroadcastReceiver receiver = new BroadcastReceiver(){
 
@@ -52,17 +53,17 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_register);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		usernameText=(EditText) findViewById(R.id.username);
 		passwordText=(EditText) findViewById(R.id.password);
 		confirmText=(EditText) findViewById(R.id.confirm);
 		register_bt=(Button) findViewById(R.id.register_bt);
-		cancel_bt=(Button) findViewById(R.id.cancel_bt);
 		
 		register_bt.setOnClickListener(new Register());
-		cancel_bt.setOnClickListener(new Cancel());
 		
 		registerReceiver(receiver,new IntentFilter("REGISTER"));
 	}
@@ -108,15 +109,13 @@ public class RegisterActivity extends Activity {
 		
 	}
 	
-	
-	class Cancel implements OnClickListener{
-
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
 		}
-		
+		return true;
 	}
 	
 	@Override

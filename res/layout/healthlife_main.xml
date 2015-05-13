@@ -1,68 +1,35 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-   	xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#3B9DDB"
-    tools:context="com.healthlife.activity.MainActivity" >
+    android:background="@drawable/main_bg" >
     
     <LinearLayout
        	android:layout_width="match_parent"
        	android:layout_height="wrap_content"
-       	android:layout_marginBottom="60dp"
-       	android:orientation="horizontal"
-       	android:gravity="center_horizontal" >
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="25sp"
-	        android:textColor="#ffffff"
-	        android:text="健康 " />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="50sp"
-	        android:textColor="#E8E288"
-	        android:text="S" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="25sp"
-	        android:textColor="#ffffff"
-	        android:text=" 生活" />
+       	android:layout_marginBottom="30dp"
+       	android:orientation="vertical" >
+	    <Button
+	        android:id="@+id/heartbtn"
+	        android:layout_width="250dp"
+	        android:layout_height="101dp"
+	        android:layout_marginLeft="20dp"
+	        android:background="@drawable/main_heartbtn_selector" />
+	    <Button 
+	        android:id="@+id/sportbtn"
+	        android:layout_width="250dp"
+	        android:layout_height="101dp"
+	        android:layout_gravity="right"
+	        android:layout_marginTop="20dp"
+	        android:layout_marginRight="20dp"
+	        android:background="@drawable/main_sportbtn_selector" />
+	    <Button
+	        android:id="@+id/musicbtn"
+	        android:layout_width="250dp"
+	        android:layout_height="101dp"
+	        android:layout_marginTop="20dp"
+	        android:layout_marginLeft="20dp"
+	        android:background="@drawable/main_musicbtn_selector" />
 	</LinearLayout>
-    <Button
-        android:id="@+id/heartbtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="#FF8360"
-        android:textColor="#ffffff"
-        android:text="心率测量" />
-    <Button
-        android:id="@+id/locatebtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="#7DCE82"
-        android:textColor="#ffffff"
-        android:text="地图定位" />
-    <Button
-        android:id="@+id/musicbtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="#EFA153"
-        android:textColor="#ffffff"
-        android:text="音乐播放" />
-    <Button 
-        android:id="@+id/sportbtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="#A435FF"
-        android:textColor="#ffffff"
-        android:text="运动数据"/>
 </LinearLayout>

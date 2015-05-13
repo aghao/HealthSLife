@@ -18,7 +18,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:background="#ffffff"
-        android:alpha="0.8" >
+        android:alpha="0.85" >
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -31,7 +31,8 @@
 		        android:gravity="center"
 		        android:layout_gravity="center_horizontal"
 		        android:textSize="45sp"
-		        android:text="00:00:00" />
+		        android:text="00:00:00"
+		    	android:textColor="#3498db" />
 		    <LinearLayout
 		        android:layout_width="wrap_content"
 		        android:layout_height="match_parent"
@@ -52,7 +53,8 @@
 			        android:gravity="center"
 			        android:layout_gravity="center_horizontal"
 					android:textSize="20sp"
-			        android:text="8.55" />
+			        android:text="8.55"
+		    	    android:textColor="#3498db" />
 	   		</LinearLayout>
 		</LinearLayout>	    
 	    
@@ -80,7 +82,8 @@
 			        android:gravity="center"
 			        android:layout_gravity="center_horizontal"
 					android:textSize="20sp"
-			        android:text="1222" />
+			        android:text="0"
+		    	    android:textColor="#3498db" />
 		    </LinearLayout>
 		    
 		    <LinearLayout
@@ -102,7 +105,8 @@
 			        android:gravity="center"
 			        android:layout_gravity="center_horizontal"
 					android:textSize="20sp"
-			        android:text="2890" />
+			        android:text="2890"
+		    	    android:textColor="#3498db" />
 		    </LinearLayout>
 		    
 		    <LinearLayout
@@ -124,7 +128,8 @@
 			        android:gravity="center"
 			        android:layout_gravity="center_horizontal"
 		    	    android:textSize="20sp"
-		    	    android:text="7.5" />
+		    	    android:text="7.5"
+		    	    android:textColor="#3498db" />
 		    </LinearLayout>
 	    </LinearLayout>
 	</LinearLayout>

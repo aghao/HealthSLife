@@ -63,14 +63,14 @@ public class ShowSportsHistoryActivity extends Activity implements OnClickListen
 				
 				switch(sports.getType()){
 				
-				/*case GlobalVariables.SPORTS_TYPE_JOG:
+				case GlobalVariables.SPORTS_TYPE_JOG:
 					//sportsImage.setImageResource(jogId);
-					intent = new Intent(context,com.healthlife.activity.LocationResultActivity.class);
+					intent = new Intent(context,com.healthlife.activity.LocationResult.class);
 					intent.putExtra("type", GlobalVariables.SPORTS_TYPE_JOG);					
 					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
 					intent.putExtra("jog", sports);
 					break;
-					*/
+					
 				case GlobalVariables.SPORTS_TYPE_PUSHUP:
 					//sportsImage.setImageResource(pushUpId);
 					intent = new Intent(context,com.healthlife.activity.ShowPushUpOrSitUpActivity.class);
@@ -86,14 +86,14 @@ public class ShowSportsHistoryActivity extends Activity implements OnClickListen
 					intent.putExtra("situp", sports);
 					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
 					break;
-				case GlobalVariables.SPORTS_TYPE_WALK:
-					//sportsImage.setImageResource(walkId);
-
-					intent = new Intent(context,com.healthlife.activity.ShowWalkActivity.class);
-					intent.putExtra("type", GlobalVariables.SPORTS_TYPE_WALK);
-					intent.putExtra("walk", sports);
-					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
-					break;
+//				case GlobalVariables.SPORTS_TYPE_WALK:
+//					//sportsImage.setImageResource(walkId);
+//
+//					intent = new Intent(context,com.healthlife.activity.ShowWalkActivity.class);
+//					intent.putExtra("type", GlobalVariables.SPORTS_TYPE_WALK);
+//					intent.putExtra("walk", sports);
+//					intent.putExtra("showmode", GlobalVariables.MODE_SHOW_SAVED);
+//					break;
 				default:
 				}				
 				startActivity(intent);

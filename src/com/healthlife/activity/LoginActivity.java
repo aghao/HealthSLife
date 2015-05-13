@@ -1,28 +1,28 @@
 package com.healthlife.activity;
 
-import com.healthlife.R;
-
-import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.healthlife.R;
 
 public class LoginActivity extends Activity {
 
 	private EditText usernameText;
 	private EditText passwordText;
 	private Button login_bt;
-	private Button cancel_bt;
 	
 	private BroadcastReceiver receiver = new BroadcastReceiver(){
 
@@ -40,23 +40,21 @@ public class LoginActivity extends Activity {
 			else if(Ret==1)
 				Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 		}
-		
-		
 	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		usernameText=(EditText) findViewById(R.id.username);
 		passwordText=(EditText) findViewById(R.id.password);
 		login_bt=(Button) findViewById(R.id.login_bt);
-		cancel_bt=(Button) findViewById(R.id.cancel_bt);
 		
 		login_bt.setOnClickListener(new Login());
-		cancel_bt.setOnClickListener(new Cancel());
 		
 		registerReceiver(receiver,new IntentFilter("LOGIN"));
 	}
@@ -80,7 +78,10 @@ public class LoginActivity extends Activity {
 				
 				if(username.isEmpty()||password.isEmpty())
 				{
-					Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent();
+					intent.setClass(LoginActivity.this, MainActivity.class);
+					startActivity(intent);
+//					Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -92,26 +93,18 @@ public class LoginActivity extends Activity {
 			        startService(intent);
 				}
 		       // LoginActivity.this.finish();
-				
 			}
-			
-			
-			
-		
-		
-	}
-	
-	
-	class Cancel implements OnClickListener{
 
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+		}
+		return true;
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
