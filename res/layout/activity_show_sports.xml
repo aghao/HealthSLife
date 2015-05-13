@@ -59,15 +59,13 @@
 	        android:id="@+id/button_save_sports"
 	        android:layout_width="110dp"
 	        android:layout_height="110dp"
-	        android:layout_weight="1"
 	        android:background="@drawable/pushresult_savebtn_selector" />
     
 	    <Button 
 	        android:id="@+id/button_drop_sports"
 	        android:layout_width="110dp"
 	        android:layout_height="110dp"
-	        android:layout_weight="1"
-	        android:layout_marginLeft="15dp"
+	        android:layout_marginLeft="20dp"
 	        android:background="@drawable/pushresult_cancelbtn_selector" />
     </LinearLayout>
     

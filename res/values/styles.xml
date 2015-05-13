@@ -45,4 +45,11 @@
         <item name="android:background">#3498db</item> 
         <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>  
     </style>
+    <style name="MusicTheme" parent="AppBaseTheme">
+          <item name="android:actionBarStyle">@style/musicBarStyle</item>
+    </style>
+    <style name="musicBarStyle" parent="android:Widget.ActionBar" >  
+        <item name="android:background">#2ecc71</item> 
+        <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>  
+    </style>
 </resources>

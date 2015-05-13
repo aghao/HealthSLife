@@ -111,7 +111,6 @@ public class MusicList extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_music_list);
 		
 		
@@ -595,7 +594,7 @@ public class MusicList extends Activity {
 			TextView music_name = (TextView) view.findViewById(R.id.music_name);
 		    music_name.setText(mData.get(position).get("music_name").toString());
 		    TextView music_path = (TextView) view.findViewById(R.id.music_path);
-		    music_path.setText(mData.get(position).get("music_path").toString()); 
+		    //music_path.setText(mData.get(position).get("music_path").toString()); 
 		    TextView music_id = (TextView) view.findViewById(R.id.music_id);
 		    music_id.setText(mData.get(position).get("music_id").toString()); 
 		    TextView music_pace = (TextView) view.findViewById(R.id.music_pace);

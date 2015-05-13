@@ -318,8 +318,8 @@ public class GetLocation extends Activity {
     		}
     		
     		Log.i("Test", "有反映么？");
-    		ActionBar actionBar = getActionBar();
-    		actionBar.setTitle(String.valueOf(points.size()));
+//    		ActionBar actionBar = getActionBar();
+//    		actionBar.setTitle(String.valueOf(points.size()));
             
     		Log.i("CenLat", "中心纬度：" + centerLatitude.toString());
     		Log.i("CenLon", "中心经度" + centerLongitude.toString());

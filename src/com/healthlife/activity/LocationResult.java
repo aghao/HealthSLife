@@ -83,7 +83,7 @@ public class LocationResult extends Activity{
 			duration = newSports.getDuration();
 			speed = newSports.getAVGSpeed();
 			steps = newSports.getNum();
-			
+			saveBtn.setVisibility(View.GONE);
 			pos = myDB.getPosList(newSports.getSportsID());
 			initMap(centerLatitude, centerLongitude);
 			pts = new ArrayList<LatLng>();
