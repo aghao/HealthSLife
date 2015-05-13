@@ -153,7 +153,7 @@
 	        android:textSize="15sp"
 	        android:textStyle="bold" />
 
-	    <TextView
+	    <ImageView
 	        android:id="@+id/hrlasttype"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -161,7 +161,13 @@
 	        android:layout_alignParentRight="true"
 	        android:layout_alignTop="@id/hrlast" />
 
-	
+	 	<TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textColor="#3498db"
+	    	
+	        android:layout_centerInParent="true"
+	    	android:id="@+id/hrlastdate"/>
 
 	</RelativeLayout>
     

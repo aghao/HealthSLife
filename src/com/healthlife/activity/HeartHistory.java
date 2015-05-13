@@ -43,6 +43,7 @@ public class HeartHistory extends Activity {
 	ArrayList <Integer> hrBeats = null;
 	ArrayList <HashMap<String,Object>> heartData = null;
 	View mView = null;
+	BarChart histroyChart =null;
 	SimpleAdapter adapter = null;
 	@Override
 	public void onCreate(Bundle savedData) {
@@ -57,7 +58,7 @@ public class HeartHistory extends Activity {
 		hrBeats = new ArrayList<Integer>();
 		hrHistory = myDB.getBeatsList();
 		ListView hrList = (ListView) findViewById(R.id.hr_list);
-		BarChart histroyChart = (BarChart) findViewById(R.id.heart_barchart);
+		histroyChart = (BarChart) findViewById(R.id.heart_barchart);
 		
 		 
 		
@@ -65,9 +66,11 @@ public class HeartHistory extends Activity {
 		BarData historyData = getBarData(hrBeats); 
 		showBarChart(histroyChart, historyData);  
 		adapter = new SimpleAdapter(this,heartData,R.layout.hearthistory_listview,
-				new String[]{"history","type"},new int[]{R.id.hr_listhistory,R.id.hr_listtype} );
+				new String[]{"history","type","date"},new int[]{R.id.hr_listhistory,R.id.hr_listtype,R.id.hr_listdate} );
 		hrList.setAdapter(adapter);
-		//清空
+		/*清空
+		 * 清空按键响应
+		 */
 		clearBt.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -81,30 +84,37 @@ public class HeartHistory extends Activity {
 				//重绑adapter刷新listviews
 				heartData.clear();
 				adapter.notifyDataSetChanged();
+				hrBeats.clear();
+				BarData historyData = getBarData(hrBeats); 
+				histroyChart.setData(historyData);
+		    	histroyChart.invalidate();
 //				list.setAdapter(buildDummyData());
 			}
 		});
 		 // listview注册上下文菜单
 		this.registerForContextMenu(hrList);
 	}
-	
+	/*
+	 * 数据库数据转化成LISTVIEW数据
+	 */
 	ArrayList <HashMap<String,Object>> getHeartRateData(){
 		ArrayList <HashMap<String,Object>> data = new ArrayList <HashMap<String,Object>>();
 		int n = hrHistory.size();
 		for(int i=0;i<n;i++)
 		{
 			HashMap <String,Object> map = new HashMap <String,Object>();
-			hrBeats.add(hrHistory.get(n-i-1).getBeats());
+			hrBeats.add(hrHistory.get(i).getBeats());
 			Log.v("11111111",""+hrHistory.get(n-i-1).getBeats());
-			map.put("history", hrHistory.get(n-i-1).getBeats()+"\n"+hrHistory.get(n-i-1).getDate());
+			map.put("history", hrHistory.get(n-i-1).getBeats());
+			map.put("date", hrHistory.get(n-i-1).getDate());
 			switch(hrHistory.get(n-i-1).getType())
 			{
 			case 1:
-				map.put("type", "静息心率");break;
+				map.put("type", R.drawable.heartres_static_down);break;
 			case 2:
-				map.put("type", "运动后心率");break;
+				map.put("type", R.drawable.heartres_run_down);break;
 			case 3:
-				map.put("type", "最大心率");break;
+				map.put("type", R.drawable.heartres_max_down);break;
 			default:
 				;
 			}
@@ -132,11 +142,17 @@ public class HeartHistory extends Activity {
 	    switch(item.getItemId()) {  
 	    case 1:  
 	        // do something  
-	    	int n = (int) (hrHistory.size()-menuInfo.id);
+	    	//删除单项
+	    	int n = (int) (hrHistory.size()-menuInfo.id)-1;
 	    	myDB.removeBeat(hrHistory.get(n).getBeatId());
 	    	hrHistory.remove(n);
-	    	heartData.remove(n);
+	    	heartData.remove((int)menuInfo.id);
+	    	hrBeats.remove(n);
+			BarData historyData = getBarData(hrBeats); 
 	    	adapter.notifyDataSetChanged();
+//	    	BarData historyData = getBarData(hrBeats); 
+	    	histroyChart.setData(historyData);
+	    	histroyChart.invalidate();
 	    	break;  
 	    default:  
 	        return super.onContextItemSelected(item);  
@@ -184,7 +200,7 @@ public class HeartHistory extends Activity {
 
 	private BarData getBarData(ArrayList<Integer> beats) {
 		ArrayList<String> xValues = new ArrayList<String>();
-		for (int i = 0; i < beats.size(); i++) {
+		for (int i = 0; i < 8; i++) {
 			xValues.add("");
 		}
 		

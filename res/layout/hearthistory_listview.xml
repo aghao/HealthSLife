@@ -5,7 +5,7 @@
     android:padding="5dp"
     android:orientation="vertical" >
     
-     <TextView
+     <ImageView
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:id="@+id/hr_listtype"
@@ -27,6 +27,11 @@
 	    	android:layout_marginLeft="5dp"
 	    	android:textColor="#e74c3c"
 	    	android:text="BPM" />
+     	 <TextView
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textColor="#3498db"
+	    	android:id="@+id/hr_listdate"/>
      </LinearLayout>
      
 </LinearLayout>
