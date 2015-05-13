@@ -1,49 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <TextView 
-		 android:layout_width="wrap_content"
-		 android:layout_height="wrap_content" 
-		 android:id="@+id/showresult"
-        />
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:orientation="vertical"
+        android:background="#f0f0f0" >
+        <TextView
+            android:id="@+id/heartres_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="111" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp" >
+	    <ImageView 
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+			 android:layout_gravity="top"
+			 android:layout_marginTop="10dp"
+			 android:background="@drawable/heart_beat_up" />
+	    <TextView 
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+			 android:layout_marginLeft="10dp"
+			 android:id="@+id/showresult"
+			 android:textSize="75sp"
+			 android:text="00" />
+	    <TextView 
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+			 android:layout_marginLeft="10dp"
+			 android:layout_marginTop="14dp"
+			 android:textSize="25sp"
+			 android:textColor="#e74c3c"
+			 android:text="BPM" />
+	</LinearLayout>
+	
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="6dp"
+        android:background="#f0f0f0" >
+	    <TextView
+	        android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:textSize="16sp"
+			android:textColor="#e74c3c"
+			android:text="测量类型" />
+	</LinearLayout>
+	
     <RadioGroup
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/showresult"
+		android:layout_marginTop="20dp"
+		android:orientation="horizontal"
+		android:layout_gravity="center_horizontal"
 		android:id="@+id/hrradiogp">
         <RadioButton 
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/statichr"
+			android:button="@null"
+			android:drawableTop="@drawable/heart_static_selector"
         	android:text="@string/hrstatic"/>
         <RadioButton 
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginLeft="30dp"
 			android:id="@+id/sporthr"
+			android:button="@null"
+			android:drawableTop="@drawable/heart_run_selector"
 			android:text="@string/hrsport"/>
         <RadioButton 
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginLeft="30dp"
 			android:id="@+id/maxhr"
+			android:button="@null"
+			android:drawableTop="@drawable/heart_max_selector"
 			android:text="@string/hrmax"/>
     </RadioGroup>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="6dp"
+        android:layout_marginTop="20dp"
+        android:background="#f0f0f0" >
+	    <TextView
+	        android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:textSize="16sp"
+			android:text="" />
+	</LinearLayout>
+   
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true" >
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
         <Button 
-            android:layout_width="wrap_content"
-		 	android:layout_height="wrap_content"
-		 	style="?android:attr/borderlessButtonStyle"
-		 	android:text="@string/saverecord"
+            android:layout_width="110dp"
+		 	android:layout_height="110dp"
+		 	android:background="@drawable/heartresult_savebtn_selector"
 		 	android:id="@+id/savebt"/>
         <Button 
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-		 	android:layout_height="wrap_content" 
-		 	android:text="@string/cancle"
+            android:layout_width="110dp"
+		 	android:layout_height="110dp"
+		 	android:layout_marginLeft="40dp"
+		 	android:background="@drawable/heartresult_cancelbtn_selector"
 		 	android:id="@+id/canclebt"/>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

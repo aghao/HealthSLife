@@ -8,6 +8,7 @@ import com.healthlife.db.DBManager;
 import com.healthlife.entity.Beats;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -27,14 +28,17 @@ public class HeartResult extends Activity {
 		Intent get =getIntent();
 		newBeats.setBeats(get.getIntExtra("heartrate", -1));
 		TextView resultText = (TextView) findViewById(R.id.showresult);
+		TextView dateText = (TextView) findViewById(R.id.heartres_date);
 		Button saveRecord = (Button) findViewById(R.id.savebt);
 		Button cancle = (Button) findViewById(R.id.canclebt);
 		final RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.hrradiogp);
 		//获取系统时间
-		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd  ahh-mm",Locale.getDefault());       
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd  ahh:mm",Locale.getDefault());       
 		String date = sDateFormat.format(new java.util.Date());  
 		newBeats.setDate(date);
-		resultText.setText(date+"心率结果"+newBeats.getBeats());
+		resultText.setText(String.valueOf(newBeats.getBeats()));
+
+		dateText.setText(date);
 		//无用户为-1
 		newBeats.setUserId(1);
 		

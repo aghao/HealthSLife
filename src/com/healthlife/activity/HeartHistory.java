@@ -16,15 +16,11 @@ import android.widget.*;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.healthlife.R;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.Beats;
@@ -156,8 +152,7 @@ public class HeartHistory extends Activity {
 		barChart.setDescription("");// 数据描述    
 		
         // 如果没有数据的时候，会显示这个，类似ListView的EmptyView    
-		barChart.setNoDataTextDescription("无记录");    
-               
+		barChart.setNoDataTextDescription("无记录");         
 		barChart.setDrawGridBackground(false); // 是否显示表格颜色    
 		barChart.setGridBackgroundColor(Color.WHITE & 0x70FFFFFF); // 表格的的颜色，在这里是是给颜色设置一个透明度    
       
@@ -166,8 +161,8 @@ public class HeartHistory extends Activity {
 		barChart.setDragEnabled(true);// 是否可以拖拽    
 		barChart.setScaleEnabled(true);// 是否可以缩放    
     
-		barChart.setPinchZoom(false);//     
-    
+		barChart.setPinchZoom(false);//同步缩放     
+		barChart.setHighlightEnabled(true);
 //		barChart.setBackgroundColor();// 设置背景    
 		
 		barChart.setDrawBarShadow(true);
@@ -190,7 +185,7 @@ public class HeartHistory extends Activity {
 	private BarData getBarData(ArrayList<Integer> beats) {
 		ArrayList<String> xValues = new ArrayList<String>();
 		for (int i = 0; i < beats.size(); i++) {
-			xValues.add("i");
+			xValues.add("");
 		}
 		
 		ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();

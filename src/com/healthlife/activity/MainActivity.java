@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.healthlife_main);
 		
 		heartBtn = (Button)findViewById(R.id.heartbtn);
-//		locateBtn = (Button)findViewById(R.id.locatebtn);
 		sportBtn = (Button)findViewById(R.id.sportbtn);
 		musicBtn = (Button)findViewById(R.id.musicbtn);
 		
@@ -42,17 +41,6 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
-//		//地图定位按钮响应
-//		locateBtn.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(MainActivity.this, GetLocation.class);
-//				startActivity(intent);
-//			}
-//		});
 		
 		//音乐播放按钮响应
 		musicBtn.setOnClickListener(new OnClickListener() {
