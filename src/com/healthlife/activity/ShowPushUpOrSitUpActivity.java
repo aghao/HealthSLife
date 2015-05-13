@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract.Data;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		if(GlobalVariables.MODE_SHOW_SAVED==showMode)
 		{
 			btnSave.setVisibility(View.GONE);
+			btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
 		}
 		
 		textNum = (TextView)findViewById(R.id.text_motion_num);
