@@ -74,7 +74,7 @@ public class HeartRate extends Activity {
 		helpButton.setText("点击开始测量");
 		progressBar.setMax(NUM);
 		lastText.setText("无记录"+"\n");
-		
+
 //		myCV = (CameraView) findViewById(R.id.cameraview);
 
 
@@ -299,7 +299,7 @@ public class HeartRate extends Activity {
 		double timeFinal = (double)(time[end]-time[start])/60000;
 		//寻峰计算心率
 		num = (int) ((num-1)/timeFinal);
-		num = num-20;
+		num = num-10;
 		resultText.setText(num+"");
 		if(point == 63)
 		{
@@ -333,18 +333,19 @@ public class HeartRate extends Activity {
 	void showLastHistory(){
 		DBManager myDB = new DBManager(this);
 		ArrayList<Beats> lastHR = myDB.getBeatsList();
-		TextView typeText = (TextView) findViewById(R.id.hrlasttype);
+		ImageView typeImage = (ImageView) findViewById(R.id.hrlasttype);
+		TextView lastDateText = (TextView) findViewById(R.id.hrlastdate);;
 		if(lastHR.size()>0){
-			lastText.setText(lastHR.get(lastHR.size()-1).getBeats()+
-				"\n"+lastHR.get(lastHR.size()-1).getDate());
+			lastText.setText(lastHR.get(lastHR.size()-1).getBeats()+"");
+			lastDateText.setText(lastHR.get(lastHR.size()-1).getDate());
 			switch(lastHR.get(lastHR.size()-1).getType())
 			{
 			case 1:
-				typeText.setText("静息心率");break;
+				typeImage.setImageResource(R.drawable.heartres_static_down);break;
 			case 2:
-				typeText.setText("运动后心率");break;
+				typeImage.setImageResource(R.drawable.heartres_run_down);break;
 			case 3:
-				typeText.setText("最大心率");break;
+				typeImage.setImageResource(R.drawable.heartres_max_down);break;
 			default:
 				;
 			}
@@ -353,7 +354,8 @@ public class HeartRate extends Activity {
 		else
 		{
 			lastText.setText("无记录"+"\n");
-			typeText.setText("");
+			typeImage.setImageBitmap(null);
+			lastDateText.setText("");
 		}
 	}
 }
