@@ -1,10 +1,11 @@
 package com.healthlife.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -90,19 +91,24 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			
 			else{
 			pushUp = dBinder.getPushUp();
-			unregisterReceiver(motionReceiver);
-			unbindService(connection);
-			
-			Intent intentStop = new Intent(this,PushUpService.class);
-			stopService(intentStop);
-			
-			Intent intentNextActivity = new Intent(this,com.healthlife.activity.ShowPushUpOrSitUpActivity.class);
-			intentNextActivity.putExtra("pushup",pushUp);
-			intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_PUSHUP);
-			startActivity(intentNextActivity);
-			finish();
+			if(pushUp.getNum()!=0){
+				unregisterReceiver(motionReceiver);
+				unbindService(connection);
+				
+				Intent intentStop = new Intent(this,PushUpService.class);
+				stopService(intentStop);
+				
+				Intent intentNextActivity = new Intent(this,com.healthlife.activity.ShowPushUpOrSitUpActivity.class);
+				intentNextActivity.putExtra("pushup",pushUp);
+				intentNextActivity.putExtra("type", GlobalVariables.SPORTS_TYPE_PUSHUP);
+				startActivity(intentNextActivity);
+				finish();
+			}
+			else{
+				showWarning();
 			}
 		}
+	}
 		
 	
 
@@ -115,6 +121,30 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			textNum.setText(String.valueOf(motionNum));	
 		}
 		
+	}
+	
+	private void showWarning(){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle("未检测到运动哦");
+		alertDialog.setMessage("是否退出运动");
+		alertDialog.setCancelable(false);
+		alertDialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				Intent intentToNextActivity = new Intent(thisActivity,SelectSportsActivity.class); 
+				startActivity(intentToNextActivity);	
+				finish();
+			}
+		});
+		alertDialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+
+			}
+		});		
+		alertDialog.show();	
 	}
 	
 	
