@@ -84,7 +84,7 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			if(!startFlag){
 			Intent intntBind = new Intent(this,com.healthlife.util.PushUpService.class);
 			bindService(intntBind,connection,BIND_AUTO_CREATE);
-			btnStart.setText("Stop");
+			btnStart.setBackgroundResource(R.drawable.sportresult_cancelbtn_selector);
 			startFlag=true;
 			}
 			

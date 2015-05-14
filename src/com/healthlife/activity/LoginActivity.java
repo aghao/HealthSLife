@@ -37,8 +37,13 @@ public class LoginActivity extends Activity {
 				Toast.makeText(LoginActivity.this, "用户名不存在或密码错误", Toast.LENGTH_SHORT).show();
 			else if(Ret==0)
 				Toast.makeText(LoginActivity.this, "网络异常 ", Toast.LENGTH_SHORT).show();
-			else if(Ret==1)
+			else if(Ret==1){
 				Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent();
+				intent.setClass(LoginActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
 		}
 	};
 	
@@ -81,6 +86,7 @@ public class LoginActivity extends Activity {
 					Intent intent = new Intent();
 					intent.setClass(LoginActivity.this, MainActivity.class);
 					startActivity(intent);
+					finish();
 //					Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
 				}
 				else

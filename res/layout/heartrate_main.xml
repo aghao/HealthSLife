@@ -82,16 +82,16 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/hrhelpbt"
 	        android:layout_alignRight="@id/hrhelpbt"
-            android:text="@string/bmp"
+            android:text="@string/bpm"
             android:textColor="#e74c3c"
             android:textSize="15sp"
-            android:id="@+id/BMP"/>
+            android:id="@+id/BPM"/>
         
         <TextView
 	        android:id="@+id/hrresulttext"
 	        android:layout_width="wrap_content"
 	        android:layout_height="54dp"
-            android:layout_toLeftOf="@id/BMP"
+            android:layout_toLeftOf="@id/BPM"
             android:layout_above="@id/hrhelpbt"
 	        android:layout_alignLeft="@id/hrhelpbt"
 	        android:text="@string/hrinit"
@@ -101,7 +101,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_above="@id/BMP"
+            android:layout_above="@id/BPM"
             android:id="@+id/heartimg"
             android:layout_toRightOf="@id/hrresulttext"/> 
         

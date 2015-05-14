@@ -300,7 +300,7 @@ public class GetLocation extends Activity {
     		//判断定位点是否有效，取0.0009为误差
     		Log.i("Test", "纬度差：" + String.valueOf(subLat));
     		Log.i("Test", "经度差：" + String.valueOf(subLon));
-    		finishBtn.setText("纬度差：" + String.valueOf(subLat) + "经度差：" + String.valueOf(subLon));
+    		//finishBtn.setText("纬度差：" + String.valueOf(subLat) + "经度差：" + String.valueOf(subLon));
     		
     		if (subLat <0.0009 && subLon < 0.0009){
     			if(!(subLat == 0.0 && subLon == 0.0)){

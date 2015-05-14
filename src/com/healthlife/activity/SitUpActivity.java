@@ -80,6 +80,7 @@ public class SitUpActivity extends Activity implements OnClickListener {
 			Intent intentBind = new Intent(this,com.healthlife.util.SitUpService.class);
 			bindService(intentBind,connection,BIND_AUTO_CREATE);
 			btnStart.setText("Stop");
+			btnStart.setBackgroundResource(R.drawable.sportresult_cancelbtn_selector);
 			startFlag=true;
 		}
 			

@@ -54,6 +54,12 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			return true;
 		}
+		if(id == R.id.sport_sum){
+			Intent intent = new Intent();
+			intent.setClass(SelectSportsActivity.this, ShowRecordActivity.class);
+			startActivity(intent);
+			return true;
+		}
 		
 		return super.onOptionsItemSelected(item);
 	}

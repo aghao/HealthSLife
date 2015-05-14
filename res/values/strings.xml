@@ -22,7 +22,7 @@
     <string name="hrmax">最大心率</string>
     <string name="hrsport">运动后心率</string>
     <string name="hrlast">最近一次的测量</string>
-    <string name="bmp">BMP</string>
+    <string name="bpm">bpm</string>
     <string name="hrinit">00</string>
     <string name="title_activity_maintitle">健康S生活</string>
     <string name="title_activity_music_main">音乐播放</string>
@@ -42,16 +42,16 @@
     <string name="btn_stop_sport">Stop</string>
     <string name="btn_save_sports">Save</string>
     <string name="btn_drop_sports">Delete</string>
-    <string name="title_activity_jogging">JoggingActivity</string>
+    <string name="title_activity_jogging">跑 步</string>
     <string name="title_activity_push_up">俯卧撑</string>
     <string name="title_activity_sit_up">仰卧起坐</string>
     <string name="title_activity_walking">WalkingActivity</string>
-    <string name="title_activity_show_push_up">ShowPushUpActivity</string>
+    <string name="title_activity_show_push_up">俯卧撑结果</string>
     <string name="title_activity_show_jog">ShowJogActivity</string>
     <string name="title_activity_show_walk">ShowWalkActivity</string>
-    <string name="title_activity_show_sit_up">ShowSitUpActivity</string>
-    <string name="title_activity_show_record">ShowRecordActivity</string>
+    <string name="title_activity_show_sit_up">仰卧起坐结果</string>
+    <string name="title_activity_show_record">运动数据统计</string>
     <string name="title_activity_show_sports_history">运动历史记录</string>
     <string name="text_inited_motion_number">0</string>
-    <string name="btn_clear_record">Clear</string>
+    <string name="btn_clear_record">清空数据</string>
 </resources>

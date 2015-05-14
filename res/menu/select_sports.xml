@@ -3,6 +3,11 @@
     tools:context="com.healthslife.SelectSportsActivity" >
     
     <item
+		android:id="@+id/sport_sum"
+		android:icon="@drawable/menu_sportsum"
+		android:showAsAction="always"
+		android:title="数据统计"/>
+    <item
 		android:id="@+id/sport_history"
 		android:icon="@drawable/menu_sporthistory"
 		android:showAsAction="always"

@@ -3,10 +3,15 @@ package com.healthlife.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.menu;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification.Action;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -55,6 +60,7 @@ public class LocationResult extends Activity{
     private String date;
 	private String duration;
 	private int showmode;
+	private DBManager myDB;
 
 	
 	@Override
@@ -64,6 +70,7 @@ public class LocationResult extends Activity{
 
 		newSports = new Sports();
 		newPosition = new Position();
+		myDB = new DBManager(LocationResult.this);
 		
 		durationTv = (TextView)findViewById(R.id.location_result_duration);
 		distanceTv = (TextView)findViewById(R.id.location_result_distance);
@@ -74,7 +81,6 @@ public class LocationResult extends Activity{
 		Intent intent = getIntent();
 		showmode = intent.getIntExtra("showmode",-1);
 		if(showmode == 1){
-			DBManager myDB = new DBManager(LocationResult.this);
 			newSports = (Sports)intent.getSerializableExtra("jog");
 			date = newSports.getDate();
 			centerLatitude = Double.valueOf((double)newSports.getGoodNum());
@@ -83,7 +89,9 @@ public class LocationResult extends Activity{
 			duration = newSports.getDuration();
 			speed = newSports.getAVGSpeed();
 			steps = newSports.getNum();
-			saveBtn.setVisibility(View.GONE);
+			
+			saveBtn.setText("删除运动");
+			
 			pos = myDB.getPosList(newSports.getSportsID());
 			initMap(centerLatitude, centerLongitude);
 			pts = new ArrayList<LatLng>();
@@ -189,18 +197,30 @@ public class LocationResult extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				// 存入数据库
-				DBManager myDB = new DBManager(LocationResult.this);
-				sportID = myDB.insertSport(newSports);
-				for(int i=0;i<points.size();i++){
-					newPosition.setSportId(sportID);
-					newPosition.setTime(points.get(i).getTime());
-					newPosition.setLatitude(points.get(i).getLatitude());
-					newPosition.setLongitude(points.get(i).getLongitude());
-					myDB.insertPosition(newPosition);
+				if(showmode == 1){
+					myDB.removeSport(newSports.getSportsID());
+					myDB.removePosition(newSports.getSportsID());
+					Toast.makeText(LocationResult.this, "记录删除成功！", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent();
+					intent.setClass(LocationResult.this, ShowSportsHistoryActivity.class);
+					startActivity(intent);
+					finish();
+				}else if (showmode == 0) {
+					// 存入数据库
+					sportID = myDB.insertSport(newSports);
+					for(int i=0;i<points.size();i++){
+						newPosition.setSportId(sportID);
+						newPosition.setTime(points.get(i).getTime());
+						newPosition.setLatitude(points.get(i).getLatitude());
+						newPosition.setLongitude(points.get(i).getLongitude());
+						myDB.insertPosition(newPosition);
+					}
+					Toast.makeText(LocationResult.this, "记录保存成功！", Toast.LENGTH_SHORT).show();
+					finish();
+				}else{
+					Log.i("Test","Others");
 				}
-				Toast.makeText(LocationResult.this, "记录保存成功！", Toast.LENGTH_SHORT).show();
-				finish();
+				
 			}
 		});
 	}
@@ -216,4 +236,5 @@ public class LocationResult extends Activity{
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
 	}
+	
 }
