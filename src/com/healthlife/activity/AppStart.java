@@ -9,11 +9,13 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.healthlife.R;
+import com.healthlife.util.CurrentUser;
 
 public class AppStart extends Activity{
 	
 	private Button loginBtn;
 	private Button regBtn;
+	private CurrentUser currentUser = new CurrentUser(this);
 	
 	
 	@Override
@@ -24,7 +26,6 @@ public class AppStart extends Activity{
 		
 		loginBtn = (Button)findViewById(R.id.appstart_loginbtn);
 		regBtn = (Button)findViewById(R.id.appstart_regbtn);
-		
 		loginBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -32,6 +33,7 @@ public class AppStart extends Activity{
 				Intent intent = new Intent();
 				intent.setClass(AppStart.this, LoginActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 		
@@ -42,6 +44,7 @@ public class AppStart extends Activity{
 				Intent intent = new Intent();
 				intent.setClass(AppStart.this, RegisterActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 	}

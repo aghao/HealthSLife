@@ -20,7 +20,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	      	android:layout_below="@+id/musiclist_bt"
-	      	 android:layout_alignParentRight="true"
+	      	android:layout_alignParentRight="true"
 	      	android:layout_marginRight="30dp"
 	      	android:textSize="17sp"
 	      	android:textColor="#ff00aa00"
@@ -66,7 +66,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="85dp"
-                android:background="@drawable/music_aiorderbtn_selector" />
+                android:background="@drawable/music_orderbtn_change" />
 
             <ImageButton
                 android:id="@+id/intelmode_bt"
@@ -74,7 +74,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="85dp"
-                android:background="@drawable/music_orderbtn_selector" />
+                android:background="@drawable/music_aiorderbtn_up" />
         </RelativeLayout>
         
 		<TextView

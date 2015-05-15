@@ -33,7 +33,7 @@
         <item name="android:background">#f1c40f</item> 
     </style>
     <style name="PushupTheme" parent="AppBaseTheme">
-          <item name="android:actionBarStyle">@style/pushupBarStyle</item>
+        <item name="android:actionBarStyle">@style/pushupBarStyle</item>
     </style>
     <style name="pushupBarStyle" parent="android:Widget.ActionBar" >  
         <item name="android:background">#f39c12</item> 

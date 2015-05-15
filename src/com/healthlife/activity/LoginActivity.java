@@ -83,11 +83,8 @@ public class LoginActivity extends Activity {
 				
 				if(username.isEmpty()||password.isEmpty())
 				{
-					Intent intent = new Intent();
-					intent.setClass(LoginActivity.this, MainActivity.class);
-					startActivity(intent);
-					finish();
-//					Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
+					
+					Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -98,7 +95,7 @@ public class LoginActivity extends Activity {
 					intent.putExtra("password", password);
 			        startService(intent);
 				}
-		       // LoginActivity.this.finish();
+//		        LoginActivity.this.finish();
 			}
 
 	}
@@ -107,7 +104,11 @@ public class LoginActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setClass(LoginActivity.this, AppStart.class);
+			startActivity(intent);
 			finish();
+			break;
 		}
 		return true;
 	}

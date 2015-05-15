@@ -2,6 +2,7 @@ package com.healthlife.activity;
 
 import com.healthlife.R;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_sports);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		btnJog=(Button)findViewById(R.id.button_select_jog);
 		btnPushUp=(Button)findViewById(R.id.button_select_pushup);
 		btnSitUp=(Button)findViewById(R.id.button_select_situp);
@@ -45,6 +48,10 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
 		if (id == R.id.action_settings) {
 			return true;
 		}
@@ -91,4 +98,5 @@ public class SelectSportsActivity extends Activity implements OnClickListener {
 //		break;
 		}
 	}
+	
 }

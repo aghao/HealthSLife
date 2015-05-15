@@ -86,6 +86,8 @@ public class MusicMain extends Activity {
 				intent.putExtra("mode", "order_mode");
 		        startService(intent);
 		        current_mode.setText("顺序模式");
+				ordermode_bt.setBackgroundResource(R.drawable.music_orderbtn_up);
+				intelmode_bt.setBackgroundResource(R.drawable.music_aiorderbtn_change);
 			}
         	
         });
@@ -102,6 +104,8 @@ public class MusicMain extends Activity {
 				intent.putExtra("mode", "intel_mode");
 		        startService(intent);
 		        current_mode.setText("智能模式");
+				ordermode_bt.setBackgroundResource(R.drawable.music_orderbtn_change);
+				intelmode_bt.setBackgroundResource(R.drawable.music_aiorderbtn_up);
 		        
 		        //test
 //		        count=count+1;
@@ -179,10 +183,17 @@ public class MusicMain extends Activity {
 				Activity.MODE_PRIVATE); 
 		// 使用getString方法获得value，注意第2个参数是value的默认值 
 		int music_mode =mySharedPreferences.getInt("MusicMode", 0);
-		if(music_mode==0)
+		if(music_mode==0){
 			current_mode.setText("顺序模式");
-		else if(music_mode==1)
+			ordermode_bt.setBackgroundResource(R.drawable.music_orderbtn_up);
+			intelmode_bt.setBackgroundResource(R.drawable.music_aiorderbtn_change);
+		}
+		else if(music_mode==1){
 			current_mode.setText("智能模式");
+			ordermode_bt.setBackgroundResource(R.drawable.music_orderbtn_change);
+			intelmode_bt.setBackgroundResource(R.drawable.music_aiorderbtn_up);
+			
+		}
 	}
 
 	

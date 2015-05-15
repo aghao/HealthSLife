@@ -3,7 +3,9 @@ package com.healthlife.activity;
 import java.math.BigDecimal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,6 +27,8 @@ public class ShowRecordActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_records);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		btnClear = (Button)findViewById(R.id.button_record_clear);
 		
@@ -104,4 +108,15 @@ public class ShowRecordActivity extends Activity implements OnClickListener {
 		updateStatics();
 		
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
+	
 }

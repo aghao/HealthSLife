@@ -51,6 +51,8 @@ public class HeartHistory extends Activity {
 		super.onCreate(savedData);
 		this.setContentView(R.layout.hearthistory_main);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		//init
 		mView = new View(this);
 		Button clearBt = (Button) findViewById(R.id.hr_clearbt);
@@ -223,5 +225,16 @@ public class HeartHistory extends Activity {
 		
 		return barData;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
+	
 
 }

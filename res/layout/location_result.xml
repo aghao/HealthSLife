@@ -86,28 +86,7 @@
 		    	    android:textColor="#3498db" />
 		    </LinearLayout>
 		    
-		    <LinearLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-				android:orientation="vertical" >
-		    	<TextView
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:gravity="center"
-			        android:layout_gravity="center_horizontal"
-					android:textSize="18sp"
-			        android:text="卡路里" />
-		    	<TextView
-			        android:id="@+id/location_result_heat"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:gravity="center"
-			        android:layout_gravity="center_horizontal"
-					android:textSize="20sp"
-			        android:text="2890"
-		    	    android:textColor="#3498db" />
-		    </LinearLayout>
+		    
 		    
 		    <LinearLayout
 		        android:layout_width="match_parent"

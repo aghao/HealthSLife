@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,6 +42,9 @@ public class SitUpActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_situp);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		startFlag=false;
 		
 		thisActivity = this;
@@ -79,7 +83,6 @@ public class SitUpActivity extends Activity implements OnClickListener {
 		if(!startFlag){
 			Intent intentBind = new Intent(this,com.healthlife.util.SitUpService.class);
 			bindService(intentBind,connection,BIND_AUTO_CREATE);
-			btnStart.setText("Stop");
 			btnStart.setBackgroundResource(R.drawable.sportresult_cancelbtn_selector);
 			startFlag=true;
 		}
@@ -96,6 +99,16 @@ public class SitUpActivity extends Activity implements OnClickListener {
 			startActivity(intentNextActivity);
 			finish();
 		}	
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
 	}
 	
 	class MotionReceiver extends BroadcastReceiver{

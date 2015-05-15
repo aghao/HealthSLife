@@ -16,6 +16,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -34,6 +35,7 @@ public class HeartRate extends Activity {
 	private TextView lastText= null;
 	private Button helpButton = null;
 	private TextView resultText = null;
+	private TextView lastBpmText = null;
 	private double [] red = new double [NUM];
 	private int point = 0;
 	private ImageView heartImage = null;
@@ -48,10 +50,14 @@ public class HeartRate extends Activity {
 		super.onCreate(savedInstanceState);
 		//init
 		setContentView(R.layout.heartrate_main);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		historyButton = (Button) findViewById(R.id.historybt);
 		lastText = (TextView) findViewById(R.id.hrlast);
 		resultText = (TextView) findViewById(R.id.hrresulttext);
 		heartImage = (ImageView) findViewById(R.id.heartimg);
+		lastBpmText = (TextView)findViewById(R.id.lastbpm);
 		//检测摄像头
 //		if(checkCameraHardware(this)){
 //			Log.e("==========", "摄像头存在");
@@ -71,9 +77,11 @@ public class HeartRate extends Activity {
 		heartImage.setBackgroundResource(R.drawable.heart_beats);
 		heartBeat= (AnimationDrawable) heartImage.getBackground(); 
 		
-		helpButton.setText("点击开始测量");
+		helpButton.setText("点我开始测量");
 		progressBar.setMax(NUM);
 		lastText.setText("无记录"+"\n");
+		lastBpmText.setText("");
+		
 
 //		myCV = (CameraView) findViewById(R.id.cameraview);
 
@@ -93,7 +101,7 @@ public class HeartRate extends Activity {
 				}
 				else
 				{
-					helpButton.setText("点击开始测量");
+					helpButton.setText("点我开始测量");
 					stopCamera();
 					point = 0;
 					progressBar.setProgress(point);
@@ -125,7 +133,7 @@ public class HeartRate extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		helpButton.setText("点击开始测量");
+		helpButton.setText("点我开始测量");
 		progressBar.setProgress(point);
 		resultText.setText("00");
 		heartBeat.stop();
@@ -338,6 +346,7 @@ public class HeartRate extends Activity {
 		if(lastHR.size()>0){
 			lastText.setText(lastHR.get(lastHR.size()-1).getBeats()+"");
 			lastDateText.setText(lastHR.get(lastHR.size()-1).getDate());
+			lastBpmText.setText("BPM");
 			switch(lastHR.get(lastHR.size()-1).getType())
 			{
 			case 1:
@@ -354,8 +363,20 @@ public class HeartRate extends Activity {
 		else
 		{
 			lastText.setText("无记录"+"\n");
+			lastText.setText("");
 			typeImage.setImageBitmap(null);
 			lastDateText.setText("");
 		}
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
+	
 }

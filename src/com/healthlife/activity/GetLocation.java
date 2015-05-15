@@ -104,6 +104,9 @@ public class GetLocation extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.location_main);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		disText = (TextView)findViewById(R.id.location_main_distance);
 		paceText = (TextView)findViewById(R.id.location_main_pace);
 		finishBtn = (Button)findViewById(R.id.location_main_finishbtn);
@@ -203,7 +206,7 @@ public class GetLocation extends Activity {
 					finish();
 					Log.i("Test", "Intent之后！");
 				}else {
-					Toast.makeText(GetLocation.this, "运动数据为0！", Toast.LENGTH_SHORT).show();
+					Toast.makeText(GetLocation.this, "未检测到位置改变！", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -275,6 +278,7 @@ public class GetLocation extends Activity {
             
     		if (isFirstCompare)
 			{
+    			Toast.makeText(GetLocation.this, "第一次检测网络和GPS会比较慢,请耐心等待！", Toast.LENGTH_LONG).show();
             	isFirstCompare = false;
             	returnMyLoc();
             	maxLatitude = mCurrentLatitude;
@@ -397,8 +401,14 @@ public class GetLocation extends Activity {
 
 	@Override
 	protected void onDestroy() {
+		// 关闭图层定位  
+        mBaiduMap.setMyLocationEnabled(false);  
+        mLocationClient.stop();  
+  
+        // 关闭方向传感器  
+        myOrientationListener.stop();
 		super.onDestroy();
-		mMapView.onDestroy(); 
+		mMapView.onDestroy();
 	}
 	
 	@Override
@@ -422,6 +432,10 @@ public class GetLocation extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
 		if (id == R.id.action_locate) {
 			try{
 				returnMyLoc();
@@ -443,41 +457,41 @@ public class GetLocation extends Activity {
 			}
 			return true;
 		}
-		if (id == R.id.action_showpoint){
-			if(points!=null){
-				for(int i=0;i<points.size();i++)
-				{
-					LatLng singlePoint = new LatLng(points.get(i).getLatitude(),points.get(i).getLongitude());  
-					BitmapDescriptor bitmap = BitmapDescriptorFactory  
-							.fromResource(R.drawable.locate);  
-					//构建MarkerOption，用于在地图上添加Marker  
-					OverlayOptions option = new MarkerOptions()  
-				    	.position(singlePoint)  
-				    	.icon(bitmap); 
-					//在地图上添加Marker，并显示  
-					mBaiduMap.addOverlay(option);
-				}
-			}
-			return true;
-		}
-		if (id == R.id.action_drawroute){
-			pts = new ArrayList<LatLng>();
-			if(points != null){
-				for(int j = 0;j<points.size();j++)
-				{
-					LatLng pt = new LatLng(points.get(j).getLatitude(), points.get(j).getLongitude());
-					pts.add(pt);
-				}
-			}
-			Log.i("Test",String.valueOf(distance));
-			//构建绘制折线的Option对象  
-			OverlayOptions polylineOption = new PolylineOptions()  
-			    .points(pts)
-			    .width(9)
-			    .color(0xAAFF4F4F);
-			mBaiduMap.addOverlay(polylineOption);
-			return true;
-		}
+//		if (id == R.id.action_showpoint){
+//			if(points!=null){
+//				for(int i=0;i<points.size();i++)
+//				{
+//					LatLng singlePoint = new LatLng(points.get(i).getLatitude(),points.get(i).getLongitude());  
+//					BitmapDescriptor bitmap = BitmapDescriptorFactory  
+//							.fromResource(R.drawable.locate);  
+//					//构建MarkerOption，用于在地图上添加Marker  
+//					OverlayOptions option = new MarkerOptions()  
+//				    	.position(singlePoint)  
+//				    	.icon(bitmap); 
+//					//在地图上添加Marker，并显示  
+//					mBaiduMap.addOverlay(option);
+//				}
+//			}
+//			return true;
+//		}
+//		if (id == R.id.action_drawroute){
+//			pts = new ArrayList<LatLng>();
+//			if(points != null){
+//				for(int j = 0;j<points.size();j++)
+//				{
+//					LatLng pt = new LatLng(points.get(j).getLatitude(), points.get(j).getLongitude());
+//					pts.add(pt);
+//				}
+//			}
+//			Log.i("Test",String.valueOf(distance));
+//			//构建绘制折线的Option对象  
+//			OverlayOptions polylineOption = new PolylineOptions()  
+//			    .points(pts)
+//			    .width(9)
+//			    .color(0xAAFF4F4F);
+//			mBaiduMap.addOverlay(polylineOption);
+//			return true;
+//		}
 		return super.onOptionsItemSelected(item);
 	}
 	

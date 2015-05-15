@@ -10,14 +10,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.provider.ContactsContract.Data;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -49,6 +52,8 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_sports);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		db = new DBManager(this);
 		sportsType = getIntent().getIntExtra("type", 0);
 		showMode = getIntent().getIntExtra("showmode",0);
@@ -64,15 +69,18 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		
 
 		Button btnSave = (Button)findViewById(R.id.button_save_sports);
-		btnSave.setOnClickListener(this);			
+		btnSave.setOnClickListener(this);
 			
 		Button btnDrop = (Button)findViewById(R.id.button_drop_sports);
 		btnDrop.setOnClickListener(this);
 		
 		if(GlobalVariables.MODE_SHOW_SAVED==showMode)
 		{
+			LinearLayout layout = (LinearLayout)findViewById(R.id.btnlayout);
+			layout.setOrientation(LinearLayout.HORIZONTAL);
+			layout.setGravity(Gravity.CENTER_HORIZONTAL);
 			btnSave.setVisibility(View.GONE);
-			btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
+			btnDrop.setBackgroundResource(R.drawable.pushresult_deletebtn_selector);
 		}
 		
 		textNum = (TextView)findViewById(R.id.text_motion_num);
@@ -255,4 +263,15 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
    
 		return millis;
     }
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
+    
 }

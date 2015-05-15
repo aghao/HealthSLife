@@ -68,6 +68,8 @@ public class LocationResult extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.location_result);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		newSports = new Sports();
 		newPosition = new Position();
 		myDB = new DBManager(LocationResult.this);
@@ -235,6 +237,35 @@ public class LocationResult extends Activity{
 		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(15).build();
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.location_result, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		if (id == R.id.locationres_switch) {
+			if(isFirst)
+			{
+				item.setTitle("«–ªª÷¡ΩªÕ®Õº");
+				isFirst = false;
+				mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);  //…Ë÷√Œ¿–«Õº
+			}else{
+				item.setTitle("«–ªª÷¡Œ¿–«Õº");
+				isFirst = true;
+				mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+			}
+			return true;
+		}
+		return true;
 	}
 	
 }
