@@ -39,7 +39,6 @@ public class DBManager {
 			db.insert("MUSIC", null, values);
 			values.clear();
 		}
-		values.clear();
 		cursor.close();	
 		
 		

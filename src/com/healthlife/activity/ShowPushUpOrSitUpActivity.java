@@ -72,7 +72,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		if(GlobalVariables.MODE_SHOW_SAVED==showMode)
 		{
 			btnSave.setVisibility(View.GONE);
-			btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
+			//btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
 		}
 		
 		textNum = (TextView)findViewById(R.id.text_motion_num);
