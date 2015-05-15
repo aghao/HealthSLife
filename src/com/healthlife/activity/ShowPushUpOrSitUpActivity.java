@@ -81,7 +81,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		textDuration = (TextView)findViewById(R.id.text_sports_duration);
 		
 		textNum.setText("动作数: "+String.valueOf(sports.getNum()));
-		textPerfectNum.setText("消耗卡路里: "+String.valueOf((int)sports.getCalorie()));
+		textPerfectNum.setText("消耗卡路里: "+String.valueOf(sports.getCalorie()));
 		textDate.setText("日期: "+String.valueOf(sports.getDate()));
 		textDuration.setText("持续时间: "+String.valueOf(sports.getDuration()));
 		
@@ -217,26 +217,50 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
     private void updateRecord(){
     	record = db.queryRecord();
     	
-    	if(GlobalVariables.SPORTS_TYPE_PUSHUP==sports.getType()){
-    		record.setCalOfPushUp(record.getCalOfPushUp()+sports.getCalorie());
-    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
-    		
-    		record.setDurationPushUp(record.getDurationPushUp()+getDurationInFloat(sports.getDuration()));
-    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
-    		
-    		record.setTotalNumPushUp(record.getTotalNumPushUp()+sports.getNum()); 
+    	if(record.getRecordId()!=0){
+	    	if(GlobalVariables.SPORTS_TYPE_PUSHUP==sports.getType()){
+	    		record.setCalOfPushUp(record.getCalOfPushUp()+sports.getCalorie());
+	    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
+	    		
+	    		record.setDurationPushUp(record.getDurationPushUp()+getDurationInFloat(sports.getDuration()));
+	    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
+	    		
+	    		record.setTotalNumPushUp(record.getTotalNumPushUp()+sports.getNum()); 
+	    	}
+	    	else if(GlobalVariables.SPORTS_TYPE_SITUP==sports.getType()){
+	    		record.setCalOfSitUp(record.getCalOfSitUp()+sports.getCalorie());
+	    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
+	    		
+	    		record.setDurationSitUp(record.getDurationSitUp()+getDurationInFloat(sports.getDuration()));
+	    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
+	    		
+	    		record.setTotalNumSitUp(record.getTotalNumSitUp()+sports.getNum());    	
+	    	}
+	    	db.updateRecord(record);
     	}
-    	else if(GlobalVariables.SPORTS_TYPE_SITUP==sports.getType()){
-    		record.setCalOfSitUp(record.getCalOfSitUp()+sports.getCalorie());
-    		record.setTotalCal(record.getTotalCal()+sports.getCalorie());
-    		
-    		record.setDurationSitUp(record.getDurationSitUp()+getDurationInFloat(sports.getDuration()));
-    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(sports.getDuration()));
-    		
-    		record.setTotalNumSitUp(record.getTotalNumSitUp()+sports.getNum());    	
+    	else{
+    		if(GlobalVariables.SPORTS_TYPE_PUSHUP==sports.getType()){
+	    		record.setCalOfPushUp(sports.getCalorie());
+	    		record.setTotalCal(sports.getCalorie());
+	    		
+	    		record.setDurationPushUp(getDurationInFloat(sports.getDuration()));
+	    		record.setTotalDuration(getDurationInFloat(sports.getDuration()));
+	    		
+	    		record.setTotalNumPushUp(sports.getNum()); 
+	    	}
+	    	else if(GlobalVariables.SPORTS_TYPE_SITUP==sports.getType()){
+	    		record.setCalOfSitUp(sports.getCalorie());
+	    		record.setTotalCal(sports.getCalorie());
+	    		
+	    		record.setDurationSitUp(getDurationInFloat(sports.getDuration()));
+	    		record.setTotalDuration(getDurationInFloat(sports.getDuration()));
+	    		
+	    		record.setTotalNumSitUp(sports.getNum());      		
+	    	}
+    		db.insertRecord(record);
     	}
     	
-    	db.updateRecord(record);
+    	
     		
     }
     

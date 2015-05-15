@@ -1,5 +1,7 @@
 package com.healthlife.activity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,7 @@ import com.healthlife.R;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Position;
+import com.healthlife.entity.Record;
 import com.healthlife.entity.Sports;
 
 public class LocationResult extends Activity{
@@ -43,6 +46,7 @@ public class LocationResult extends Activity{
 	private TextView distanceTv;
 	private TextView speedTv;
 	private TextView stepsTv;
+	private TextView heatTv;
 	private Button saveBtn;
 	private Double centerLatitude;
     private Double centerLongitude;
@@ -55,6 +59,7 @@ public class LocationResult extends Activity{
     private String date;
 	private String duration;
 	private int showmode;
+	private float calorie;
 
 	
 	@Override
@@ -69,11 +74,12 @@ public class LocationResult extends Activity{
 		distanceTv = (TextView)findViewById(R.id.location_result_distance);
 		speedTv = (TextView)findViewById(R.id.location_result_speed);
 		stepsTv = (TextView)findViewById(R.id.location_result_pace);
+		heatTv = (TextView)findViewById(R.id.location_result_heat);
 		saveBtn = (Button)findViewById(R.id.location_result_savebtn);
 		
 		Intent intent = getIntent();
 		showmode = intent.getIntExtra("showmode",-1);
-		if(showmode == 1){
+		if(showmode == GlobalVariables.MODE_SHOW_SAVED){
 			DBManager myDB = new DBManager(LocationResult.this);
 			newSports = (Sports)intent.getSerializableExtra("jog");
 			date = newSports.getDate();
@@ -83,6 +89,8 @@ public class LocationResult extends Activity{
 			duration = newSports.getDuration();
 			speed = newSports.getAVGSpeed();
 			steps = newSports.getNum();
+			calorie = newSports.getCalorie();
+			
 			saveBtn.setVisibility(View.GONE);
 			pos = myDB.getPosList(newSports.getSportsID());
 			initMap(centerLatitude, centerLongitude);
@@ -115,7 +123,7 @@ public class LocationResult extends Activity{
 				    .width(9)
 				    .color(0xAAFF4F4F);
 				mBaiduMap.addOverlay(polylineOption);
-		}else if(showmode == 0){
+		}else if(showmode == GlobalVariables.MODE_SHOW_UNSAVED){
 			points = (List<Position>) intent.getSerializableExtra("locinfo");
 			date = intent.getStringExtra("date");
 			centerLatitude = intent.getDoubleExtra("cenlat", 39.923963);
@@ -125,10 +133,16 @@ public class LocationResult extends Activity{
 			duration = intent.getStringExtra("duration");
 			speed = (float)(distance / recordTime);
 			steps = intent.getIntExtra("steps", 0);
+
+			float min = ((float)recordTime)/60;
+			float hour = min/60;
+			float speedPer400m=400/(float)distance*min;
+			float K=30/speedPer400m;
+			calorie = hour*60/*kg*/*K;
 			
 			Log.i("Test", String.valueOf(centerLatitude.floatValue()));
 			//newSports.setUserId(1); //测试用1
-			newSports.setDate(date);
+			newSports.setDate(date);	
 			newSports.setType(GlobalVariables.SPORTS_TYPE_JOG);
 			newSports.setGoodNum(centerLatitude.floatValue());  //中心纬度
 			newSports.setPerfectNum(centerLongitude.floatValue()); //中心经度
@@ -136,6 +150,7 @@ public class LocationResult extends Activity{
 			newSports.setDuration(duration);
 			newSports.setAVGSpeed(speed);
 			newSports.setNum(steps);
+			newSports.setCalorie(calorie);
 			
 			if(points.size() != 0){
 				initMap(centerLatitude, centerLongitude);
@@ -183,6 +198,7 @@ public class LocationResult extends Activity{
 		distanceTv.setText(String.format("%.1f", distance) + "米");
 		speedTv.setText(String.format("%.1f", speed) + "m/s");
 		stepsTv.setText(String.valueOf(steps));
+		heatTv.setText(String.valueOf(calorie));
 
 		
 		saveBtn.setOnClickListener(new OnClickListener() {
@@ -198,9 +214,36 @@ public class LocationResult extends Activity{
 					newPosition.setLatitude(points.get(i).getLatitude());
 					newPosition.setLongitude(points.get(i).getLongitude());
 					myDB.insertPosition(newPosition);
+					
 				}
-				Toast.makeText(LocationResult.this, "记录保存成功！", Toast.LENGTH_SHORT).show();
+				Record record = new Record();
+				
+				record = myDB.queryRecord();
+				if(record.getRecordId()!=0){
+					record.setCalOfJog(record.getCalOfJog()+newSports.getCalorie());
+					record.setTotalCal(record.getTotalCal()+newSports.getCalorie());
+					record.setTotalDistance(record.getTotalDistance()+newSports.getDistance());
+					record.setTotalSteps(record.getTotalSteps()+newSports.getNum());
+					
+					record.setDurationSitUp(record.getDurationJog()+getDurationInFloat(newSports.getDuration()));
+		    		record.setTotalDuration(record.getTotalDuration()+getDurationInFloat(newSports.getDuration()));
+		    		myDB.updateRecord(record);
+				}
+	    		
+				else{
+					record.setCalOfJog(newSports.getCalorie());
+					record.setTotalCal(newSports.getCalorie());
+					record.setTotalDistance(newSports.getDistance());
+					record.setTotalSteps(newSports.getNum());
+					
+					record.setDurationSitUp(getDurationInFloat(newSports.getDuration()));
+		    		record.setTotalDuration(getDurationInFloat(newSports.getDuration()));
+		    		myDB.insertRecord(record);
+				}
+	    		
 				finish();
+				
+				Toast.makeText(LocationResult.this, "记录保存成功！", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -216,4 +259,19 @@ public class LocationResult extends Activity{
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
 	}
+	
+	private float getDurationInFloat(String duration){
+
+    	float millis=-1;
+    	duration="1970-1-1"+" "+duration; 
+    	
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	try {
+			millis = formatter.parse(duration).getTime()-formatter.parse("1970-1-1 00:00:00").getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return millis;
+    }
 }
