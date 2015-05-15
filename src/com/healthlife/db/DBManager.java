@@ -33,7 +33,7 @@ public class DBManager {
 		if(!cursor.moveToNext())
 		{
 			values.put("MUSICNAME", music.getMusicName());
-			values.put("MUSICPATH", music.getMusicPath());
+			values.put("PATH", music.getMusicPath());
 			values.put("PACE", music.getPace());
 			values.put("IFACTIVE", music.isIfActive());
 			db.insert("MUSIC", null, values);

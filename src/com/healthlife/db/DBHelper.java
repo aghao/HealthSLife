@@ -74,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String CREATE_MUSIC = "CREATE TABLE MUSIC ("
 			+"MUSICID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"MUSICNAME VARCHAR(50),"
-			+"MUSICPATH VARCHAR(50),"
+			+"PATH VARCHAR(50),"
 			+"PACE INTEGER,"
 			+"IFACTIVE INTEGER"
 			+")";
