@@ -459,6 +459,11 @@ public class DBManager {
 		return positionList;
 	}
 
+	public void removePosition(long sportId){
+		
+		db.delete("POSITIONS", "SPORTID = ?",new String [] {String.valueOf(sportId)});
+	}
+	
 	public void removeAllBeats(long userId){
 		db.delete("BEATS", "USERID = ?", new String [] {String.valueOf(userId)});
 	}

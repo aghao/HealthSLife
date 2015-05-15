@@ -24,6 +24,7 @@ public class BackupsActivity extends Activity {
 
 	private Button backups_bt;
 	private Button recovery_bt;
+	private Button record_bt;
 	
 	private BroadcastReceiver backups_receiver = new BroadcastReceiver(){
 
@@ -68,14 +69,15 @@ public class BackupsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_backups);
 		
 		backups_bt=(Button) findViewById(R.id.backups_bt);
 		recovery_bt=(Button) findViewById(R.id.recovery_bt);
+		record_bt=(Button) findViewById(R.id.historyrecord_bt);
 		
 		backups_bt.setOnClickListener(new Backups());
 		recovery_bt.setOnClickListener(new Recovery());
+		record_bt.setOnClickListener(new RecordGo());
 		
 		registerReceiver(backups_receiver,new IntentFilter("BACKUPS"));
 		registerReceiver(recovery_receiver,new IntentFilter("RECOVERY"));
@@ -124,6 +126,18 @@ public class BackupsActivity extends Activity {
 		        startService(intent);
 		        
 
+		}
+		
+	}
+	class RecordGo implements OnClickListener{
+		
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			
+			Intent intent = new Intent(BackupsActivity.this, 
+					ShowSportsHistoryActivity.class);
+			startActivity(intent);
 		}
 		
 	}

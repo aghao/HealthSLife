@@ -3,35 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
     
      <ImageView
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:id="@+id/hr_listtype"
-    	android:textSize="17sp"
-    	android:textColor="#393939"
-    	android:layout_alignParentRight="true"/>
+        android:layout_width="50dp"
+    	android:layout_height="50dp"
+    	android:id="@+id/hr_listtype" />
      <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+	    android:layout_marginLeft="15dp"
+        android:orientation="vertical" >
+        <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	        <TextView
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="#3498db"
+		    	android:textSize="19sp"
+	    		android:text="00"
+		    	android:id="@+id/hr_listhistory"/>
+	     	<TextView
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:layout_marginLeft="20dp"
+		    	android:textColor="#e74c3c"
+		    	android:textSize="19sp"
+		    	android:text="BPM" />
+        </LinearLayout>
         <TextView
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
-	    	android:textColor="#3498db"
-	    	android:id="@+id/hr_listhistory"/>
-     	<TextView
-	        android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:layout_marginLeft="5dp"
-	    	android:textColor="#e74c3c"
-	    	android:text="BPM" />
-     	 <TextView
-	        android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:textColor="#3498db"
+	    	android:textColor="#393939"
+	    	android:textSize="16sp"
 	    	android:id="@+id/hr_listdate"/>
+        
      </LinearLayout>
      
 </LinearLayout>

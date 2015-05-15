@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -42,6 +44,8 @@ public class PushUpActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pushup);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		startFlag=false;
 		
@@ -85,7 +89,7 @@ public class PushUpActivity extends Activity implements OnClickListener {
 			if(!startFlag){
 			Intent intntBind = new Intent(this,com.healthlife.util.PushUpService.class);
 			bindService(intntBind,connection,BIND_AUTO_CREATE);
-			btnStart.setText("Stop");
+			btnStart.setBackgroundResource(R.drawable.sportresult_cancelbtn_selector);
 			startFlag=true;
 			}
 			
@@ -148,7 +152,14 @@ public class PushUpActivity extends Activity implements OnClickListener {
 	}
 	
 	
-
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
+	}
 	
 }

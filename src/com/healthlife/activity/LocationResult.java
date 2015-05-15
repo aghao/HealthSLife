@@ -5,10 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.menu;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification.Action;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -59,6 +64,7 @@ public class LocationResult extends Activity{
     private String date;
 	private String duration;
 	private int showmode;
+	private DBManager myDB;
 	private float calorie;
 
 	
@@ -67,8 +73,11 @@ public class LocationResult extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.location_result);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		newSports = new Sports();
 		newPosition = new Position();
+		myDB = new DBManager(LocationResult.this);
 		
 		durationTv = (TextView)findViewById(R.id.location_result_duration);
 		distanceTv = (TextView)findViewById(R.id.location_result_distance);
@@ -79,6 +88,7 @@ public class LocationResult extends Activity{
 		
 		Intent intent = getIntent();
 		showmode = intent.getIntExtra("showmode",-1);
+
 		if(showmode == GlobalVariables.MODE_SHOW_SAVED){
 			DBManager myDB = new DBManager(LocationResult.this);
 			newSports = (Sports)intent.getSerializableExtra("jog");
@@ -89,9 +99,10 @@ public class LocationResult extends Activity{
 			duration = newSports.getDuration();
 			speed = newSports.getAVGSpeed();
 			steps = newSports.getNum();
+			
+			saveBtn.setText("删除运动");
 			calorie = newSports.getCalorie();
 			
-			saveBtn.setVisibility(View.GONE);
 			pos = myDB.getPosList(newSports.getSportsID());
 			initMap(centerLatitude, centerLongitude);
 			pts = new ArrayList<LatLng>();
@@ -198,13 +209,36 @@ public class LocationResult extends Activity{
 		distanceTv.setText(String.format("%.1f", distance) + "米");
 		speedTv.setText(String.format("%.1f", speed) + "m/s");
 		stepsTv.setText(String.valueOf(steps));
-		heatTv.setText(String.valueOf(calorie));
+		heatTv.setText(String.format("%.2f", calorie));
 
 		
 		saveBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				if(showmode == 1){
+					myDB.removeSport(newSports.getSportsID());
+					myDB.removePosition(newSports.getSportsID());
+					Toast.makeText(LocationResult.this, "记录删除成功！", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent();
+					intent.setClass(LocationResult.this, ShowSportsHistoryActivity.class);
+					startActivity(intent);
+					finish();
+				}else if (showmode == 0) {
+					// 存入数据库
+					sportID = myDB.insertSport(newSports);
+					for(int i=0;i<points.size();i++){
+						newPosition.setSportId(sportID);
+						newPosition.setTime(points.get(i).getTime());
+						newPosition.setLatitude(points.get(i).getLatitude());
+						newPosition.setLongitude(points.get(i).getLongitude());
+						myDB.insertPosition(newPosition);
+					}
+					Toast.makeText(LocationResult.this, "记录保存成功！", Toast.LENGTH_SHORT).show();
+					finish();
+				}else{
+					Log.i("Test","Others");
+				}
 				// 存入数据库
 				DBManager myDB = new DBManager(LocationResult.this);
 				sportID = myDB.insertSport(newSports);
@@ -258,6 +292,35 @@ public class LocationResult extends Activity{
 		MapStatus mMapStatus = new MapStatus.Builder().target(cenpt).zoom(15).build();
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		mBaiduMap.setMapStatus(mMapStatusUpdate);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.location_result, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		if (id == R.id.locationres_switch) {
+			if(isFirst)
+			{
+				item.setTitle("切换至交通图");
+				isFirst = false;
+				mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);  //设置卫星图
+			}else{
+				item.setTitle("切换至卫星图");
+				isFirst = true;
+				mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+			}
+			return true;
+		}
+		return true;
 	}
 	
 	private float getDurationInFloat(String duration){

@@ -33,7 +33,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="8dp"
-		        android:text="1.点击“点我开始测量"
+		        android:text="1.点击“点我开始测量”"
 		        android:textSize="14sp" />
 	        <TextView
 		        android:layout_width="wrap_content"
@@ -56,6 +56,7 @@
             android:background="@drawable/heart_ins2" />
     </LinearLayout>
     <LinearLayout 
+        android:id="@+id/linearmid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -82,16 +83,16 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/hrhelpbt"
 	        android:layout_alignRight="@id/hrhelpbt"
-            android:text="@string/bmp"
+            android:text="@string/bpm"
             android:textColor="#e74c3c"
             android:textSize="15sp"
-            android:id="@+id/BMP"/>
+            android:id="@+id/BPM"/>
         
         <TextView
 	        android:id="@+id/hrresulttext"
 	        android:layout_width="wrap_content"
 	        android:layout_height="54dp"
-            android:layout_toLeftOf="@id/BMP"
+            android:layout_toLeftOf="@id/BPM"
             android:layout_above="@id/hrhelpbt"
 	        android:layout_alignLeft="@id/hrhelpbt"
 	        android:text="@string/hrinit"
@@ -101,7 +102,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_above="@id/BMP"
+            android:layout_above="@id/BPM"
             android:id="@+id/heartimg"
             android:layout_toRightOf="@id/hrresulttext"/> 
         
@@ -133,42 +134,66 @@
            android:text="测量历史" />
     </LinearLayout>
    
-	<RelativeLayout
+	<LinearLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true" >
+	    android:layout_height="match_parent"
+	    android:layout_below="@id/linearmid"
+	    android:orientation="vertical"
+	    android:layout_marginTop="10dp" >
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center_horizontal"
+		    android:padding="5dp"
+		    android:background="#f0f0f0" >
+	
+		    <TextView
+		        android:id="@+id/textView1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/hrlast"
+		        android:textSize="13sp"
+		        android:textStyle="bold" />
+		    
+		</LinearLayout>
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:orientation="horizontal"
+		    android:gravity="center"
+		    android:padding="5dp" >
+		    <ImageView
+		        android:id="@+id/hrlasttype"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginLeft="15dp" />
+		    
+			<TextView
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+	       		android:layout_marginLeft="15dp"
+		    	android:textColor="#393939"
+		        android:textSize="15sp"
+		    	android:id="@+id/hrlastdate" />
+			<TextView
+		        android:id="@+id/hrlast"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	       		android:layout_marginLeft="15dp"
+	       		android:textColor="#3498db"
+		        android:textSize="15sp"
+		        android:text="00" />
+			<TextView
+		        android:id="@+id/lastbpm"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	       		android:layout_marginLeft="10dp"
+		        android:textSize="15sp"
+		        android:textColor="#e74c3c"
+		        android:text="BPM" />
+		    
+		</LinearLayout>
 
-	    <TextView
-	        android:id="@+id/hrlast"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true" />
-
-	    <TextView
-	        android:id="@+id/textView1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@id/hrlast"
-	        android:text="@string/hrlast"
-	        android:textSize="15sp"
-	        android:textStyle="bold" />
-
-	    <ImageView
-	        android:id="@+id/hrlasttype"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignBottom="@id/hrlast"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignTop="@id/hrlast" />
-
-	 	<TextView
-	        android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:textColor="#3498db"
-	    	
-	        android:layout_centerInParent="true"
-	    	android:id="@+id/hrlastdate"/>
-
-	</RelativeLayout>
+	</LinearLayout>
     
 </RelativeLayout>

@@ -64,7 +64,6 @@ public class CurrentUser {
 		}
 		else
 			return null;
-	
 	}
 	
 	

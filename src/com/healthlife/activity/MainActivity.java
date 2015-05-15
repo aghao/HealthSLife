@@ -27,6 +27,8 @@ public class MainActivity extends Activity {
 		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.healthlife_main);
 		
+		getActionBar().setHomeButtonEnabled(true);
+		
 		heartBtn = (Button)findViewById(R.id.heartbtn);
 		sportBtn = (Button)findViewById(R.id.sportbtn);
 		musicBtn = (Button)findViewById(R.id.musicbtn);
@@ -74,6 +76,13 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, BackupsActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		if (id == android.R.id.home) {
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -75,7 +75,8 @@
         </activity>
         <activity
             android:name="com.healthlife.activity.HeartRate"
-            android:label="@string/title_activity_heart_rate" >
+            android:label="@string/title_activity_heart_rate"
+            android:icon="@drawable/heart_beat_logo" >
         </activity>
         <activity
             android:name="com.healthlife.activity.GetLocation"
@@ -91,11 +92,13 @@
         </activity>
         <activity
             android:name="com.healthlife.activity.HeartResult"
-            android:label="@string/title_activity_heart_result" >
+            android:label="@string/title_activity_heart_result"
+            android:icon="@drawable/heart_beat_logo" >
         </activity>
         <activity
             android:name="com.healthlife.activity.HeartHistory"
-            android:label="@string/title_activity_heart_history" >
+            android:label="@string/title_activity_heart_history"
+            android:icon="@drawable/heart_beat_logo" >
         </activity>
         <activity
             android:name="com.healthlife.activity.MusicMain"

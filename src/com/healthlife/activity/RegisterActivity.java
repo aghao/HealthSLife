@@ -43,8 +43,13 @@ public class RegisterActivity extends Activity {
 				Toast.makeText(RegisterActivity.this, "用户名已存在", Toast.LENGTH_SHORT).show();
 			else if(Ret==0)
 				Toast.makeText(RegisterActivity.this, "网络异常 ", Toast.LENGTH_SHORT).show();
-			else if(Ret==1)
+			else if(Ret==1){
 				Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent();
+				intent.setClass(RegisterActivity.this, LoginActivity.class);
+				startActivity(intent);
+				finish();
+			}
 		}
 		
 		
@@ -113,6 +118,9 @@ public class RegisterActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setClass(RegisterActivity.this, AppStart.class);
+			startActivity(intent);
 			finish();
 		}
 		return true;
