@@ -94,11 +94,11 @@ public class ShowRecordActivity extends Activity implements OnClickListener {
 		
 		bd = new BigDecimal(record.getTotalSteps());
 		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
-		totalDistance.setText("总步数: "+String.valueOf(f)+" 千米");
+		totalDistance.setText("总步数: "+String.valueOf(f)+" 次");
 		
-		totalNumPushUp.setText("慢跑总距离: "+String.valueOf(record.getTotalDistance())+" 次");
+		totalNumPushUp.setText("慢跑总距离: "+String.valueOf(record.getTotalDistance())+" M");
 		totalNumSitUp.setText("俯卧撑总数: "+String.valueOf(record.getTotalNumPushUp())+" 次");
-		totalSteps.setText("仰卧起坐总数: "+String.valueOf(record.getTotalNumSitUp())+" 步");
+		totalSteps.setText("仰卧起坐总数: "+String.valueOf(record.getTotalNumSitUp())+" 次");
 	}
 
 	@Override
