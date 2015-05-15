@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -113,7 +114,7 @@ public class MusicList extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_music_list);
 		
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		TabHost tabHost=(TabHost)findViewById(R.id.tabhost);  
 		tabHost.setup();  
@@ -1105,7 +1106,15 @@ public class MusicList extends Activity {
     }
 	
 	
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
 	
 	
 	@Override

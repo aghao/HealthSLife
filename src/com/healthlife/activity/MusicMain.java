@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -39,6 +40,9 @@ public class MusicMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_main);
+        
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
         musicbox_bt=(ImageButton)findViewById(R.id.musicbox_bt);
         
         ordermode_bt=(ImageButton)findViewById(R.id.ordermode_bt);
@@ -196,7 +200,15 @@ public class MusicMain extends Activity {
 		}
 	}
 
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return true;
+	}
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
