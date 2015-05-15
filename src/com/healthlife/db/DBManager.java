@@ -92,7 +92,7 @@ public class DBManager {
 		values.put("NUM", sports.getNum());
 		values.put("PERFECTNUM", sports.getPerfectNum());
 		values.put("VALIDNUM", sports.getValidNum());
-		values.put("USERID", sports.getUserId());
+		values.put("USERID", userId);
 		values.put("TYPE", sports.getType());
 		values.put("DURATION", sports.getDuration().toString());
 

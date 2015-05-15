@@ -1012,7 +1012,7 @@ public class MusicList extends Activity {
 	 */
 	private void SearchMusic()
     {
-    	
+		all_music_path.clear();
 		search_music(Environment.getRootDirectory().getAbsolutePath());
 		search_music(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
@@ -1034,8 +1034,12 @@ public class MusicList extends Activity {
     	
     	File dir = new File(DirectoryPath);
     	File file[] = dir.listFiles();
+    	
+    	if(file==null){
+    		return;
+    	}
     	//Log.i("TEST","LEN:"+file.length);
-    	all_music_path.clear();
+    	
     	if(file == null)
     		return;
     	for (int i = 0; i < file.length; i++) {
