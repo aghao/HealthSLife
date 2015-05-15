@@ -39,7 +39,6 @@ public class DBManager {
 			db.insert("MUSIC", null, values);
 			values.clear();
 		}
-		values.clear();
 		cursor.close();	
 		
 		
@@ -368,7 +367,7 @@ public class DBManager {
 		
 	}
 	
-	public void insertRecord(Record record){
+	public long insertRecord(Record record){
 		
 		values.put("AVGSPEED", record.getAVGSpeed());
 		values.put("DISTANCE", record.getDistance());
@@ -385,10 +384,11 @@ public class DBManager {
 		values.put("TOTALNUMPUSHUP",record.getTotalNumPushUp());
 		values.put("TOTALNUMSITUP",record.getTotalNumSitUp());
 		values.put("TOTALSTEPS",record.getTotalSteps());
-		values.put("USERID", record.getUserId());
+		values.put("USERID", userId);
 		
-		long a = db.insert("RECORDS", null, values);
+		long id = db.insert("RECORDS", null, values);
 		values.clear();
+		return id;
 	}
 
 	public long insertPosition(Position position){

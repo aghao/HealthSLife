@@ -1036,7 +1036,8 @@ public class MusicList extends Activity {
     	File file[] = dir.listFiles();
     	//Log.i("TEST","LEN:"+file.length);
     	all_music_path.clear();
-    	
+    	if(file == null)
+    		return;
     	for (int i = 0; i < file.length; i++) {
     		if (file[i].isDirectory()) 
     			list.add(file[i]);
