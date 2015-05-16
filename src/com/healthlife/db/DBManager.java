@@ -28,7 +28,7 @@ public class DBManager {
 	
 	public long insertMusic(Music music){
 		
-	Cursor cursor = db.rawQuery("SELECT * FROM MUSIC WHERE MUSICPATH = ?", new String[] {music.getMusicPath()});
+	Cursor cursor = db.rawQuery("SELECT * FROM MUSIC WHERE PATH = ?", new String[] {music.getMusicPath()});
 		
 		if(!cursor.moveToNext())
 		{
