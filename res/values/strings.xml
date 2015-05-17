@@ -54,4 +54,7 @@
     <string name="title_activity_show_sports_history">运动历史记录</string>
     <string name="text_inited_motion_number">0</string>
     <string name="btn_clear_record">清空数据</string>
+    <string name="title_activity_cal_calorie">CalCalorie</string>
+    <string name="title_activity_show_cal_diff">ShowCalDiff</string>
+
 </resources>

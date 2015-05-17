@@ -1,7 +1,9 @@
 package com.healthlife.db;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -505,4 +507,61 @@ public class DBManager {
 		cursor.close();
 		return sportsList;
 	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public void addCalorie(Calorie calorie){
+		Cursor cursor = db.query("CALORIE", null, "USERID = ? AND DATE = ?", new String[] {String.valueOf(userId),calorie.getDate()}, null, null, null);
+		
+		if(cursor.moveToNext()){
+			values.put("CALORIE", calorie.getCalorie()+cursor.getFloat(cursor.getColumnIndex("CALORIE")));
+			db.update("CALORIE", values, "USERID = ? AND DATE = ?", new String[] {String.valueOf(userId),calorie.getDate()});
+			values.clear();
+			cursor.close();
+		}
+		else{
+			values.put("USERID", userId);
+			values.put("CALORIE", calorie.getCalorie());
+			values.put("DATE", calorie.getDate());
+			db.insert("CALORIE", null, values);
+			values.clear();
+		}
+	}
+	
+	public Calorie queryCalorieByDate(String date){
+		Cursor cursor = db.query("CALORIE", null, "USERID = ? AND DATE = ?", new String[] {String.valueOf(userId),date}, null, null, null);
+		Calorie cal = new Calorie();
+		if(cursor.moveToNext()){	
+			cal.setCalorie(cursor.getFloat(cursor.getColumnIndex("CALORIE")));
+			cal.setDate(cursor.getString(cursor.getColumnIndex("DATE")));
+		}
+		else
+			cal.setDate(date);
+		
+		cursor.close();
+		return cal;
+	}
+
+	public ArrayList<Sports> querySportsByDate(String date){
+		
+		ArrayList<Sports> sportsList = new ArrayList<Sports>();
+		Cursor cursor = db.query("SPORTS", null, "DATE LIKE ?", new String[] {date+"%"},null,null,null);
+		//Cursor cursor = db.rawQuery("SELECT * FROM SPORTS WHERE DATE LIKE ?", new String[] {"%2015-05%"});
+		while(cursor.moveToNext()){
+			Sports sports = new Sports();
+			sports.setSportsID(cursor.getLong(cursor.getColumnIndex("SPORTID")));
+			sports.setDate(cursor.getString(cursor.getColumnIndex("DATE")));
+			sports.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
+			sports.setCalorie(cursor.getFloat(cursor.getColumnIndex("MAXSPEED")));
+			
+			sportsList.add(sports);
+		}
+		if(sportsList.size()==0){
+			Sports sports = new Sports();
+			sports.setDate(date);
+			sportsList.add(sports);
+		}
+		cursor.close();
+		return sportsList;
+	}
+
 }

@@ -78,6 +78,13 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"PACE INTEGER,"
 			+"IFACTIVE INTEGER"
 			+")";
+	
+	private static final String CREATE_CALORIE = "CREATE TABLE CALORIE ("
+			+"CALORIEID INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+"USERID INTEGER,"
+			+"CALORIE REAL,"
+			+"DATE VARCHAR(50)"
+			+")";
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -87,8 +94,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_BEATS);
 		db.execSQL(CREATE_MUSIC);
 		db.execSQL(CREATE_POSITIONS);
-		db.execSQL("PRAGMA foreign_keys = ON");
+		db.execSQL(CREATE_CALORIE);
 	}
+	
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

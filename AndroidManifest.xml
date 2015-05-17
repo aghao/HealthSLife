@@ -8,11 +8,12 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-	<uses-feature android:name="android.hardware.camera" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	
-	<!-- **********************定位所需权限**************************** -->
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- **********************定位所需权限**************************** -->
     <!-- 进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 访问GPS定位 -->
@@ -41,27 +42,28 @@
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <service android:name="com.healthlife.activity.MusicService" >
+        <service android:name=".activity.MusicService" >
         </service>
-        <service android:name="com.healthlife.activity.ClientService" >
+        <service android:name=".activity.ClientService" >
         </service>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
         </service>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="1ra2qcvsPAIc05rGqHxIZPQl" />
-                
+
         <activity
-            android:name="com.healthlife.activity.AppStart"
+            android:name=".activity.AppStart"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,125 +72,134 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.healthlife.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_maintitle" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.HeartRate"
-            android:label="@string/title_activity_heart_rate"
-            android:icon="@drawable/heart_beat_logo" >
+            android:name=".activity.HeartRate"
+            android:icon="@drawable/heart_beat_logo"
+            android:label="@string/title_activity_heart_rate" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.GetLocation"
+            android:name=".activity.GetLocation"
+            android:icon="@drawable/jog_logo"
             android:label="@string/title_activity_get_location"
-            android:icon="@drawable/jog_logo"
             android:theme="@style/JogTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.LocationResult"
+            android:name=".activity.LocationResult"
+            android:icon="@drawable/jog_logo"
             android:label="@string/title_activity_location_result"
-            android:icon="@drawable/jog_logo"
             android:theme="@style/JogTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.HeartResult"
-            android:label="@string/title_activity_heart_result"
-            android:icon="@drawable/heart_beat_logo" >
+            android:name=".activity.HeartResult"
+            android:icon="@drawable/heart_beat_logo"
+            android:label="@string/title_activity_heart_result" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.HeartHistory"
-            android:label="@string/title_activity_heart_history"
-            android:icon="@drawable/heart_beat_logo" >
+            android:name=".activity.HeartHistory"
+            android:icon="@drawable/heart_beat_logo"
+            android:label="@string/title_activity_heart_history" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.MusicMain"
+            android:name=".activity.MusicMain"
+            android:icon="@drawable/music_logo"
             android:label="@string/title_activity_music_main"
-            android:icon="@drawable/music_logo"
             android:theme="@style/MusicTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.MusicPlayer"
+            android:name=".activity.MusicPlayer"
+            android:icon="@drawable/music_logo"
             android:label="@string/title_activity_music_player"
-            android:icon="@drawable/music_logo"
             android:theme="@style/MusicTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.MusicList"
+            android:name=".activity.MusicList"
+            android:icon="@drawable/music_logo"
             android:label="@string/title_activity_music_list"
-            android:icon="@drawable/music_logo"
             android:theme="@style/MusicTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.BackupsActivity"
+            android:name=".activity.BackupsActivity"
             android:label="@string/title_activity_backups" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ClientMain"
+            android:name=".activity.ClientMain"
             android:label="@string/title_activity_client_main" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.SelectSportsActivity"
+            android:name=".activity.SelectSportsActivity"
             android:label="@string/title_activity_select_sports" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.JogActivity"
+            android:name=".activity.JogActivity"
             android:label="@string/title_activity_jogging" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.PushUpActivity"
-            android:label="@string/title_activity_push_up"
+            android:name=".activity.PushUpActivity"
             android:icon="@drawable/pushup_logo"
+            android:label="@string/title_activity_push_up"
             android:theme="@style/PushupTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.SitUpActivity"
-            android:label="@string/title_activity_sit_up"
+            android:name=".activity.SitUpActivity"
             android:icon="@drawable/situp_logo"
+            android:label="@string/title_activity_sit_up"
             android:theme="@style/SitupTheme" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.WalkActivity"
+            android:name=".activity.WalkActivity"
             android:label="@string/title_activity_walking" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowPushUpOrSitUpActivity"
+            android:name=".activity.ShowPushUpOrSitUpActivity"
             android:label="@string/title_activity_show_push_up" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowJogActivity"
+            android:name=".activity.ShowJogActivity"
             android:label="@string/title_activity_show_jog" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowWalkActivity"
+            android:name=".activity.ShowWalkActivity"
             android:label="@string/title_activity_show_walk" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowSitUpActivity"
+            android:name=".activity.ShowSitUpActivity"
             android:label="@string/title_activity_show_sit_up" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowRecordActivity"
+            android:name=".activity.ShowRecordActivity"
             android:label="@string/title_activity_show_record" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowSportsHistoryActivity"
+            android:name=".activity.ShowSportsHistoryActivity"
             android:label="@string/title_activity_show_sports_history" >
         </activity>
 
-        <service android:name="com.healthlife.util.PushUpService" >
+        <service android:name=".util.PushUpService" >
         </service>
-        <service android:name="com.healthlife.util.SitUpService" >
+        <service android:name=".util.SitUpService" >
         </service>
-        <service android:name="com.healthlife.util.StepService" >
+        <service android:name=".util.StepService" >
         </service>
+
+        <activity
+            android:name=".CalCalorie"
+            android:label="@string/title_activity_cal_calorie" >
+        </activity>
+        <activity
+            android:name="com.healthlife.activity.ShowCalDiff"
+            android:label="@string/title_activity_show_cal_diff" >
+        </activity>
     </application>
 
 </manifest>

@@ -219,7 +219,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
         float px = 5 * (metrics.densityDpi / 160f);    
         pieDataSet.setSelectionShift(px); // 选中态多出的长度    
     
-        PieData pieData = new PieData(xValues, pieDataSet);    
+        PieData pieData = new PieData(xValues, pieDataSet);
             
         return pieData;    
     }
@@ -268,10 +268,7 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 	    		record.setTotalNumSitUp(sports.getNum());      		
 	    	}
     		db.insertRecord(record);
-    	}
-    	
-    	
-    		
+    	}		
     }
     
     private float getDurationInFloat(String duration){
