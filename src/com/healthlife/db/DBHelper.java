@@ -74,9 +74,16 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String CREATE_MUSIC = "CREATE TABLE MUSIC ("
 			+"MUSICID INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"MUSICNAME VARCHAR(50),"
-			+"MUSICPATH VARCHAR(50),"
+			+"PATH VARCHAR(50),"
 			+"PACE INTEGER,"
 			+"IFACTIVE INTEGER"
+			+")";
+	
+	private static final String CREATE_CALORIE = "CREATE TABLE CALORIE ("
+			+"CALORIEID INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+"USERID INTEGER,"
+			+"CALORIE REAL,"
+			+"DATE VARCHAR(50)"
 			+")";
 
 	@Override
@@ -87,8 +94,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_BEATS);
 		db.execSQL(CREATE_MUSIC);
 		db.execSQL(CREATE_POSITIONS);
-		db.execSQL("PRAGMA foreign_keys = ON");
+		db.execSQL(CREATE_CALORIE);
 	}
+	
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

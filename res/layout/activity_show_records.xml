@@ -10,7 +10,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_situp_cal"
@@ -18,7 +18,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_jog_cal"
@@ -26,7 +26,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_total_cal"
@@ -34,7 +34,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_pushup_duration"
@@ -42,7 +42,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_situp_duration"
@@ -50,7 +50,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_jog_duration"
@@ -58,15 +58,14 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_daily_duration"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" 
+        android:layout_height="wrap_content" 
         android:visibility="gone"/>
     
     <TextView
@@ -75,7 +74,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_total_distance"
@@ -83,7 +82,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_total_pushup"
@@ -91,7 +90,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_total_situp"
@@ -99,7 +98,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <TextView
         android:id="@+id/text_total_steps"
@@ -107,7 +106,7 @@
         android:layout_marginLeft="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
     
     <Button 
         android:id="@+id/button_record_clear"

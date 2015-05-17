@@ -29,5 +29,6 @@ public class GlobalVariables {
 	public final static int RECORD_TYPE_TOTALNUMPUSHUP = 12;
 	public final static int RECORD_TYPE_TOTALNUMSITUP = 13;
 	public final static int RECORD_TYPE_STEPS = 14;	
+	
 
 }

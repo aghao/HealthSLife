@@ -61,19 +61,19 @@ public class ShowRecordActivity extends Activity implements OnClickListener {
 		
 		BigDecimal  bd = new BigDecimal(record.getCalOfPushUp());
 		float f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
-		calOfPushUp.setText("俯卧撑消耗: "+String.valueOf(f)+" 卡路里");
+		calOfPushUp.setText("俯卧撑消耗: "+String.valueOf(f)+" KCAL");
 		
 		bd = new BigDecimal(record.getCalOfSitUp());
 		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
-		calOfSitUp.setText("仰卧起坐消耗: "+String.valueOf(f)+" 卡路里");
+		calOfSitUp.setText("仰卧起坐消耗: "+String.valueOf(f)+" KCAL");
 		
 		bd = new BigDecimal(record.getCalOfJog());
 		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
-		calOfJog.setText("慢跑消耗: "+String.valueOf(f)+" 卡路里");
+		calOfJog.setText("慢跑消耗: "+String.valueOf(f)+" KCAL");
 		
 		bd = new BigDecimal(record.getTotalCal());
 		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue(); 
-		totalCal.setText("总消耗: "+String.valueOf(f)+" 卡路里");
+		totalCal.setText("总消耗: "+String.valueOf(f)+" KCAL");
 
 		bd = new BigDecimal(record.getDurationPushUp()/1000/60);
 		f = bd.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
