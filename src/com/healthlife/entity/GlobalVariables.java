@@ -30,5 +30,10 @@ public class GlobalVariables {
 	public final static int RECORD_TYPE_TOTALNUMSITUP = 13;
 	public final static int RECORD_TYPE_STEPS = 14;	
 	
-
+	public final static int MAINFOOD = 0;
+	public final static int DISHES = 1;
+	public final static int DRINKS = 2;
+	public final static int SNACKS = 3;
+	public final static int FRUITS = 4;
+	
 }

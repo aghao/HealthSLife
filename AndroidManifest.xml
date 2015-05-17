@@ -193,11 +193,11 @@
         </service>
 
         <activity
-            android:name=".CalCalorie"
+            android:name="com.healthlife.activity.CalCalorie"
             android:label="@string/title_activity_cal_calorie" >
         </activity>
         <activity
-            android:name="com.healthlife.activity.ShowCalDiff"
+            android:name=".activity.ShowCalDiff"
             android:label="@string/title_activity_show_cal_diff" >
         </activity>
     </application>

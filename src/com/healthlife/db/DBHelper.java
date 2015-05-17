@@ -1,9 +1,13 @@
 package com.healthlife.db;
 
+import com.healthlife.entity.GlobalVariables;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.renderscript.Sampler.Value;
 
 public class DBHelper extends SQLiteOpenHelper {
 	
@@ -85,16 +89,92 @@ public class DBHelper extends SQLiteOpenHelper {
 			+"CALORIE REAL,"
 			+"DATE VARCHAR(50)"
 			+")";
+	
+	private static final String CREATE_FOODS = "CREATE TABLE FOODS ("
+			+"FOODID INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+"CALORIE REAL,"
+			+"TYPE INTEGER,"
+			+"FOODNAME VARCHAR(50)"
+			+")";
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
+		ContentValues values = new ContentValues();
 		db.execSQL(CREATE_SPORTS);
 		db.execSQL(CREATE_RECORDS);
 		db.execSQL(CREATE_BEATS);
 		db.execSQL(CREATE_MUSIC);
 		db.execSQL(CREATE_POSITIONS);
 		db.execSQL(CREATE_CALORIE);
+		db.execSQL(CREATE_FOODS);
+		
+		values.put("FOODNAME", "Ã×·¹");	
+		values.put("CALORIE",1.5);
+		values.put("TYPE",GlobalVariables.MAINFOOD);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "¼å±ý");	
+		values.put("CALORIE", 333);
+		values.put("TYPE",GlobalVariables.MAINFOOD);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "»¨¾í");	
+		values.put("CALORIE", 217);
+		values.put("TYPE",GlobalVariables.MAINFOOD);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "ÂøÍ·");	
+		values.put("CALORIE", 233);
+		values.put("TYPE",GlobalVariables.MAINFOOD);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "ÉÕÂó");	
+		values.put("CALORIE", 100);
+		values.put("TYPE",GlobalVariables.MAINFOOD);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "¶¹»¨");	
+		values.put("CALORIE",47);
+		values.put("TYPE",GlobalVariables.SNACKS);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "Æ»¹û");	
+		values.put("CALORIE", 80);
+		values.put("TYPE",GlobalVariables.FRUITS);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "³´¸Î");	
+		values.put("CALORIE", 96);
+		values.put("TYPE",GlobalVariables.DISHES);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME", "Í­ÂàÉÕ");	
+		values.put("CALORIE",280);
+		values.put("TYPE",GlobalVariables.SNACKS);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME","¿É¿Ú¿ÉÀÖ");	
+		values.put("CALORIE", 1.12);
+		values.put("TYPE",GlobalVariables.DRINKS);
+		db.insert("FOODS", null, values);
+		values.clear();
+				
+		values.put("FOODNAME","±ùä¿ÁÜ");	
+		values.put("CALORIE", 200);	
+		values.put("TYPE",GlobalVariables.SNACKS);
+		db.insert("FOODS", null, values);
+		values.clear();
+		
 	}
 	
 	
