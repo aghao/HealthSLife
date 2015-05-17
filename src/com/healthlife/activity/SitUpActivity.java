@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.baidu.platform.comapi.map.o;
 import com.healthlife.R;
 import com.healthlife.entity.GlobalVariables;
 import com.healthlife.entity.Sports;

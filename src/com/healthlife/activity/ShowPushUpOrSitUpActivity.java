@@ -81,8 +81,10 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 			layout.setGravity(Gravity.CENTER_HORIZONTAL);
 			btnSave.setVisibility(View.GONE);
 			
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lp.setMargins(0, 0, 0, 0);
+			btnDrop.setLayoutParams(lp);
 			btnDrop.setBackgroundResource(R.drawable.pushresult_deletebtn_selector);
-			//btnDrop.setGravity(Gravity.CENTER_HORIZONTAL);
 		}
 		
 		textNum = (TextView)findViewById(R.id.text_motion_num);

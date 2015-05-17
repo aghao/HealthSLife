@@ -14,6 +14,7 @@ import com.healthlife.entity.Music;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,6 +79,8 @@ public class MusicList extends Activity {
 	boolean ifmultiselect=true;
 	boolean ifbatchdelete=true;
 	
+    ProgressDialog progress_dialog;
+    int progress=0;
 	//CheckBox checkbox;
 	
 	private BroadcastReceiver musicname_receiver = new BroadcastReceiver(){
@@ -112,6 +116,7 @@ public class MusicList extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_music_list);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -153,6 +158,9 @@ public class MusicList extends Activity {
 		batchdelete_bt.setOnClickListener(new BatchDelete());
 		
 		playingmusic_name=(TextView)findViewById(R.id.playingmusic_name);
+		
+		progress_dialog = new ProgressDialog(MusicList.this);
+		
 		registerReceiver(musicname_receiver,new IntentFilter("MusicName"));
 		registerReceiver(directplay_receiver,new IntentFilter("DirectPlayRet"));
 	}
@@ -595,7 +603,7 @@ public class MusicList extends Activity {
 			TextView music_name = (TextView) view.findViewById(R.id.music_name);
 		    music_name.setText(mData.get(position).get("music_name").toString());
 		    TextView music_path = (TextView) view.findViewById(R.id.music_path);
-		    //music_path.setText(mData.get(position).get("music_path").toString()); 
+		    music_path.setText(mData.get(position).get("music_path").toString()); 
 		    TextView music_id = (TextView) view.findViewById(R.id.music_id);
 		    music_id.setText(mData.get(position).get("music_id").toString()); 
 		    TextView music_pace = (TextView) view.findViewById(R.id.music_pace);
@@ -937,26 +945,41 @@ public class MusicList extends Activity {
 	private void RefreshMusic(ProgressDialog dialog)
 	{
 		DBManager database=new DBManager(MusicList.this);
-		SearchMusic();
+		SearchMusics();
+//		long a=System.currentTimeMillis();
+//		Log.i("TEST","time:"+(System.currentTimeMillis()-a));
 		
-		Music music;
-		String music_path;
-		String music_name;
-		long music_id;
+//		Log.i("TEST","time:"+(System.currentTimeMillis()-a));
+//		Music music;
+//		String music_path;
+//		String music_name;
+//		long music_id;
 		
 		//Log.i("TEST","size:"+all_music.size());
-		for(int i=0;i<all_music_path.size();i++)
+//		for(int i=0;i<all_music_path.size();i++)
+//		{
+//			
+//			music_path=all_music_path.get(i);
+//			music_name=music_path.substring(music_path.lastIndexOf("/")+1, music_path.lastIndexOf("."));
+//			music=new Music(1,music_name,music_path,3,0);
+//			music_id=database.insertMusic(music);
+//			music.setMusicId(music_id);
+//			
+//			
+//		}
+		dialog.setMax(all_music_data.size());
+		for(int i=0;i<all_music_data.size();i++)
 		{
 			
-			music_path=all_music_path.get(i);
-			music_name=music_path.substring(music_path.lastIndexOf("/")+1, music_path.lastIndexOf("."));
-			music=new Music(1,music_name,music_path,3,0);
-			music_id=database.insertMusic(music);
-			music.setMusicId(music_id);
+			database.insertMusic(all_music_data.get(i));
 			
+			progress=i+1;
 			
+			mHandler.post(mUpdateProgress);
 		}
+	//	Log.i("TEST","time:"+(System.currentTimeMillis()-a));
 		ReadMusicData();
+	//	Log.i("TEST","time:"+(System.currentTimeMillis()-a));
 		dialog.dismiss();
 		mHandler.post(mUpdateResults);
 	}
@@ -965,6 +988,15 @@ public class MusicList extends Activity {
 	
 	
 	Handler mHandler = new Handler();  
+	
+    Runnable mUpdateProgress= new Runnable() {  
+	        public void run() {  
+	        	
+	        	//ShowMusicList(); // 更新视图  
+	        	progress_dialog.setProgress(progress);
+	        }  
+	};  
+	
     Runnable mUpdateResults = new Runnable() {  
         public void run() {  
         	
@@ -983,25 +1015,24 @@ public class MusicList extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			
-			 final ProgressDialog dialog;
-			 dialog = new ProgressDialog(MusicList.this);
-		     dialog.setTitle("提示");
-		     dialog.setMessage("正在搜索歌曲，请稍后...");
-		     // dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); 
-		     dialog.setCancelable(false);
-		     dialog.show();
+			// final ProgressDialog dialog;
+			// dialog = new ProgressDialog(MusicList.this);
+			progress_dialog.setTitle("提示");
+			progress_dialog.setMessage("正在搜索歌曲，请稍后...");
+			progress_dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); 
+		     
+			progress_dialog.setCancelable(false);
+			progress_dialog.show();
 		        
 		     new Thread(new Runnable() {                    
                     @Override
                     public void run() {
-                    	RefreshMusic(dialog);                      
+                    	RefreshMusic(progress_dialog);                      
                     }
                 }).start();
 			  
 			
-			//ShowMusicList();
 			
-			//dialog.dismiss();
 		}
 		
 	}
@@ -1011,99 +1042,149 @@ public class MusicList extends Activity {
 	/**
 	 * 从手机存储和SDcard里面搜索音乐文件
 	 */
-	private void SearchMusic()
-    {
-		all_music_path.clear();
-		search_music(Environment.getRootDirectory().getAbsolutePath());
-		search_music(Environment.getExternalStorageDirectory().getAbsolutePath());
-    }
+//	private void SearchMusic()
+//    {
+//		//all_music_path.clear();
+//		//search_music(Environment.getRootDirectory().getAbsolutePath());
+//		//search_music(Environment.getExternalStorageDirectory().getAbsolutePath());
+//	
+//    }
 	
 	
+	
+	
+	
+	private void SearchMusics(){
+		all_music_data.clear();
+		Cursor cursor = this.getContentResolver().query(
+		MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+		new String[] { MediaStore.Audio.Media.TITLE,
+		MediaStore.Audio.Media.DURATION,
+		MediaStore.Audio.Media.ARTIST,
+		MediaStore.Audio.Media._ID,
+		MediaStore.Audio.Media.SIZE,
+		MediaStore.Audio.Media.DATA,
+		MediaStore.Audio.Media.DISPLAY_NAME,
+		MediaStore.Audio.Media.ALBUM_ID, }, "is_music=1 and _display_name like '%.mp3'", null, MediaStore.Audio.Media.TITLE);
+		
+		String sId;
+		String sDisplayName;
+		Long lDuration;
+		String sArtist;
+		String sPath;
+		if (cursor!= null){
+			if (cursor.getCount() > 0){
+				
+				cursor.moveToFirst();
+				for (int i = 0; i < cursor.getCount(); i++) {
+					sId = cursor.getString(cursor.getColumnIndex("_id"));
+					sDisplayName = cursor.getString(cursor.getColumnIndex("title"));//名称
+					lDuration = cursor.getLong(cursor.getColumnIndex("duration"));//长度
+					sArtist = cursor.getString(cursor.getColumnIndex("artist"));//演唱者
+					sPath = cursor.getString(cursor.getColumnIndex("_data"));//歌曲路径
+					
+					
+					
+//					Log.i("TEST","title:"+sDisplayName);
+//					Log.i("TEST","duration:"+lDuration);
+//					Log.i("TEST","artist:"+sArtist);
+//					Log.i("TEST","path:"+sPath);
+					
+					all_music_data.add(new Music(1,sDisplayName,sPath,3,0));
+					
+					cursor.moveToNext();
+				
+		
+				}
+				
+			}
+		
+			cursor.close();	
+	  }
+	}
 	
 	/**
 	 * 在指定的文件夹里搜索音乐文件
 	 * @param DirectoryPath 文件夹路径
 	 */
-	private void search_music(String DirectoryPath)
-    {
-    	
-    	
-    	//long a = System.currentTimeMillis();
-    	LinkedList<File> list = new LinkedList<File>();
-    	 //Log.i("TEST","Root:"+Environment.getRootDirectory().getAbsolutePath());
-        // Log.i("TEST","SD:"+Environment.getExternalStorageDirectory().getAbsolutePath());
-    	
-    	File dir = new File(DirectoryPath);
-    	File file[] = dir.listFiles();
-    	
-    	if(file==null){
-    		return;
-    	}
-    	//Log.i("TEST","LEN:"+file.length);
-    	
-    	if(file == null)
-    		return;
-    	for (int i = 0; i < file.length; i++) {
-    		if (file[i].isDirectory()) 
-    			list.add(file[i]);
-    		else
-    		{
-    		
-    			//currentpath=file[i].getAbsolutePath();
-    			if(file[i].getAbsolutePath().endsWith(".mp3"))
-    			{
-    				//Log.i("TEST",file[i].getAbsolutePath());
-    			
-    				all_music_path.add(file[i].getAbsolutePath());
-    			}
-    		}
-    			
-    	}
-
-    	File tmp; 
-    	while (!list.isEmpty()) {
-
-    	tmp = (File) list.removeFirst();
-    	
-    	if (tmp.isDirectory()) {
-
-    		file = tmp.listFiles();
-
-    		if (file == null) continue;
-
-    			for (int i = 0; i < file.length; i++) {
-    				if (file[i].isDirectory()) 
-    					list.add(file[i]);
-    				else
-    				{
-    					if(file[i].getAbsolutePath().endsWith(".mp3"))
-    					//currentpath=file[i].getAbsolutePath();
-    					{
-    					//	Log.i("TEST",file[i].getAbsolutePath());
-    						all_music_path.add(file[i].getAbsolutePath());
-    					}
-    					
-    				}
-    					
-    			}
-
-    		}
-    		else   					
-    		{ 
-    		
-    			//currentpath=tmp.getAbsolutePath();
-    			if(tmp.getAbsolutePath().endsWith(".mp3"))
-    			{
-    				
-    			//	Log.i("TEST",tmp.getAbsolutePath());
-    				all_music_path.add(tmp.getAbsolutePath());
-    			}
-    		}
-
-    	}
-    	//Log.i("TEST","time:"+(System.currentTimeMillis() - a));
-    	
-    }
+//	private void search_music(String DirectoryPath)
+//    {
+//    	
+//    	
+//    	//long a = System.currentTimeMillis();
+//    	LinkedList<File> list = new LinkedList<File>();
+//    	 //Log.i("TEST","Root:"+Environment.getRootDirectory().getAbsolutePath());
+//        // Log.i("TEST","SD:"+Environment.getExternalStorageDirectory().getAbsolutePath());
+//    	
+//    	File dir = new File(DirectoryPath);
+//    	
+//    	File file[] = dir.listFiles();
+//    	if(file==null)
+//    		return;
+//    	//Log.i("TEST","LEN:"+file.length);
+//    	
+//    	
+//    	for (int i = 0; i < file.length; i++) {
+//    		if (file[i].isDirectory()) 
+//    			list.add(file[i]);
+//    		else
+//    		{
+//    		
+//    			//currentpath=file[i].getAbsolutePath();
+//    			if(file[i].getAbsolutePath().endsWith(".mp3"))
+//    			{
+//    				//Log.i("TEST",file[i].getAbsolutePath());
+//    			
+//    				all_music_path.add(file[i].getAbsolutePath());
+//    			}
+//    		}
+//    			
+//    	}
+//
+//    	File tmp; 
+//    	while (!list.isEmpty()) {
+//
+//    	tmp = (File) list.removeFirst();
+//    	
+//    	if (tmp.isDirectory()) {
+//
+//    		file = tmp.listFiles();
+//
+//    		if (file == null) continue;
+//
+//    			for (int i = 0; i < file.length; i++) {
+//    				if (file[i].isDirectory()) 
+//    					list.add(file[i]);
+//    				else
+//    				{
+//    					if(file[i].getAbsolutePath().endsWith(".mp3"))
+//    					//currentpath=file[i].getAbsolutePath();
+//    					{
+//    					//	Log.i("TEST",file[i].getAbsolutePath());
+//    						all_music_path.add(file[i].getAbsolutePath());
+//    					}
+//    					
+//    				}
+//    					
+//    			}
+//
+//    		}
+//    		else   					
+//    		{ 
+//    		
+//    			//currentpath=tmp.getAbsolutePath();
+//    			if(tmp.getAbsolutePath().endsWith(".mp3"))
+//    			{
+//    				
+//    			//	Log.i("TEST",tmp.getAbsolutePath());
+//    				all_music_path.add(tmp.getAbsolutePath());
+//    			}
+//    		}
+//
+//    	}
+//    	//Log.i("TEST","time:"+(System.currentTimeMillis() - a));
+//    	
+//    }
 	
 	
 	@Override

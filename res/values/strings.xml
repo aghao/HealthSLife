@@ -46,7 +46,7 @@
     <string name="title_activity_push_up">俯卧撑</string>
     <string name="title_activity_sit_up">仰卧起坐</string>
     <string name="title_activity_walking">WalkingActivity</string>
-    <string name="title_activity_show_push_up">俯卧撑结果</string>
+    <string name="title_activity_show_push_up">锻炼结果</string>
     <string name="title_activity_show_jog">ShowJogActivity</string>
     <string name="title_activity_show_walk">ShowWalkActivity</string>
     <string name="title_activity_show_sit_up">仰卧起坐结果</string>
