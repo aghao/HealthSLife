@@ -85,9 +85,9 @@ public class LoginActivity extends Activity {
 				{
 					
 					Toast.makeText(LoginActivity.this, "ÕËºÅÃÜÂë²»ÄÜÎª¿Õ", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent();
-					intent.setClass(LoginActivity.this, MainActivity.class);
-					startActivity(intent);
+//					Intent intent = new Intent();
+//					intent.setClass(LoginActivity.this, MainActivity.class);
+//					startActivity(intent);
 				}
 				else
 				{
