@@ -28,7 +28,7 @@
     <string name="title_activity_music_main">音乐播放</string>
     <string name="title_activity_music_player">正在播放</string>
     <string name="title_activity_music_list">播放列表</string>
-    <string name="title_activity_backups">BackupsActivity</string>
+    <string name="title_activity_backups">个人中心</string>
     <string name="title_activity_client_main">ClientMain</string>
     <string name="title_activity_recovery">RecoveryActivity</string>
     <string name="title_activity_login">登录</string>
@@ -42,6 +42,7 @@
     <string name="btn_stop_sport">Stop</string>
     <string name="btn_save_sports">Save</string>
     <string name="btn_drop_sports">Delete</string>
+    <string name="title_activity_all">全部</string>
     <string name="title_activity_jogging">跑 步</string>
     <string name="title_activity_push_up">俯卧撑</string>
     <string name="title_activity_sit_up">仰卧起坐</string>

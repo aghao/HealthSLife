@@ -85,9 +85,10 @@ public class LoginActivity extends Activity {
 				{
 					
 					Toast.makeText(LoginActivity.this, "’À∫≈√‹¬Î≤ªƒ‹Œ™ø’", Toast.LENGTH_SHORT).show();
-//					Intent intent = new Intent();
-//					intent.setClass(LoginActivity.this, MainActivity.class);
-//					startActivity(intent);
+					Intent intent = new Intent();
+					intent.setClass(LoginActivity.this, MainActivity.class);
+					startActivity(intent);
+					finish();
 				}
 				else
 				{
@@ -113,13 +114,6 @@ public class LoginActivity extends Activity {
 			finish();
 			break;
 		}
-		return true;
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
 

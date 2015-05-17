@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.personal_center) {
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, BackupsActivity.class);
 			startActivity(intent);

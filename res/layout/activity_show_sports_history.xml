@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center"
         android:padding="5dp"
         android:background="#f0f0f0" >
@@ -24,42 +23,51 @@
     <ListView
         android:id="@+id/list_sports_history"
         android:layout_width="match_parent"
-        android:layout_height="500dp" />
-    
-    <Button   
-        android:id="@+id/button_show_total_history"
-        android:layout_below="@id/list_sports_history"
-        android:layout_height="match_parent"
-        android:layout_width="100dp"
-        android:text="总览"
-        />
-    
-    <Button   
-        android:id="@+id/button_show_pushup_history"
-        android:layout_below="@id/list_sports_history"
-        android:layout_toRightOf="@+id/button_show_total_history"
-        android:layout_height="match_parent"
-        android:layout_width="100dp"
-        android:text="俯卧撑"
-        />
-        
-    <Button   
-        android:id="@+id/button_show_situp_history"
-        android:layout_below="@id/list_sports_history"
-        android:layout_toRightOf="@id/button_show_pushup_history"
-        android:layout_height="match_parent"
-        android:layout_width="100dp"
-        android:text="仰卧起坐"
-        />
-            
-    <Button   
-        android:id="@+id/button_show_jog_history"
-        android:layout_below="@id/list_sports_history"
-        android:layout_toRightOf="@id/button_show_situp_history"
-        android:layout_height="match_parent"
-        android:layout_width="100dp"
-        android:text="长跑"
-        />
-    
+        android:layout_height="440dp" />
+		<RadioGroup
+	        android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="horizontal"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginLeft="10dp"
+			android:padding="5dp"
+			android:background="#f8f8f8"
+			android:id="@+id/sportradiogp">
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:id="@+id/button_show_total_history"
+				android:button="@null"
+				android:drawableTop="@drawable/sportres_all_selector"
+	        	android:text="全部运动"/>
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:layout_marginLeft="30dp"
+				android:id="@+id/button_show_jog_history"
+				android:button="@null"
+				android:drawableTop="@drawable/sportres_jog_selector"
+				android:text="跑 步"/>
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:layout_marginLeft="30dp"
+				android:id="@+id/button_show_pushup_history"
+				android:button="@null"
+				android:drawableTop="@drawable/sportres_pushup_selector"
+				android:text="俯卧撑"/>
+	        <RadioButton 
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:layout_marginLeft="30dp"
+				android:id="@+id/button_show_situp_history"
+				android:button="@null"
+				android:drawableTop="@drawable/sportres_situp_selector"
+				android:text="仰卧起坐"/>
+	    </RadioGroup>
 
 </LinearLayout>

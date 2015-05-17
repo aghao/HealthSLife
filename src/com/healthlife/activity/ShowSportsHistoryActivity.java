@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -33,6 +34,9 @@ public class ShowSportsHistoryActivity extends Activity implements OnClickListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_sports_history);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		context =this;
 		db = new DBManager(this);
 		sportsList = db.getSportList();	
@@ -121,4 +125,15 @@ public class ShowSportsHistoryActivity extends Activity implements OnClickListen
 		sportsAdapter = new SportsAdapter(this,R.layout.list_sports,sportsList);
 		listView.setAdapter(sportsAdapter);	
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
+	}
+	
 }
