@@ -56,5 +56,7 @@
     <string name="btn_clear_record">清空数据</string>
     <string name="title_activity_cal_calorie">CalCalorie</string>
     <string name="title_activity_show_cal_diff">ShowCalDiff</string>
+    <string name="hint_foods">输入食物名称</string>
+    <string name="hint_account_foods">输入食物数量</string>
 
 </resources>

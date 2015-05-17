@@ -258,9 +258,8 @@ public class DBManager {
 				
 				beatsList.add(beats);
 			}
-			cursor.close();
 		}
-		
+		cursor.close();
 		return beatsList;
 	}
 	
@@ -545,7 +544,6 @@ public class DBManager {
 		
 		ArrayList<Sports> sportsList = new ArrayList<Sports>();
 		Cursor cursor = db.query("SPORTS", null, "DATE LIKE ?", new String[] {date+"%"},null,null,null);
-		//Cursor cursor = db.rawQuery("SELECT * FROM SPORTS WHERE DATE LIKE ?", new String[] {"%2015-05%"});
 		while(cursor.moveToNext()){
 			Sports sports = new Sports();
 			sports.setSportsID(cursor.getLong(cursor.getColumnIndex("SPORTID")));
@@ -564,4 +562,49 @@ public class DBManager {
 		return sportsList;
 	}
 
+	public ArrayList<Food> queryFoods(String name){
+		
+		ArrayList<Food> foodList = new ArrayList<Food>();
+		Cursor cursor = db.query("FOODS", null, "FOODNAME LIKE ?", new String[] {"%"+name+"%"},null,null,null);
+		while(cursor.moveToNext()){
+			Food food = new Food();
+			food.setFoodId(cursor.getLong(cursor.getColumnIndex("FOODID")));
+			food.setFoodName(cursor.getString(cursor.getColumnIndex("FOODNAME")));
+			food.setCalorie(cursor.getFloat(cursor.getColumnIndex("CALORIE")));
+			food.setType(cursor.getInt(cursor.getColumnIndex("TYPE")));
+			
+			foodList.add(food);
+		}
+		
+		return foodList;
+	}
+
+	public ArrayList<Calorie> queryCalorieByUser(){
+		
+		ArrayList<Calorie> calorieList = new ArrayList<Calorie>();
+		Cursor cursor =  db.query("CALORIE", null, "USERID = ?",new String [] {String.valueOf(userId)}, null, null, null);
+		
+		if(cursor!=null)
+		{
+			calorieList = new ArrayList<Calorie>();
+			
+			while(cursor.moveToNext()){
+				Calorie calorie= new Calorie();
+				
+				calorie.setCalorieId(cursor.getLong(cursor.getColumnIndex("CALORIEID")));
+				calorie.setCalorie(cursor.getFloat(cursor.getColumnIndex("CALORIE")));
+				calorie.setDate(cursor.getString(cursor.getColumnIndex("DATE")));
+				calorie.setUserId(cursor.getLong(cursor.getColumnIndex("USERID")));
+				
+				calorieList.add(calorie);
+			}
+		}
+		cursor.close();
+		
+		return calorieList;
+	}
+
+	public void removeCalorie(){
+		db.delete("CALORIE", "USERID = ?", new String [] {String.valueOf(userId)});
+	}
 }
