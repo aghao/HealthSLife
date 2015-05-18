@@ -607,4 +607,10 @@ public class DBManager {
 	public void removeCalorie(){
 		db.delete("CALORIE", "USERID = ?", new String [] {String.valueOf(userId)});
 	}
+	
+	public ArrayList<Food> queryFoodByName(String foodName){
+		
+		
+		return null;
+	}
 }

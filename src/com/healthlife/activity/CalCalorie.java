@@ -10,6 +10,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,7 +37,7 @@ public class CalCalorie extends Activity{
 	private DBManager db;
 	private FoodsAdapter foodsAdapter;
 	private Food food;
-	private EditText et_accoumt;
+	private EditText etGetAccoumt,etFindFoods;
 	private Calorie calorie;
 	
 	@Override
@@ -46,11 +48,33 @@ public class CalCalorie extends Activity{
 		
 		db = new DBManager(this);
 		foodList=db.queryFoods("");
-		
-		listView =(ListView)findViewById(R.id.list_foods);
-		foodsAdapter = new FoodsAdapter(this,R.layout.list_foods,foodList);
-		listView.setAdapter(foodsAdapter);	
-		
+		etFindFoods = (EditText)findViewById(R.id.edit_foodname);
+		etFindFoods.addTextChangedListener(new TextWatcher(){
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				foodList = db.queryFoods(etFindFoods.getText().toString());
+				initList();
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		listView =(ListView)findViewById(R.id.list_foods);	
+		initList();	
 		
 		listView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
@@ -61,6 +85,7 @@ public class CalCalorie extends Activity{
 				showDialog(food);
 			}
 		});		
+	
 	}
 	
 	private void showDialog(Food food){
@@ -70,7 +95,7 @@ public class CalCalorie extends Activity{
 			LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.dialog_food_account,null);
 			
 			dialog.setView(layout);
-			et_accoumt=(EditText)layout.findViewById(R.id.et_food_account);
+			etGetAccoumt=(EditText)layout.findViewById(R.id.et_food_account);
 			dialog.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int which) {
 			    	insertCalorie();
@@ -89,10 +114,15 @@ public class CalCalorie extends Activity{
 	}
 	
 	private void insertCalorie(){
-		calorie.setCalorie(Integer.valueOf(et_accoumt.getText().toString())*food.getCalorie());     
+		calorie.setCalorie(Integer.valueOf(etGetAccoumt.getText().toString())*food.getCalorie());     
 		SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		calorie.setDate(simpleFormatter.format( new java.util.Date()));
 	 
 		db.addCalorie(calorie);
+	}
+	
+	private void initList(){
+		foodsAdapter = new FoodsAdapter(this,R.layout.list_foods,foodList);
+		listView.setAdapter(foodsAdapter);
 	}
 }
