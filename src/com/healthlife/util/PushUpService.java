@@ -51,7 +51,7 @@ public class DBinder extends Binder{
 		
 		sensorManager = (SensorManager)this.getSystemService(Service.SENSOR_SERVICE);
 		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-		sensorManager.registerListener(pushUpAnalyser,sensor,sensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(pushUpAnalyser,sensor,sensorManager.SENSOR_DELAY_GAME);
 		Log.i("dd", "aaaaaaaa");
 	}
 	

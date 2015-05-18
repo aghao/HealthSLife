@@ -10,6 +10,7 @@
 	   android:layout_height = "wrap_content"
 	   android:gravity = "left"
 	   android:hint="@string/hint_account_foods"
+	   android:inputType="number"
 	   />
     
     

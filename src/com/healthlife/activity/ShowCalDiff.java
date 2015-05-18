@@ -1,5 +1,6 @@
 package com.healthlife.activity;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.ParseException;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,8 +23,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.healthlife.R;
-import com.healthlife.R.id;
-import com.healthlife.R.layout;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.Calorie;
 import com.healthlife.entity.GlobalVariables;
@@ -73,10 +71,14 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		btnPushUp=(Button)findViewById(R.id.diff_pushup);
 		btnSitUp=(Button)findViewById(R.id.diff_situp);
 		btnJog=(Button)findViewById(R.id.diff_jog);
+
+		float calAbF2 = new BigDecimal(lineChart.getAverage("摄入卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		float calOffF2 = new BigDecimal(lineChart.getAverage("运动消耗卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		float calTotalF2 = new BigDecimal(lineChart.getAverage("总卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
 		
-		txtCalAbs.setText(String.valueOf(lineChart.getAverage("摄入卡路里")*7) + " 千卡");
-		txtCalOff.setText(String.valueOf(+lineChart.getAverage("运动消耗卡路里")*7) + " 千卡");
-		txtCalDiff.setText(String.valueOf(+lineChart.getAverage("总卡路里")*7) + " 千卡");
+		txtCalAbs.setText(String.valueOf(calAbF2 + " 千卡"));
+		txtCalOff.setText(String.valueOf(calOffF2) + " 千卡");
+		txtCalDiff.setText(String.valueOf(calTotalF2) + " 千卡");
 		
 		if(lineChart.getAverage("总卡路里")*7>0){
 			txtRec.setText("最近又勇敢地朝土肥圆迈进了呢！\n完成以下运动来赎罪吧");
@@ -85,7 +87,8 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 			btnJog.setText("慢跑约"+(int)(lineChart.getAverage("总卡路里")*7/0.5)+"km");
 		}
 		else{
-			txtRec.setText("干得漂亮，七天内减掉了"+(int)lineChart.getAverage("总卡路里")*7/7.7+"kg脂肪，离瘦子已经不远了！");
+			float totalCal = new BigDecimal(lineChart.getAverage("总卡路里")*7/7.7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+			txtRec.setText("干得漂亮，最近内减掉了"+totalCal+"kg脂肪，离瘦子已经不远了！");
 			btnPushUp.setVisibility(View.GONE);
 			btnSitUp.setVisibility(View.GONE);
 			btnJog.setVisibility(View.GONE);	
@@ -94,24 +97,10 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		btnPushUp.setOnClickListener(this);
 		btnSitUp.setOnClickListener(this);
 		btnJog.setOnClickListener(this);
-		
-		
-		
+	
 		System.out.println("");	
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
 	private  String getDayBefore(String today) throws java.text.ParseException {
         Calendar c = Calendar.getInstance();  
         Date date = null;  

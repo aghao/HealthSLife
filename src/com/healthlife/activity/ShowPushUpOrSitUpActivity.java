@@ -1,19 +1,17 @@
 package com.healthlife.activity;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
-import android.provider.ContactsContract.Data;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -23,13 +21,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.Legend.LegendPosition;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
 import com.healthlife.R;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.GlobalVariables;
@@ -37,6 +35,7 @@ import com.healthlife.entity.Record;
 import com.healthlife.entity.Sports;
 
 
+@SuppressLint("SimpleDateFormat")
 public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListener{
 	
 	private Sports sports;
@@ -44,8 +43,18 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 	private Intent intentToNextActivity;
 	private TextView textNum,textPerfectNum,textDate,textDuration;
 	private int showMode,sportsType;
-	private PieChart mChart; 
+	private RadarChart radarChart; 
 	private Record record;
+	private float duration;
+	private float num;
+	private float quality;
+	private float calorie;
+	private int speed;
+	private float durationGrade;
+	private float numGrade;
+	private float qualityGrade;
+	private float calorieGrade;
+	private float speedGrade;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,20 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		
 		intentToNextActivity=new Intent(this,MainActivity.class);
 		
+		SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		num=sports.getNum();
+
+		try {
+			long mills =simpleFormatter.parse("1970-1-2"+" "+sports.getDuration()).getTime();
+			float timeOffSet=mills-57600000;
+			duration= (timeOffSet)/60000;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		speed=(int)(sports.getNum()/duration);
+		quality=(float)(sports.getPerfectNum()*1+sports.getValidNum()*0.5+sports.getGoodNum()*0.8)/sports.getNum();
+		calorie = sports.getCalorie();
 
 		Button btnSave = (Button)findViewById(R.id.button_save_sports);
 		btnSave.setOnClickListener(this);
@@ -97,9 +120,15 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		textDate.setText("日期: "+String.valueOf(sports.getDate()));
 		textDuration.setText("持续时间: "+String.valueOf(sports.getDuration()));
 		
-        mChart = (PieChart) findViewById(R.id.piechart_motion);    
-        PieData mPieData = getPieData(4, sports.getNum());    
-        showChart(mChart, mPieData);		
+        radarChart = (RadarChart) findViewById(R.id.radar_chart); 
+        radarChart.getYAxis().setAxisLineColor(Color.BLACK);
+        radarChart.getYAxis().setAxisLineWidth(5f);
+        radarChart.animateY(2000);
+        radarChart.getYAxis().setGridColor(Color.RED);
+        radarChart.getYAxis().setAxisMaxValue(100);
+        
+        RadarData radarData = getRadarData(4, sports.getNum());  
+        showChart(radarChart, radarData);		
 	}
 
 	@Override
@@ -151,79 +180,61 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
 		alertDialog.show();	
 	}
 	
-	private void showChart(PieChart pieChart, PieData pieData) {    
-        pieChart.setHoleColorTransparent(true);    
+	private void showChart(RadarChart radarChart, RadarData radarData) {    
     
-        pieChart.setHoleRadius(30f);  //半径    
-        pieChart.setTransparentCircleRadius(64f); // 半透明圈    
-    
-        pieChart.setDescription("动作评分图");     
-        pieChart.setDrawCenterText(true);  //饼状图中间可以添加文字        
-        pieChart.setDrawHoleEnabled(true);        
-        pieChart.setRotationAngle(90); // 初始旋转角度    
-        pieChart.setRotationEnabled(true); // 可以手动旋转    
-        pieChart.setUsePercentValues(true);  //显示成百分比    
-        pieChart.setCenterText(String.valueOf(sports.getNum()));  //饼状图中间的文字       
+        radarChart.setDescription("");     
+      
+        radarChart.setRotationAngle(90); // 初始旋转角度    
+        radarChart.setRotationEnabled(true); // 可以手动旋转         
         //设置数据    
-        pieChart.setData(pieData);     
-        Legend mLegend = pieChart.getLegend();  //设置比例图    
+        radarChart.setData(radarData);     
+        Legend mLegend = radarChart.getLegend();  //设置比例图    
         mLegend.setPosition(LegendPosition.BELOW_CHART_CENTER);  //最右边显示    
         mLegend.setForm(LegendForm.CIRCLE);  //设置比例图的形状，默认是方形    
         mLegend.setXEntrySpace(7f);    
         mLegend.setYEntrySpace(5f);               
-        pieChart.animateXY(1000, 1000);  //设置动画      
+        radarChart.animateXY(20000, 20000);  //设置动画   
+        //radarChart.invalidate(); 
     }    
      
-    private PieData getPieData(int count, float range) {    
+    private RadarData getRadarData(int count, float range) {    
             
         ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容     
-        
-//        	if(sports.getValidNum()!=0)
-        		xValues.add("Not Bad: "+(int)sports.getValidNum());
-//        	else
-//        		xValues.add("Not Bad:0");
-//        	if(sports.getGoodNum()!=0)
-        		xValues.add("Good: "+(int)sports.getGoodNum());
-//        	else
-//        		xValues.add("Good:0");
-//        	if(sports.getPerfectNum()!=0)
-        		xValues.add("Perfect: "+(int)sports.getPerfectNum());
-//        	else
-//        		xValues.add("Perfect:0");
-//    
+
+		float cal = new BigDecimal(calorie).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		
+		xValues.add("时间:"+sports.getDuration());
+		xValues.add("卡路里:"+cal+"KCAL");
+		
+		float spd = new BigDecimal(speed).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		xValues.add("速度:"+spd+"个/分钟");
+		xValues.add("数量:"+(int)num+"个");
+		
+		xValues.add("质量:"+(int)(quality*100)+"%");
+   
         ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据    
-    
-        // 饼图数据    
-        /**  
-         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38  
-         * 所以 14代表的百分比就是14%   
-         */         
-    
-        yValues.add(new Entry(sports.getValidNum(), 0));    
-        yValues.add(new Entry(sports.getGoodNum(), 1));    
-        yValues.add(new Entry(sports.getPerfectNum(), 2));      
+        
+        calGrades();
+        yValues.add(new Entry(durationGrade, 0));    
+        yValues.add(new Entry(calorieGrade, 1));    
+        yValues.add(new Entry(speedGrade, 2));    
+        yValues.add(new Entry(numGrade, 3)); 
+        yValues.add(new Entry(qualityGrade, 4)); 
     
         //y轴的集合    
-        PieDataSet pieDataSet = new PieDataSet(yValues, "各类动作达标数"/*显示在比例图上*/);    
-        pieDataSet.setSliceSpace(2f); //设置个饼状图之间的距离    
-    
+        RadarDataSet radarDataSet = new RadarDataSet(yValues, "运动分析图");        
         ArrayList<Integer> colors = new ArrayList<Integer>();    
     
         // 饼图颜色    
-        colors.add(Color.rgb(205, 205, 205));    
-        colors.add(Color.rgb(114, 188, 223));    
-        colors.add(Color.rgb(255, 123, 124));    
-        colors.add(Color.rgb(57, 135, 200));    
+             
+        colors.add(Color.RED); 
     
-        pieDataSet.setColors(colors);    
-    
-        DisplayMetrics metrics = getResources().getDisplayMetrics();    
-        float px = 5 * (metrics.densityDpi / 160f);    
-        pieDataSet.setSelectionShift(px); // 选中态多出的长度    
-    
-        PieData pieData = new PieData(xValues, pieDataSet);
-            
-        return pieData;    
+        radarDataSet.setColors(colors);     
+        radarDataSet.setDrawValues(false);
+        radarDataSet.setDrawFilled(true);
+        radarDataSet.setFillColor(Color.RED);
+        RadarData radarData = new RadarData(xValues, radarDataSet); 
+        return radarData;    
     }
 
     private void updateRecord(){
@@ -288,15 +299,81 @@ public class ShowPushUpOrSitUpActivity extends Activity implements OnClickListen
    
 		return millis;
     }
-    
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == android.R.id.home) {
-			finish();
-			return true;
+	
+	private void calGrades(){
+		if(duration<1){
+			durationGrade = (int)(duration*50);
 		}
-		return true;
+		else if(duration<=5){
+			durationGrade =(int)((duration-1)*5+60);	
+		}
+		else if(duration<=10){
+			durationGrade = (int)((duration-5)*2+70);
+		}
+		else if(duration<=15){
+			durationGrade = (int)((duration-10)*2+80);
+		}
+		else if(duration<=20){
+			durationGrade = (int)((duration-10)*2+90);	
+		}
+		else if(duration>20){
+			durationGrade = 100;	
+		}
+		
+		if(speed<=20){
+			speedGrade=speed*2;
+		}
+		else if(speed>20&&speed<=80){
+			speedGrade=(speed-20)+40;
+		}
+		else if(speed>80){
+			speedGrade=100;
+		}
+		
+		qualityGrade = quality*100;
+		
+		//if(sports.getType()==GlobalVariables.SPORTS_TYPE_PUSHUP){
+			if(num<10){
+				numGrade = num*4;
+			}
+			else if(num<=20){
+				numGrade = (int)((num-10)*1.5+40);
+			}
+			else if(num<=40){
+				numGrade = (int)((num-20)*0.75+55);
+			}
+			else if (num<=60){
+				numGrade = (int)((num-40)*0.75+70);
+			}
+			else if (num<=80){
+				numGrade = (int)((num-60)*0.75+85);
+			}
+			else if (num>80){
+				numGrade = 100;
+			}
+		
+		
+/*		if(sports.getType()==GlobalVariables.SPORTS_TYPE_SITUP){
+			if(num<10){
+				numGrade = num*40;
+			}
+			else if(num<=30){
+				numGrade = (int)((num-10)*0.75+40);
+			}
+			else if(num<=50){
+				numGrade = (int)((num-20)*0.75+55);
+			}
+			else if (num<=70){
+				numGrade = (int)((num-40)*0.75+70);
+			}
+			else if (num<=90){
+				numGrade = (int)((num-60)*0.75+85);
+			}
+			else if (num>120){
+				numGrade = 100;
+			}
+		}*/			
+			calorieGrade=numGrade*quality;
 	}
-    
+
 }
