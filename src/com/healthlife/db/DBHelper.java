@@ -110,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_FOODS);
 		
 		values.put("FOODNAME", "米饭");	
-		values.put("CALORIE",1.5);
+		values.put("CALORIE",115);
 		values.put("TYPE",GlobalVariables.MAINFOOD);
 		db.insert("FOODS", null, values);
 		values.clear();
@@ -164,7 +164,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.clear();
 				
 		values.put("FOODNAME","可口可乐");	
-		values.put("CALORIE", 1.12);
+		values.put("CALORIE", 112);
 		values.put("TYPE",GlobalVariables.DRINKS);
 		db.insert("FOODS", null, values);
 		values.clear();

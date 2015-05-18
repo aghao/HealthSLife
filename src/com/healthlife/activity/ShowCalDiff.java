@@ -74,13 +74,13 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 
 		float calAbF2 = new BigDecimal(lineChart.getAverage("摄入卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
 		float calOffF2 = new BigDecimal(lineChart.getAverage("运动消耗卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
-		float calTotalF2 = new BigDecimal(lineChart.getAverage("总卡路里")*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+		float calTotalF2 = new BigDecimal((lineChart.getAverage("摄入卡路里")-lineChart.getAverage("运动消耗卡路里"))*7).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
 		
 		txtCalAbs.setText(String.valueOf(calAbF2 + " 千卡"));
 		txtCalOff.setText(String.valueOf(calOffF2) + " 千卡");
 		txtCalDiff.setText(String.valueOf(calTotalF2) + " 千卡");
 		
-		if(lineChart.getAverage("总卡路里")*7>0){
+		if(lineChart.getAverage("摄入卡路里")-lineChart.getAverage("运动消耗卡路里")>0){
 			txtRec.setText("最近又勇敢地朝土肥圆迈进了呢！\n完成以下运动来赎罪吧");
 			btnPushUp.setText((int)(lineChart.getAverage("总卡路里")*7/0.4)+"个俯卧撑");
 			btnSitUp.setText((int)(lineChart.getAverage("总卡路里")*7/0.4)+"个俯卧撑");
@@ -157,7 +157,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		calorie= new Calorie();
 		sportsList= db.querySportsByDate(day1);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day1);
@@ -168,7 +168,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day2);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day2);
@@ -179,7 +179,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day3);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day3);
@@ -190,7 +190,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day4);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day4);
@@ -201,7 +201,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day5);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day5);
@@ -212,7 +212,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day6);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day6);
@@ -223,7 +223,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		sum=0;
 		sportsList= db.querySportsByDate(day7);
 		for(int i=0;i<sportsList.size();i++){
-			sum+=sportsList.get(i).getCalorie();
+			sum+=sportsList.get(i).getCalorie()+1.4;
 		}
 		calorie.setCalorie(sum);
 		calorie.setDate(day7);
@@ -254,7 +254,7 @@ public class ShowCalDiff extends Activity implements OnClickListener{
     	for(int i=0;i<7;i++){
     		calorieDiff = new Calorie();
     		calorieDiff.setDate(calList.get(i).getDate());
-    		calorieDiff.setCalorie((calList.get(i).getCalorie()-calOffList.get(i).getCalorie()-1.4f));
+    		calorieDiff.setCalorie((calList.get(i).getCalorie()-calOffList.get(i).getCalorie()));
     		calDiffList.add(calorieDiff);
     	}
     }
@@ -302,16 +302,22 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 	        calAbsorbData.setCircleColorHole(Color.WHITE);
 	        calAbsorbData.setColor(Color.RED);
 	        calAbsorbData.setLineWidth(2f);
+	        calAbsorbData.setValueTextSize(12f);
+	        calAbsorbData.setValueTextColor(Color.RED);
 	        
-	        calOffData.setCircleColor(Color.GREEN);
+	        calOffData.setCircleColor(Color.BLUE);
 	        calOffData.setCircleColorHole(Color.WHITE);
-	        calOffData.setColor(Color.GREEN);
+	        calOffData.setColor(Color.BLUE);
 	        calOffData.setLineWidth(2f);
+	        calOffData.setValueTextSize(12f);
+	        calOffData.setValueTextColor(Color.BLUE);
 	        
 	        calDiffData.setCircleColor(Color.BLACK);
 	        calDiffData.setCircleColorHole(Color.WHITE);
 	        calDiffData.setColor(Color.BLACK);
 	        calDiffData.setLineWidth(2f);
+	        calDiffData.setValueTextSize(12f);
+	        calDiffData.setValueTextColor(Color.BLACK);
 
 	        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
 	        dataSets.add(calAbsorbData);

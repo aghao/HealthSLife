@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.Text;
 import com.healthlife.R;
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.Calorie;
@@ -25,6 +26,7 @@ import android.view.View.OnClickListener;
 
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -33,6 +35,7 @@ public class MainActivity extends Activity {
 	private Button sportBtn;
 	private Button musicBtn;
 	private Button heatAddBtn;
+	private TextView mainInfoTv;
 	private LinearLayout linearLayout;
 	
 	@Override
@@ -51,7 +54,14 @@ public class MainActivity extends Activity {
 		sportBtn = (Button)findViewById(R.id.sportbtn);
 		musicBtn = (Button)findViewById(R.id.musicbtn);
 		heatAddBtn = (Button)findViewById(R.id.main_heataddbtn);
+		mainInfoTv = (TextView)findViewById(R.id.main_heatinfo);
 		linearLayout = (LinearLayout)findViewById(R.id.main_layout);
+		
+		if(getTodayCalorie() > 0){
+			mainInfoTv.setText("您今天净增加了" + String.format("%.2f", (Math.abs(getTodayCalorie()))) + "卡路里~");
+		}else {
+			mainInfoTv.setText("您今天净消耗了" + String.format("%.2f", (Math.abs(getTodayCalorie()))) + "卡路里~");
+		}
 		
 		//心率按钮响应
 		heartBtn.setOnClickListener(new OnClickListener() {

@@ -19,6 +19,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.healthlife.db.DBManager;
 import com.healthlife.entity.Beats;
+import com.healthlife.entity.Calorie;
 import com.healthlife.entity.IdRefer;
 import com.healthlife.entity.Position;
 import com.healthlife.entity.Record;
@@ -286,7 +287,7 @@ public class ClientService extends Service{
 		
 		BackupBeatsData(userId,username,password);
 		BackupSportsData(userId,username,password);
-
+		BackupCalorieData(userId,username,password);
 		BackupRecordData(userId,username,password);
 		return SUCCESS;
 	}
@@ -330,10 +331,61 @@ public class ClientService extends Service{
 		out.write(jsonArray.toString().getBytes());
 		out.close();
         
-
+		if(conn.getResponseCode()==200)
+		{
+			
+		}
 		
 		return SUCCESS;
 	}
+	
+	
+	private int BackupCalorieData(long userId,String username, String password) throws IOException, JSONException{
+		
+		URL url = new URL("http://"+IPAddr+":8080/Server/BackupsServlet?datatype=calorie"+"&username="+username+"&password="+password);  
+		HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+
+		conn.setConnectTimeout(5000);
+
+		
+		
+		conn.setDoOutput(true);//设置允许输出
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("User-Agent", "Fiddler");
+	    conn.setRequestProperty("Content-Type", "application/json");
+	    conn.setRequestProperty("Charset", "UTF-8");
+		
+	  
+	    //获取用户ID
+	  	DBManager db=new DBManager(ClientService.this);
+	  	
+	  	ArrayList<Calorie> calorielist=db.queryCalorieByUser();
+	  	
+	  	
+	  	JSONArray jsonArray=new JSONArray();
+	  	for(Calorie calorie:calorielist)
+	  	{
+	  		JSONObject jsonObject = new JSONObject();
+	  		jsonObject.put("userId", calorie.getUserId());
+	  		jsonObject.put("calorieId", calorie.getCalorieId());
+	  		jsonObject.put("calorie", calorie.getCalorie());
+	  		jsonObject.put("date", calorie.getDate());
+	  		jsonArray.put(jsonObject);
+	  	}
+	  	
+	  	
+        OutputStream out = conn.getOutputStream();
+		out.write(jsonArray.toString().getBytes());
+		out.close();
+        
+		if(conn.getResponseCode()==200)
+		{
+			
+		}
+		
+		return SUCCESS;
+	}
+	
 	
 	private int BackupSportsData(long userId,String username, String password) throws IOException, JSONException{
 		
@@ -402,7 +454,10 @@ public class ClientService extends Service{
 		out.write(outStr.getBytes());
 		out.close();
         
-
+		if(conn.getResponseCode()==200)
+		{
+			
+		}
 		return SUCCESS;
 	}	
 	
@@ -457,7 +512,10 @@ public class ClientService extends Service{
 		out.write(jsonArray.toString().getBytes());
 		out.close();
         
-
+		if(conn.getResponseCode()==200)
+		{
+			
+		}
 		return SUCCESS;
 	}	
 		
@@ -469,8 +527,8 @@ public class ClientService extends Service{
 	
 	
 		RecoveryBeatsData(userId,username,password);
+		RecoveryCalorieData(userId,username,password);
 		RecoverySportsData(userId,username,password);
-
 		RecoveryRecordData(userId,username,password);
 		return SUCCESS;
 	}
@@ -512,6 +570,54 @@ public class ClientService extends Service{
 	          		beats.setType(object.getInt("type"));
 	          		beats.setUserId(object.getLong("userId"));
 	          		db.insertBeats(beats);
+            }  
+
+
+		}
+	
+			return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	private  int RecoveryCalorieData(long userId,String username, String password) throws MalformedURLException, IOException, XmlPullParserException, JSONException {
+		// TODO Auto-generated method stub
+		
+	
+		URL url = new URL("http://"+IPAddr+":8080/Server/RecoveryServlet?datatype=calorie"+"&username="+username+"&password="+password);  
+		HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("POST");
+
+		if(conn.getResponseCode()==200)
+		{
+			InputStream inStream=conn.getInputStream();
+
+            String jsonStr=new String(ReadStream(inStream),"UTF-8");
+           // Log.i("TEST","json"+jsonStr);
+
+            
+            DBManager db=new DBManager(ClientService.this);
+            
+            db.removeCalorie();
+            
+            JSONArray array = new JSONArray(jsonStr);  
+            
+            int length = array.length();  
+            Log.i("TEST","length"+length);
+            for(int i=0;i<length;i++){  
+                  	JSONObject object = array.getJSONObject(i); 
+	       
+             		
+                    Calorie calorie=new Calorie();
+                    calorie.setUserId(object.getLong("userId"));
+                    calorie.setCalorieId(object.getLong("calorieId"));
+                    calorie.setCalorie((float)object.getDouble("calorie"));
+                    calorie.setDate(object.getString("date"));
+                    db.addCalorie(calorie);
             }  
 
 

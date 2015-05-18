@@ -93,10 +93,11 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="54dp"
             android:layout_toLeftOf="@id/BPM"
+            android:layout_marginRight="4dp"
+            android:layout_alignBottom="@id/BPM"
             android:layout_above="@id/hrhelpbt"
-	        android:layout_alignLeft="@id/hrhelpbt"
 	        android:text="@string/hrinit"
-	        android:textSize="50sp" />
+	        android:textSize="45sp" />
         
         
         <ImageView

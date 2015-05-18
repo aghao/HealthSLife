@@ -31,7 +31,8 @@ public class FoodsAdapter extends ArrayAdapter<Food>{
 		View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
 		ImageView  foodImage = (ImageView)view.findViewById(R.id.image_food_type);
 		TextView textName = (TextView)view.findViewById(R.id.text_food_name);
-		TextView textCalorie = (TextView)view.findViewById(R.id.text_food_cal);
+		TextView textCalorie = (TextView)view.findViewById(R.id.text_food_num);
+		TextView textInfo = (TextView)view.findViewById(R.id.text_food_cal);
 				
 		switch(food.getType()){
 		
@@ -39,31 +40,32 @@ public class FoodsAdapter extends ArrayAdapter<Food>{
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
 			foodImage.setBackgroundResource(R.drawable.food_main);
-			textCalorie.setText(food.getCalorie() + "/100g");
+			textCalorie.setText(food.getCalorie() + "");
 			break;
 		case GlobalVariables.DISHES:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
 			foodImage.setBackgroundResource(R.drawable.food_dish);
-			textCalorie.setText(food.getCalorie() + "/100g");
+			textCalorie.setText(food.getCalorie() + "");
 			break;
 		case GlobalVariables.SNACKS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
 			foodImage.setBackgroundResource(R.drawable.food_snack);
-			textCalorie.setText(food.getCalorie() + "/100g");
+			textCalorie.setText(food.getCalorie() + "");
 			break;
 		case GlobalVariables.DRINKS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
 			foodImage.setBackgroundResource(R.drawable.food_drink);
-			textCalorie.setText(food.getCalorie() + "/cc");
+			textInfo.setText("¿¨/100ºÁÉý");
+			textCalorie.setText(food.getCalorie() + "");
 			break;
 		case GlobalVariables.FRUITS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
 			foodImage.setBackgroundResource(R.drawable.food_fruit);
-			textCalorie.setText(food.getCalorie() + "/100g");
+			textCalorie.setText(food.getCalorie() + "");
 			break;
 		default:
 		}		

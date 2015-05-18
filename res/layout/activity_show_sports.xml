@@ -9,37 +9,37 @@
      <com.github.mikephil.charting.charts.RadarChart
          android:id="@+id/radar_chart"
          android:layout_width="match_parent"
-         android:layout_height="320dp"
-         android:layout_gravity="center_horizontal" 
+         android:layout_height="300dp"
+         android:layout_gravity="center_horizontal"
+         android:background="#f0f0f0"
          />
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="160dp"
          android:gravity="center_vertical"
-         android:orientation="vertical"
-         android:background="#f0f0f0" >
+         android:padding="4dp"
+         android:orientation="vertical" >
          
 	     <TextView
 		    android:id="@+id/text_sports_date"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="10dp"
-	        android:textSize="19sp"
-		    android:layout_marginTop="10dp" />
+	        android:textSize="19sp" />
 	     <TextView
 		    android:id="@+id/text_sports_duration"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="10dp"
 	        android:textSize="19sp"
-		    android:layout_marginTop="10dp" />
+		    android:layout_marginTop="7dp" />
          <TextView
 	        android:id="@+id/text_motion_num"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 		    android:layout_marginLeft="10dp"
 	        android:textSize="19sp"
-	        android:layout_marginTop="10dp" />
+	        android:layout_marginTop="7dp" />
     
 	     <TextView
 	        android:id="@+id/text_perfect_motion"
@@ -47,7 +47,7 @@
 	        android:layout_height="wrap_content"
 		    android:layout_marginLeft="10dp"
 	        android:textSize="19sp"
-	        android:layout_marginTop="10dp" />
+	        android:layout_marginTop="7dp" />
 	
      </LinearLayout>
     <LinearLayout
@@ -55,18 +55,17 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp" >
+        android:layout_gravity="center_horizontal" >
 	    <Button
 	        android:id="@+id/button_save_sports"
-	        android:layout_width="110dp"
-	        android:layout_height="110dp"
+	        android:layout_width="105dp"
+	        android:layout_height="105dp"
 	        android:background="@drawable/pushresult_savebtn_selector" />
     
 	    <Button 
 	        android:id="@+id/button_drop_sports"
-	        android:layout_width="110dp"
-	        android:layout_height="110dp"
+	        android:layout_width="105dp"
+	        android:layout_height="105dp"
 	        android:layout_marginLeft="20dp"
 	        android:background="@drawable/pushresult_cancelbtn_selector" />
     </LinearLayout>

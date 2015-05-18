@@ -30,6 +30,7 @@ public class BackupsActivity extends Activity {
 	private Button recovery_bt;
 	private Button record_bt;
 	private TextView usernameTv;
+	private CurrentUser user;
 	
 	private BroadcastReceiver backups_receiver = new BroadcastReceiver(){
 
@@ -78,7 +79,7 @@ public class BackupsActivity extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		CurrentUser user=new CurrentUser(BackupsActivity.this);
+		user=new CurrentUser(BackupsActivity.this);
         User user1 = user.QueryCurrentUser();
 		
 		backups_bt=(Button) findViewById(R.id.backups_bt);
@@ -156,11 +157,24 @@ public class BackupsActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
 			break;
 		}
+		if (id == R.id.menu_logout) {
+			user.Logout();
+			finish();
+			return true;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.backups, menu);
 		return true;
 	}
 	
