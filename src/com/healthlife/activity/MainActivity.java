@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Log.i("dd", getTodayCalorie()+"");
 		
 		//使用SDK之前各组件初始化context信息，传入ApplicationContext
 		SDKInitializer.initialize(getApplicationContext());

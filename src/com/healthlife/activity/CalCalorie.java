@@ -117,7 +117,7 @@ public class CalCalorie extends Activity{
 		calorie.setCalorie(Integer.valueOf(etGetAccoumt.getText().toString())*food.getCalorie());     
 		SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		calorie.setDate(simpleFormatter.format( new java.util.Date()));
-	 
+		calorie.setCalorie(calorie.getCalorie()/1000);
 		db.addCalorie(calorie);
 	}
 	
