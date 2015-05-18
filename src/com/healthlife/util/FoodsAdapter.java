@@ -38,26 +38,31 @@ public class FoodsAdapter extends ArrayAdapter<Food>{
 		case GlobalVariables.MAINFOOD:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
+			foodImage.setBackgroundResource(R.drawable.food_main);
 			textCalorie.setText(food.getCalorie() + "/100g");
 			break;
 		case GlobalVariables.DISHES:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
+			foodImage.setBackgroundResource(R.drawable.food_dish);
 			textCalorie.setText(food.getCalorie() + "/100g");
 			break;
 		case GlobalVariables.SNACKS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
+			foodImage.setBackgroundResource(R.drawable.food_snack);
 			textCalorie.setText(food.getCalorie() + "/100g");
 			break;
 		case GlobalVariables.DRINKS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
+			foodImage.setBackgroundResource(R.drawable.food_drink);
 			textCalorie.setText(food.getCalorie() + "/cc");
 			break;
 		case GlobalVariables.FRUITS:
 			//foodImage.setImageResource();
 			textName.setText(food.getFoodName());
+			foodImage.setBackgroundResource(R.drawable.food_fruit);
 			textCalorie.setText(food.getCalorie() + "/100g");
 			break;
 		default:

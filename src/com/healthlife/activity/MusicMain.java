@@ -151,13 +151,13 @@ public class MusicMain extends Activity {
 				if(MusicToPlay.GetMediaState()==MusicToPlay.PLAYING)
 				{
 					intent.putExtra("PlayerAction", "Pause");
-					startmusic_bt.setBackgroundResource(R.drawable.qstartmusic_bt);
+					startmusic_bt.setBackgroundResource(R.drawable.music_playbtn_selector);
 					
 				}
 				else
 				{
 					intent.putExtra("PlayerAction", "Play");
-					startmusic_bt.setBackgroundResource(R.drawable.qpausemusic_bt);
+					startmusic_bt.setBackgroundResource(R.drawable.music_pausebtn_selector);
 				}
 		        startService(intent);
 					
@@ -174,9 +174,9 @@ public class MusicMain extends Activity {
 		
 		Log.i("TEST","state:"+MusicToPlay.GetMediaState());
 		 if(MusicToPlay.GetMediaState()==MusicToPlay.PLAYING)
-	        	startmusic_bt.setBackgroundResource(R.drawable.qpausemusic_bt);
+	        	startmusic_bt.setBackgroundResource(R.drawable.music_pausebtn_selector);
 	        else
-	        	startmusic_bt.setBackgroundResource(R.drawable.qstartmusic_bt);
+	        	startmusic_bt.setBackgroundResource(R.drawable.music_playbtn_selector);
 		 
 		 ShowMusicMode();
 	}
@@ -209,12 +209,5 @@ public class MusicMain extends Activity {
 		}
 		return true;
 	}
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
     
 }

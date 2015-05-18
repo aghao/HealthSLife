@@ -2,34 +2,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:background="@drawable/main_bg" >
+    
+    <LinearLayout
+        android:id="@+id/main_layout"
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:layout_marginTop="10dp"
+       	android:layout_marginLeft="10dp"
+       	android:layout_marginRight="10dp"
+       	android:padding="5dp"
+       	android:orientation="horizontal"
+       	android:gravity="center_vertical"
+       	android:alpha="0.84"
+       	android:clickable="true"
+       	android:background="@drawable/mainlayout_selecor" >
+       	<ImageView 
+       	    android:layout_width="30dp"
+       	    android:layout_height="45dp"
+       	    android:layout_marginLeft="15dp"
+       	    android:background="@drawable/heat_icon" />
+       	<TextView 
+       	    android:id="@+id/main_heatinfo"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_marginLeft="15dp"
+       	    android:textSize="17sp"
+       	    android:text="您今天消耗了XXX卡路里~" />
+       	<ImageView 
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_marginLeft="40dp"
+       	    android:layout_marginRight="2dp"
+       	    android:background="@drawable/heat_jump" />
+    </LinearLayout>
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:text="您要做什么？" />
     
     <LinearLayout
        	android:layout_width="match_parent"
        	android:layout_height="wrap_content"
-       	android:layout_marginBottom="30dp"
+       	android:padding="25dp"
+       	android:layout_marginTop="5dp"
+       	android:gravity="center_horizontal"
        	android:orientation="vertical" >
-	    <Button
-	        android:id="@+id/heartbtn"
-	        android:layout_width="250dp"
-	        android:layout_height="101dp"
-	        android:layout_marginLeft="20dp"
-	        android:background="@drawable/main_heartbtn_selector" />
+	   
 	    <Button 
 	        android:id="@+id/sportbtn"
-	        android:layout_width="250dp"
-	        android:layout_height="101dp"
-	        android:layout_gravity="right"
-	        android:layout_marginTop="20dp"
-	        android:layout_marginRight="20dp"
+	        android:layout_width="310dp"
+	        android:layout_height="150dp"
 	        android:background="@drawable/main_sportbtn_selector" />
-	    <Button
-	        android:id="@+id/musicbtn"
-	        android:layout_width="250dp"
-	        android:layout_height="101dp"
-	        android:layout_marginTop="20dp"
-	        android:layout_marginLeft="20dp"
-	        android:background="@drawable/main_musicbtn_selector" />
+	    <LinearLayout
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:layout_marginTop="7dp"
+	       	android:gravity="center_horizontal"
+	       	android:orientation="horizontal" >
+		    <Button
+		        android:id="@+id/heartbtn"
+		        android:layout_width="150dp"
+		        android:layout_height="120dp"
+		        android:background="@drawable/main_heartbtn_selector" />
+		    <Button
+		        android:id="@+id/musicbtn"
+		        android:layout_width="150dp"
+		        android:layout_height="120dp"
+		        android:layout_marginLeft="7dp"
+		        android:background="@drawable/main_musicbtn_selector" />
+		    </LinearLayout>
+	</LinearLayout>
+	<LinearLayout
+       	android:layout_width="match_parent"
+       	android:layout_height="match_parent"
+       	android:gravity="bottom"
+       	android:orientation="vertical" >
+		<Button
+	        android:id="@+id/main_heataddbtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="65dp"
+	        android:background="@drawable/heatadd_btn_selector" />
 	</LinearLayout>
 </LinearLayout>

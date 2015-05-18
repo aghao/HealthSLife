@@ -13,11 +13,12 @@
         android:id="@+id/text_food_name"
         android:layout_toRightOf="@id/image_food_type"
         android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#e74c3c"
         android:textSize="19sp"
-        android:text="2434"
+        android:text="食物"
         />
     
      <TextView
@@ -27,9 +28,13 @@
         android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/text_food_name"
         android:textColor="#1abc9c"
         android:textSize="16sp"
-        android:text="8.55km"
+        android:text="卡/百克"
         />
     
 

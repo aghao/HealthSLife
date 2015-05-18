@@ -15,7 +15,7 @@
            android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
            android:layout_marginTop="20dp"
-            android:background="@drawable/music_listbtn_selector" />
+            android:background="@drawable/musicmain_listbtn_selector" />
 		<TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_height="60dp"
              android:layout_marginLeft="30dp"
            android:layout_marginTop="20dp"
-            android:background="@drawable/music_boxbtn_selector" />
+            android:background="@drawable/musicbox_btn_selector" />
       
 		<TextView
 	        android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_height="130dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="170dp"
-            android:background="@drawable/music_playbtn_down" />
+            android:background="@drawable/musicbox_btn_selector" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.healthlife.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
 	
@@ -18,6 +20,8 @@ public class MainActivity extends Activity {
 	private Button locateBtn;
 	private Button sportBtn;
 	private Button musicBtn;
+	private Button heatAddBtn;
+	private LinearLayout linearLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,8 @@ public class MainActivity extends Activity {
 		heartBtn = (Button)findViewById(R.id.heartbtn);
 		sportBtn = (Button)findViewById(R.id.sportbtn);
 		musicBtn = (Button)findViewById(R.id.musicbtn);
+		heatAddBtn = (Button)findViewById(R.id.main_heataddbtn);
+		linearLayout = (LinearLayout)findViewById(R.id.main_layout);
 		
 		//心率按钮响应
 		heartBtn.setOnClickListener(new OnClickListener() {
@@ -61,6 +67,28 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, SelectSportsActivity.class);
+				startActivity(intent);
+			}
+		});
+		//添加摄入卡路里按钮响应
+		heatAddBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, CalCalorie.class);
+				startActivity(intent);
+			}
+		});
+		//添加顶部layout点击响应
+		linearLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//linearLayout.setBackgroundColor(Color.parseColor("#f0f0f0"));
+				linearLayout.setBackgroundResource(R.drawable.mainlayout_selecor);
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, ShowCalDiff.class);
 				startActivity(intent);
 			}
 		});

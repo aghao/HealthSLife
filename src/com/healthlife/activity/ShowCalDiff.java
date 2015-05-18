@@ -74,9 +74,9 @@ public class ShowCalDiff extends Activity implements OnClickListener{
 		btnSitUp=(Button)findViewById(R.id.diff_situp);
 		btnJog=(Button)findViewById(R.id.diff_jog);
 		
-		txtCalAbs.setText(String.valueOf("摄入卡路里 :"+lineChart.getAverage("摄入卡路里")*7));
-		txtCalOff.setText(String.valueOf("消耗卡路里 :"+lineChart.getAverage("运动消耗卡路里")*7));
-		txtCalDiff.setText(String.valueOf("总卡路里 :"+lineChart.getAverage("总卡路里")*7));
+		txtCalAbs.setText(String.valueOf(lineChart.getAverage("摄入卡路里")*7) + " 千卡");
+		txtCalOff.setText(String.valueOf(+lineChart.getAverage("运动消耗卡路里")*7) + " 千卡");
+		txtCalDiff.setText(String.valueOf(+lineChart.getAverage("总卡路里")*7) + " 千卡");
 		
 		if(lineChart.getAverage("总卡路里")*7>0){
 			txtRec.setText("最近又勇敢地朝土肥圆迈进了呢！\n完成以下运动来赎罪吧");
