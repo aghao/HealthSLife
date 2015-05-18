@@ -1,9 +1,20 @@
 package com.healthlife.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.baidu.mapapi.SDKInitializer;
 import com.healthlife.R;
+import com.healthlife.db.DBManager;
+import com.healthlife.entity.Calorie;
+import com.healthlife.entity.Sports;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -86,5 +97,24 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@SuppressLint("SimpleDateFormat")
+	private float getTodayCalorie(){
+		DBManager db = new DBManager(this);
+		SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		String today=simpleFormatter.format(new java.util.Date());
+		
+		Calorie cal = db.queryCalorieByDate(today);
+		ArrayList<Sports> sportsList = db.querySportsByDate(today);
+		
+		float sumCalorie=0;
+		for(int i=0;i<sportsList.size();i++){
+			sumCalorie+=sportsList.get(i).getCalorie();
+		}
+		cal.setCalorie(cal.getCalorie()-sumCalorie);
+		
+		return cal.getCalorie();
+		
 	}
 }
