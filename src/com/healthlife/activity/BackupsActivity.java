@@ -4,6 +4,8 @@ import com.healthlife.R;
 import com.healthlife.R.id;
 import com.healthlife.R.layout;
 import com.healthlife.R.menu;
+import com.healthlife.entity.User;
+import com.healthlife.util.CurrentUser;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BackupsActivity extends Activity {
@@ -26,6 +29,7 @@ public class BackupsActivity extends Activity {
 	private Button backups_bt;
 	private Button recovery_bt;
 	private Button record_bt;
+	private TextView usernameTv;
 	
 	private BroadcastReceiver backups_receiver = new BroadcastReceiver(){
 
@@ -74,10 +78,15 @@ public class BackupsActivity extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		CurrentUser user=new CurrentUser(BackupsActivity.this);
+        User user1 = user.QueryCurrentUser();
+		
 		backups_bt=(Button) findViewById(R.id.backups_bt);
 		recovery_bt=(Button) findViewById(R.id.recovery_bt);
 		record_bt=(Button) findViewById(R.id.historyrecord_bt);
+		usernameTv=(TextView) findViewById(R.id.username_text);
 		
+		usernameTv.setText(user1.getUsersName());
 		backups_bt.setOnClickListener(new Backups());
 		recovery_bt.setOnClickListener(new Recovery());
 		record_bt.setOnClickListener(new RecordGo());
